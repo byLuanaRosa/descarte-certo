@@ -43,6 +43,8 @@ test("página inexistente mostra a página 404 amigável", async ({ page }) => {
 
 test("página Sobre mostra os ícones dos ODS relacionados", async ({ page }) => {
   await page.goto("/sobre");
+  await expect(page.getByRole("heading", { name: "Objetivos do projeto" })).toBeVisible();
+  await expect(page.getByText("Divulgar locais que realmente recebem cada resíduo.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Objetivos de Desenvolvimento Sustentável (ODS) relacionados ao projeto" })).toBeVisible();
   for (const n of [12, 3, 4, 11]) await expect(page.getByRole("img", { name: new RegExp(`^ODS ${n}:`) })).toBeVisible();
 });

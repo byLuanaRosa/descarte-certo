@@ -9,7 +9,10 @@ export function BotaoTema() {
   const escuro = tema === "escuro";
   return (
     <label className="flex shrink-0 cursor-pointer items-center gap-2 text-sm font-semibold">
-      <span className="hidden sm:inline">Modo escuro</span>
+      {/* Texto visível mostra o tema atual; para leitores de tela, o switch é "Modo escuro" ligado/desligado. */}
+      <span aria-hidden className="hidden sm:inline">
+        {escuro ? "Modo escuro" : "Modo claro"}
+      </span>
       <button
         type="button"
         role="switch"

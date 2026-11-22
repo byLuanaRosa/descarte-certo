@@ -29,14 +29,17 @@ test("o menu leva às páginas", async ({ page, isMobile }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Dicas/);
 });
 
-test("tema claro é o padrão e o switch alterna e lembra a escolha", async ({ page }) => {
+test("tema claro é o padrão e o switch alterna e lembra a escolha", async ({ page, isMobile }) => {
   await page.goto("/");
   const html = page.locator("html");
   await expect(html).toHaveAttribute("data-tema", "claro");
   const botao = page.getByRole("switch", { name: "Modo escuro" });
   await expect(botao).toHaveAttribute("aria-checked", "false");
+  const rotulo = page.getByRole("banner").getByText(/^Modo (claro|escuro)$/);
+  if (!isMobile) await expect(rotulo).toHaveText("Modo claro");
   await botao.click();
   await expect(html).toHaveAttribute("data-tema", "escuro");
+  if (!isMobile) await expect(rotulo).toHaveText("Modo escuro");
   await page.goto("/sobre");
   await expect(html).toHaveAttribute("data-tema", "escuro");
   await expect(page.getByRole("switch", { name: "Modo escuro" })).toHaveAttribute("aria-checked", "true");

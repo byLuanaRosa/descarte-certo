@@ -5,10 +5,10 @@ import { creditosImagens } from "@/lib/conteudo";
 
 export const metadata: Metadata = { title: "Sobre o Descarte Certo" };
 
-const pilares = [
-  { titulo: "Informar", texto: "Orientações específicas e seguras para cada material." },
-  { titulo: "Facilitar", texto: "Locais que realmente recebem o resíduo, em lista e no mapa." },
-  { titulo: "Conscientizar", texto: "Redução, reutilização e prevenção de acidentes, inclusive para crianças." },
+const objetivos = [
+  { titulo: "Informar", texto: "Disponibilizar orientações específicas e seguras para cada material." },
+  { titulo: "Facilitar", texto: "Divulgar locais que realmente recebem cada resíduo." },
+  { titulo: "Conscientizar", texto: "Promover a redução, a reutilização e a prevenção de acidentes, inclusive para crianças." },
 ];
 
 const ods = [
@@ -34,12 +34,12 @@ export default function SobrePage() {
         <p className="mt-2 text-lg text-muted">O descarte de hoje define o futuro de amanhã.</p>
       </header>
 
-      <section aria-labelledby="pilares">
-        <h2 id="pilares" className="mb-3 text-2xl font-bold">
-          Três pilares
+      <section aria-labelledby="objetivos">
+        <h2 id="objetivos" className="mb-3 text-2xl font-bold">
+          Objetivos do projeto
         </h2>
         <ul className="grid gap-3 sm:grid-cols-3">
-          {pilares.map((p) => (
+          {objetivos.map((p) => (
             <li key={p.titulo} className="rounded-[var(--radius-card)] bg-secondary p-5">
               <h3 className="text-xl font-bold">{p.titulo}</h3>
               <p>{p.texto}</p>
