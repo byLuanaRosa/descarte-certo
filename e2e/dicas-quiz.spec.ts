@@ -42,9 +42,11 @@ test.describe("quiz Kids", () => {
     await page.goto("/kids");
     const respostas = ["Papel", "Lixeira de reciclar", "Plástico", "Dar para um adulto levar", "Não tocar e chamar um adulto", "Usar de novo", "Papel", "Um adulto leva à farmácia"];
     for (const [i, resposta] of respostas.entries()) {
-      await expect(page.getByText(`Pergunta ${i + 1} de 8`)).toBeVisible({ timeout: 6000 });
-      await page.getByRole("list", { name: "Alternativas" }).getByRole("button", { name: resposta, exact: false }).first().click();
-      await expect(page.getByText("Acertou!", { exact: true })).toBeVisible();
+      await expect(page.getByText(`Pergunta ${i + 1} de 8`)).toBeVisible({ timeout: 10_000 });
+      const botao = page.getByRole("list", { name: "Alternativas" }).getByRole("button", { name: resposta, exact: false }).first();
+      await expect(botao).toBeEnabled();
+      await botao.click();
+      await expect(page.getByText("Acertou!", { exact: true })).toBeVisible({ timeout: 10_000 });
     }
     await expect(page.getByRole("heading", { name: "Você completou o quiz!" })).toBeVisible({ timeout: 6000 });
     await expect(page.getByText("Acertou de primeira 8 de 8 perguntas.")).toBeVisible();

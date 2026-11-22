@@ -72,7 +72,8 @@ function Pergunta({
           alt={pergunta.alt}
           width={220}
           height={160}
-          className="h-40 w-56 rounded-2xl object-cover"
+          unoptimized={pergunta.imagem.endsWith(".svg")}
+          className="h-40 w-56 rounded-2xl bg-white object-contain p-2"
           priority
         />
         <div>
@@ -95,7 +96,14 @@ function Pergunta({
                   certaAgora ? "border-primary" : tentada ? "border-transparent opacity-40" : "border-transparent"
                 }`}
               >
-                <Image src={alt.imagem} alt="" width={200} height={130} className="h-28 w-full rounded-xl object-cover" />
+                <Image
+                  src={alt.imagem}
+                  alt=""
+                  width={200}
+                  height={130}
+                  unoptimized={alt.imagem.endsWith(".svg")}
+                  className="h-28 w-full rounded-xl bg-white object-contain p-2"
+                />
                 <span>{alt.texto}</span>
                 {tentada && <span className="text-sm font-semibold text-muted">Já tentou</span>}
               </button>

@@ -23,9 +23,9 @@ O visual segue o [mockup](../../mockup/README.md) feito no Lovable.
 
 **Sobre:** equipe, orientadores, fontes usadas e o aviso de que é um projeto acadêmico e que o usuário deve confirmar horários antes de ir.
 
-**Quiz Kids:** visual lúdico (fundo azul-claro), aviso "Não toque, não recolha e chame um adulto", dois níveis, fotos de domínio público ou CC0 (créditos na página Sobre), brilhos, sons gerados no navegador e palmas ao acertar, animação e dica ao errar. Respeita quem pede menos movimento e tem botão para desligar o som.
+**Quiz Kids:** visual lúdico (fundo azul-claro), aviso "Não toque, não recolha e chame um adulto", dois níveis, ilustrações 2D coloridas, sem texto, de domínio público ou CC0 (créditos na página Sobre), brilhos, sons gerados no navegador e palmas ao acertar, animação e dica ao errar. Respeita quem pede menos movimento e tem botão para desligar o som.
 
-**Tema:** claro por padrão; botão 🌙/☀️ no canto superior direito.
+**Tema:** claro por padrão; switch "Modo escuro" no canto superior direito.
 
 ## Identidade visual
 | Elemento | Valor |
@@ -46,6 +46,6 @@ O verde é a cor da marca. O amarelo e o vermelho ficam reservados para avisos d
 - Na página do material, os riscos aparecem antes de onde entregar.
 - Linguagem simples e acolhedora.
 - Cada ponto mostra "verificado em mm/aaaa" e o aviso "confirme o horário antes de ir".
-- Tema claro por padrão, com botão para o escuro no canto superior direito (RNF04).
+- Tema claro por padrão, com switch para o escuro no canto superior direito (RNF04).
 - Contraste mínimo de 4,5:1, navegação por teclado, textos alternativos nas imagens e textos que aumentam com o zoom do navegador; meta de Lighthouse Acessibilidade ≥ 90 (RNF06).
 - Layout responsivo a partir de 320 px de largura (RNF07).

@@ -114,7 +114,7 @@ export default function SobrePage() {
             Créditos das imagens do Descarte Certo Kids
           </summary>
           <p className="mt-2 text-sm text-muted">
-            Todas são de domínio público ou licença CC0 (sem direitos autorais), encontradas pelo Openverse.
+            Ilustrações 2D de domínio público ou CC0 (sem direitos autorais), encontradas pelo Openverse (rawpixel), e duas desenhadas pela própria equipe.
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-6 text-sm">
             {creditosImagens.map((c) => (

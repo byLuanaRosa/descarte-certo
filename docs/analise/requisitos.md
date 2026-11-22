@@ -9,7 +9,7 @@ Requisitos do **MVP** do Descarte Certo. Eles são um recorte do [mockup](../../
 | RF02 | Mostrar pontos de coleta de acordo com a localização do usuário em mapa e lista | Pontos aprovados filtrados por material e ordenados pela distância, em lista ou mapa, com botão "Como chegar" que abre o app de mapas. |
 | RF03 | Mostrar dicas para diminuir o lixo e o impacto ambiental do consumo | Página com dicas separadas por tema. |
 | RF04 | Cadastro comunitário de pontos de coleta com formulário e verificação | O formulário localiza o endereço no mapa e salva o ponto como "pendente"; o administrador faz login, aprova ou rejeita. |
-| RF05 | Quiz educativo sobre reciclagem e descarte correto | Quiz Kids com dois níveis (até 10 anos e a partir de 10 anos), fotos livres de direitos autorais, brilhos, sons e palmas ao acertar e avanço automático; ao errar, animação, dica e repetição da pergunta até acertar; aviso de segurança para crianças. |
+| RF05 | Quiz educativo sobre reciclagem e descarte correto | Quiz Kids com dois níveis (até 10 anos e a partir de 10 anos), ilustrações 2D coloridas livres de direitos autorais, brilhos, sons e palmas ao acertar e avanço automático; ao errar, animação, dica e repetição da pergunta até acertar; aviso de segurança para crianças. |
 
 ## Requisitos Não Funcionais
 | ID | Requisito | Como verificar |
@@ -17,7 +17,7 @@ Requisitos do **MVP** do Descarte Certo. Eles são um recorte do [mockup](../../
 | RNF01 | O sistema deve ser uma aplicação web (Next.js, publicada na Vercel). | Site acessível pela URL pública da Vercel. |
 | RNF02 | O sistema deve ser intuitivo, simples, humanizado e cativante. | Teste com 5 pessoas: pelo menos 4 encontram onde descartar um material em até 1 minuto, sem ajuda. |
 | RNF03 | O sistema deve seguir os princípios de UI/UX. | Checklist das 10 heurísticas de Nielsen aplicado às telas do MVP. |
-| RNF04 | O sistema deve possuir tema claro e escuro. | Tema claro por padrão; botão no canto superior direito alterna para o escuro e a escolha fica salva no aparelho. |
+| RNF04 | O sistema deve possuir tema claro e escuro. | Tema claro por padrão; switch no canto superior direito alterna para o escuro e a escolha fica salva no aparelho. |
 | RNF05 | O sistema deve permitir a instalação estilo PWA. | O Lighthouse indica o site como instalável (manifest e ícones). |
 | RNF06 | O sistema deve possuir opções de acessibilidade para pessoas com deficiência. | Lighthouse Acessibilidade ≥ 90; contraste ≥ 4,5:1; uso completo pelo teclado; imagens com texto alternativo. |
 | RNF07 | O sistema deve ser responsivo (desktop, tablet, mobile). | Sem rolagem horizontal entre 320 px e 1920 px de largura. |
