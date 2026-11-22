@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CardPonto } from "@/components/CardPonto";
+import { Mapa } from "@/components/Mapa";
 import { usePontos } from "@/components/usePontos";
 import { materiais } from "@/lib/conteudo";
-import { filtrarEOrdenar, type Coordenadas } from "@/lib/pontos";
+import { filtrarEOrdenar, linkComoChegar, type Coordenadas } from "@/lib/pontos";
 
 type Localizacao =
   | { situacao: "inativa" }
@@ -17,6 +18,7 @@ export function ExplorarPontos({ materialInicial }: { materialInicial: string })
   const estado = usePontos();
   const [material, setMaterial] = useState(materialInicial);
   const [local, setLocal] = useState<Localizacao>({ situacao: "inativa" });
+  const [visao, setVisao] = useState<"lista" | "mapa">("lista");
 
   const origem = local.situacao === "ok" ? local.coordenadas : null;
   const lista = useMemo(
@@ -101,13 +103,51 @@ export function ExplorarPontos({ materialInicial }: { materialInicial: string })
                 .
               </p>
             )}
-            <ul className="grid gap-4 md:grid-cols-2">
-              {lista.map((p) => (
-                <li key={p.id}>
-                  <CardPonto ponto={p} />
-                </li>
+            <div role="tablist" aria-label="Forma de ver os pontos" className="inline-flex rounded-full border border-border bg-card p-1">
+              {(["lista", "mapa"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  role="tab"
+                  id={`aba-${v}`}
+                  aria-selected={visao === v}
+                  aria-controls={`painel-${v}`}
+                  onClick={() => setVisao(v)}
+                  className={`rounded-full px-5 py-2 font-semibold ${visao === v ? "bg-primary text-primary-foreground" : ""}`}
+                >
+                  {v === "lista" ? "Lista" : "Mapa"}
+                </button>
               ))}
-            </ul>
+            </div>
+            {visao === "lista" ? (
+              <ul id="painel-lista" role="tabpanel" aria-labelledby="aba-lista" className="grid gap-4 md:grid-cols-2">
+                {lista.map((p) => (
+                  <li key={p.id}>
+                    <CardPonto ponto={p} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div id="painel-mapa" role="tabpanel" aria-labelledby="aba-mapa">
+                <Mapa
+                  rotulo="Mapa dos pontos de coleta"
+                  marcadores={lista.map((p) => ({
+                    id: p.id,
+                    latitude: p.latitude,
+                    longitude: p.longitude,
+                    titulo: p.nome,
+                    conteudo: (
+                      <span className="block">
+                        <span className="block">{p.endereco}</span>
+                        <a href={linkComoChegar(p)} target="_blank" rel="noreferrer">
+                          Como chegar
+                        </a>
+                      </span>
+                    ),
+                  }))}
+                />
+              </div>
+            )}
           </>
         )}
       </div>
