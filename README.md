@@ -12,7 +12,7 @@ O MVP permite:
 **ODS relacionados:** 12 (Consumo e Produção Responsáveis), 3, 4 e 11.
 
 **Equipe:** Luana Rosa e Jedson Torquato.
-**Orientação:** [nome do professor] (Atividade de Extensão – Eletrônica) e [nome da professora] (Engenharia e Sustentabilidade).
+**Orientação:** Julio Feller Golin (Departamento Acadêmico de Eletrônica),  Maurilia de Almeida Bastos (Departamento Acadêmico de Construção Civil).
 **Instituição:** IFSC Câmpus Florianópolis, Engenharia Eletrônica, 2026. Projeto acadêmico, sem fins lucrativos.
 
 **Tecnologias:** Next.js, Tailwind CSS, Vercel, Supabase e Leaflet/OpenStreetMap.
