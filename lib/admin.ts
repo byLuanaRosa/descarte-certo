@@ -1,0 +1,52 @@
+import type { Session } from "@supabase/supabase-js";
+import type { Ponto } from "@/lib/pontos";
+import { obterSupabase } from "@/lib/supabase";
+
+/**
+ * Funções da área administrativa (RF04, RN01).
+ * A tela de login é só interface: quem garante que apenas administradores
+ * aprovam ou rejeitam são as regras RLS do banco (supabase/schema.sql).
+ */
+
+export async function sessaoAtual(): Promise<Session | null> {
+  const { data } = await obterSupabase().auth.getSession();
+  return data.session;
+}
+
+export async function entrar(email: string, senha: string): Promise<{ erro: string | null }> {
+  const { error } = await obterSupabase().auth.signInWithPassword({ email: email.trim(), password: senha });
+  return { erro: error ? "E-mail ou senha inválidos." : null };
+}
+
+export async function sair(): Promise<void> {
+  await obterSupabase().auth.signOut();
+}
+
+/** Confere se o usuário logado está na tabela de administradores. */
+export async function ehAdministrador(userId: string): Promise<boolean> {
+  const { data, error } = await obterSupabase().from("administradores").select("user_id").eq("user_id", userId);
+  return !error && (data ?? []).length > 0;
+}
+
+export async function listarPendentes(): Promise<Ponto[]> {
+  const { data, error } = await obterSupabase()
+    .from("pontos_coleta")
+    .select("id, nome, endereco, latitude, longitude, materiais, horario, telefone, fonte, status, criado_em, verificado_em")
+    .eq("status", "pendente")
+    .order("criado_em", { ascending: true });
+  if (error) throw error;
+  return (data ?? []) as Ponto[];
+}
+
+export type Decisao = "aprovado" | "rejeitado";
+
+/** Aprova ou rejeita um ponto pendente. Retorna false se o banco não alterou nada (sem permissão). */
+export async function decidir(id: string, decisao: Decisao): Promise<boolean> {
+  const { data, error } = await obterSupabase()
+    .from("pontos_coleta")
+    .update({ status: decisao, verificado_em: new Date().toISOString() })
+    .eq("id", id)
+    .eq("status", "pendente")
+    .select("id");
+  return !error && (data ?? []).length === 1;
+}
