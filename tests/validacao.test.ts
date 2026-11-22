@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { buscarEndereco, montarUrlBusca } from "@/lib/geocodificar";
-import { dentroDeSantaCatarina, validarSugestao, type DadosSugestao } from "@/lib/validacao";
+import { dentroDeSantaCatarina, validarFonte, validarSugestao, type DadosSugestao } from "@/lib/validacao";
 
 const valido: DadosSugestao = {
   nome: "  Farmácia   Central ",
@@ -81,5 +81,13 @@ describe("buscarEndereco (Nominatim)", () => {
   it("lança erro se o serviço falhar", async () => {
     const buscar = vi.fn().mockResolvedValue(new Response("", { status: 503 }));
     await expect(buscarEndereco("x", buscar)).rejects.toThrow();
+  });
+});
+
+describe("validarFonte", () => {
+  it("aceita vazio ou link http(s) e recusa o resto", () => {
+    expect(validarFonte("")).toEqual({ ok: true, valor: null });
+    expect(validarFonte(" https://www.pmf.sc.gov.br ")).toEqual({ ok: true, valor: "https://www.pmf.sc.gov.br" });
+    expect(validarFonte("pmf.sc.gov.br").ok).toBe(false);
   });
 });

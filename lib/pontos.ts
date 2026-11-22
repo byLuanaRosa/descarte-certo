@@ -1,3 +1,4 @@
+import { normalizar } from "@/lib/busca";
 import { obterSupabase } from "@/lib/supabase";
 
 export type Ponto = {
@@ -49,11 +50,23 @@ export function formatarDistancia(km: number): string {
 export type PontoComDistancia = Ponto & { distanciaKm: number | null };
 
 /**
- * Filtra por material e, se houver posição do usuário, ordena do mais perto ao mais longe (RF02).
+ * Filtra por material e pelo texto buscado (nome ou endereço) e, se houver posição do usuário,
+ * ordena do mais perto ao mais longe (RF02).
  * A posição do usuário só é usada aqui, no navegador; nunca é enviada ao servidor (RN03).
  */
-export function filtrarEOrdenar(pontos: Ponto[], material: string, origem: Coordenadas | null): PontoComDistancia[] {
-  const filtrados = material ? pontos.filter((p) => p.materiais.includes(material)) : pontos;
+export function filtrarEOrdenar(
+  pontos: Ponto[],
+  material: string,
+  origem: Coordenadas | null,
+  termo = "",
+): PontoComDistancia[] {
+  const palavras = normalizar(termo).split(" ").filter(Boolean);
+  const filtrados = pontos.filter((p) => {
+    if (material && !p.materiais.includes(material)) return false;
+    if (palavras.length === 0) return true;
+    const texto = normalizar(`${p.nome} ${p.endereco}`);
+    return palavras.every((palavra) => texto.includes(palavra));
+  });
   const comDistancia = filtrados.map((p) => ({ ...p, distanciaKm: origem ? distanciaKm(origem, p) : null }));
   if (origem) comDistancia.sort((a, b) => (a.distanciaKm ?? 0) - (b.distanciaKm ?? 0));
   return comDistancia;

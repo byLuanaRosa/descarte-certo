@@ -34,15 +34,48 @@ export async function ehAdministrador(userId: string): Promise<boolean> {
   return (data ?? []).length > 0;
 }
 
-export async function listarPendentes(): Promise<Ponto[]> {
+const COLUNAS =
+  "id, nome, endereco, latitude, longitude, materiais, horario, telefone, fonte, status, criado_em, verificado_em";
+
+export type StatusPonto = Ponto["status"];
+
+/** Lista pontos de um status (o administrador vê todos; até 100 por vez). */
+export async function listarPorStatus(status: StatusPonto): Promise<Ponto[]> {
   const { data, error } = await obterSupabase()
     .from("pontos_coleta")
-    .select("id, nome, endereco, latitude, longitude, materiais, horario, telefone, fonte, status, criado_em, verificado_em")
-    .eq("status", "pendente")
-    .order("criado_em", { ascending: true })
+    .select(COLUNAS)
+    .eq("status", status)
+    .order(status === "pendente" ? "criado_em" : "nome", { ascending: true })
     .limit(100);
   if (error) throw error;
   return (data ?? []) as Ponto[];
+}
+
+export async function listarPendentes(): Promise<Ponto[]> {
+  return listarPorStatus("pendente");
+}
+
+export type DadosEdicao = {
+  nome: string;
+  endereco: string;
+  latitude: number;
+  longitude: number;
+  materiais: string[];
+  horario: string | null;
+  telefone: string | null;
+  fonte: string | null;
+};
+
+/** Salva a edição de um ponto. Retorna false se o banco não alterou nada (sem permissão). */
+export async function atualizarPonto(id: string, dados: DadosEdicao): Promise<boolean> {
+  const { data, error } = await obterSupabase().from("pontos_coleta").update(dados).eq("id", id).select("id");
+  return !error && (data ?? []).length === 1;
+}
+
+/** Exclui um ponto de vez. Retorna false se o banco não apagou nada (sem permissão). */
+export async function excluirPonto(id: string): Promise<boolean> {
+  const { data, error } = await obterSupabase().from("pontos_coleta").delete().eq("id", id).select("id");
+  return !error && (data ?? []).length === 1;
 }
 
 export type Decisao = "aprovado" | "rejeitado";

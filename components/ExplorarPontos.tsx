@@ -18,12 +18,12 @@ export function ExplorarPontos({ materialInicial }: { materialInicial: string })
   const estado = usePontos();
   const [material, setMaterial] = useState(materialInicial);
   const [local, setLocal] = useState<Localizacao>({ situacao: "inativa" });
-  const [visao, setVisao] = useState<"lista" | "mapa">("lista");
+  const [termo, setTermo] = useState("");
 
   const origem = local.situacao === "ok" ? local.coordenadas : null;
   const lista = useMemo(
-    () => (estado.situacao === "pronto" ? filtrarEOrdenar(estado.pontos, material, origem) : []),
-    [estado, material, origem],
+    () => (estado.situacao === "pronto" ? filtrarEOrdenar(estado.pontos, material, origem, termo) : []),
+    [estado, material, origem, termo],
   );
 
   function usarMinhaLocalizacao() {
@@ -46,7 +46,21 @@ export function ExplorarPontos({ materialInicial }: { materialInicial: string })
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-col gap-3 rounded-[var(--radius-card)] border border-border bg-card p-4 shadow-sm sm:flex-row sm:items-end">
+      <div className="flex flex-col gap-3 rounded-[var(--radius-card)] border border-border bg-card p-4 shadow-sm lg:flex-row lg:items-end">
+        <div className="flex-1">
+          <label htmlFor="busca-ponto" className="mb-1 block font-semibold">
+            Buscar ponto
+          </label>
+          <input
+            id="busca-ponto"
+            type="search"
+            value={termo}
+            onChange={(e) => setTermo(e.target.value)}
+            placeholder="Nome ou bairro, ex.: Canasvieiras"
+            autoComplete="off"
+            className="w-full rounded-xl border border-border bg-background px-4 py-3"
+          />
+        </div>
         <div className="flex-1">
           <label htmlFor="material" className="mb-1 block font-semibold">
             Material
@@ -79,78 +93,60 @@ export function ExplorarPontos({ materialInicial }: { materialInicial: string })
         Sua localização é opcional, usada só neste aparelho para ordenar a lista, e não é salva.
       </p>
 
-      <div aria-live="polite" className="space-y-4">
+      <div className="space-y-4">
         {local.situacao === "negada" && (
-          <p className="rounded-lg bg-warning-soft px-4 py-3 text-warning-foreground">{local.mensagem}</p>
+          <p role="status" className="rounded-lg bg-warning-soft px-4 py-3 text-warning-foreground">
+            {local.mensagem}
+          </p>
         )}
 
         {estado.situacao === "carregando" && <p>Carregando pontos de coleta…</p>}
         {estado.situacao === "erro" && (
-          <p className="rounded-lg bg-danger-soft px-4 py-3">{estado.mensagem}</p>
+          <p role="alert" className="rounded-lg bg-danger-soft px-4 py-3">
+            {estado.mensagem}
+          </p>
         )}
         {estado.situacao === "pronto" && (
           <>
-            <p className="font-semibold">
+            <Mapa
+              rotulo="Mapa dos pontos de coleta"
+              voce={origem}
+              marcadores={lista.map((p) => ({
+                id: p.id,
+                latitude: p.latitude,
+                longitude: p.longitude,
+                titulo: p.nome,
+                conteudo: (
+                  <span className="block">
+                    <span className="block">{p.endereco}</span>
+                    <a href={linkComoChegar(p)} target="_blank" rel="noreferrer">
+                      Como chegar
+                    </a>
+                  </span>
+                ),
+              }))}
+            />
+            <p role="status" className="font-semibold">
               {lista.length} ponto(s) encontrado(s){origem ? ", do mais perto ao mais longe" : ""}.
             </p>
             {lista.length === 0 && (
               <p className="rounded-lg border border-border bg-card px-4 py-3">
-                Ainda não temos ponto cadastrado para este material. Veja na ficha do material qual é o destino
-                correto ou{" "}
+                {termo
+                  ? "Nenhum ponto encontrado com esse nome ou endereço. Tente outra palavra ou "
+                  : "Ainda não temos ponto cadastrado para este material. Veja na ficha do material qual é o destino correto ou "}
                 <Link href="/pontos/sugerir" className="font-semibold text-primary underline">
                   sugira um ponto
                 </Link>
                 .
               </p>
             )}
-            <div role="tablist" aria-label="Forma de ver os pontos" className="inline-flex rounded-full border border-border bg-card p-1">
-              {(["lista", "mapa"] as const).map((v) => (
-                <button
-                  key={v}
-                  type="button"
-                  role="tab"
-                  id={`aba-${v}`}
-                  aria-selected={visao === v}
-                  aria-controls={`painel-${v}`}
-                  onClick={() => setVisao(v)}
-                  className={`rounded-full px-5 py-2 font-semibold ${visao === v ? "bg-primary text-primary-foreground" : ""}`}
-                >
-                  {v === "lista" ? "Lista" : "Mapa"}
-                </button>
+            <ul aria-label="Lista de pontos de coleta" className="grid gap-4 md:grid-cols-2">
+              {lista.map((p) => (
+                <li key={p.id}>
+                  <CardPonto ponto={p} />
+                </li>
               ))}
-            </div>
-            {visao === "lista" ? (
-              <div id="painel-lista" role="tabpanel" aria-labelledby="aba-lista">
-                <ul className="grid gap-4 md:grid-cols-2">
-                  {lista.map((p) => (
-                    <li key={p.id}>
-                      <CardPonto ponto={p} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              <div id="painel-mapa" role="tabpanel" aria-labelledby="aba-mapa">
-                <Mapa
-                  rotulo="Mapa dos pontos de coleta"
-                  voce={origem}
-                  marcadores={lista.map((p) => ({
-                    id: p.id,
-                    latitude: p.latitude,
-                    longitude: p.longitude,
-                    titulo: p.nome,
-                    conteudo: (
-                      <span className="block">
-                        <span className="block">{p.endereco}</span>
-                        <a href={linkComoChegar(p)} target="_blank" rel="noreferrer">
-                          Como chegar
-                        </a>
-                      </span>
-                    ),
-                  }))}
-                />
-              </div>
-            )}
+            </ul>
           </>
         )}
       </div>

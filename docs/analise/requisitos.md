@@ -6,9 +6,9 @@ Requisitos do **MVP** do Descarte Certo. Eles são um recorte do [mockup](../../
 | ID | Requisito | Critério de aceite |
 |---|---|---|
 | RF01 | Buscar informações sobre descarte de diversos tipos de resíduos | Busca por nome ou categoria mostra os riscos do descarte incorreto e um passo a passo simples para descarte, com destino e fonte. |
-| RF02 | Mostrar pontos de coleta de acordo com a localização do usuário em mapa e lista | Pontos aprovados filtrados por material e ordenados pela distância, em lista ou mapa, com botão "Como chegar" que abre o app de mapas. |
+| RF02 | Mostrar pontos de coleta de acordo com a localização do usuário em mapa e lista | Mapa acima da lista, com busca por nome ou bairro e filtro por material; pontos aprovados ordenados pela distância, materiais aceitos em ordem alfabética e botão "Como chegar". |
 | RF03 | Mostrar dicas para diminuir o lixo e o impacto ambiental do consumo | Página com dicas separadas por tema. |
-| RF04 | Cadastro comunitário de pontos de coleta com formulário e verificação | O formulário localiza o endereço no mapa e salva o ponto como "pendente"; o administrador faz login, aprova ou rejeita. |
+| RF04 | Cadastro comunitário de pontos de coleta com formulário e verificação | O formulário localiza o endereço no mapa e salva o ponto como "pendente"; o administrador faz login, aprova ou rejeita, e pode editar ou excluir qualquer ponto. |
 | RF05 | Quiz educativo sobre reciclagem e descarte correto | Quiz Kids com dois níveis (até 10 anos e a partir de 10 anos), ilustrações 2D coloridas livres de direitos autorais, brilhos, sons e palmas ao acertar e avanço automático; ao errar, animação, dica e repetição da pergunta até acertar; aviso de segurança para crianças. |
 
 ## Requisitos Não Funcionais

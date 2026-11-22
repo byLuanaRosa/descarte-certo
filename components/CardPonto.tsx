@@ -1,4 +1,4 @@
-import { buscarMaterialPorId } from "@/lib/conteudo";
+import { nomesDosMateriais } from "@/lib/conteudo";
 import { formatarDistancia, formatarVerificacao, linkComoChegar, type PontoComDistancia } from "@/lib/pontos";
 
 export function CardPonto({ ponto }: { ponto: PontoComDistancia }) {
@@ -28,9 +28,11 @@ export function CardPonto({ ponto }: { ponto: PontoComDistancia }) {
       )}
       <details className="mt-2">
         <summary className="cursor-pointer font-semibold text-primary">Materiais aceitos ({ponto.materiais.length})</summary>
-        <p className="mt-1 text-sm">
-          {ponto.materiais.map((id) => buscarMaterialPorId(id)?.nome ?? id).join(", ")}
-        </p>
+        <ul className="mt-1 list-disc space-y-0.5 pl-6 text-sm">
+          {nomesDosMateriais(ponto.materiais).map((nome) => (
+            <li key={nome}>{nome}</li>
+          ))}
+        </ul>
       </details>
       <p className="mt-3 rounded-lg bg-warning-soft px-3 py-2 text-sm text-warning-foreground">
         {verificado ? `Verificado em ${verificado}. ` : ""}Confirme o horário e o material antes de ir.

@@ -36,6 +36,7 @@ const pendentes = [
 /** Simula o Supabase Auth e a API REST para a área administrativa. */
 async function simularAdmin(page: Page, opcoes: { ehAdmin: boolean; senhaCerta?: string }) {
   const atualizacoes: { url: string; corpo: unknown }[] = [];
+  const exclusoes: string[] = [];
   await page.route("**/tile.openstreetmap.org/**", (r) => r.fulfill({ status: 204, body: "" }));
   await page.route("**/auth/v1/token**", async (route) => {
     const corpo = route.request().postDataJSON() as { password?: string };
@@ -70,9 +71,18 @@ async function simularAdmin(page: Page, opcoes: { ehAdmin: boolean; senhaCerta?:
       const id = new URL(req.url()).searchParams.get("id")?.replace("eq.", "");
       return route.fulfill({ contentType: "application/json", json: [{ id }] });
     }
-    return route.fulfill({ contentType: "application/json", json: pendentes });
+    if (req.method() === "DELETE") {
+      exclusoes.push(req.url());
+      const id = new URL(req.url()).searchParams.get("id")?.replace("eq.", "");
+      return route.fulfill({ contentType: "application/json", json: [{ id }] });
+    }
+    const status = new URL(req.url()).searchParams.get("status")?.replace("eq.", "") ?? "pendente";
+    return route.fulfill({
+      contentType: "application/json",
+      json: pendentes.map((p) => ({ ...p, status })),
+    });
   });
-  return { atualizacoes };
+  return { atualizacoes, exclusoes };
 }
 
 async function login(page: Page, senha = "senha-certa") {
@@ -120,4 +130,58 @@ test("administrador vê pendentes, aprova e rejeita", async ({ page }) => {
 
   await page.getByRole("button", { name: "Sair" }).click();
   await expect(page.getByRole("heading", { name: "Entrar" })).toBeVisible();
+});
+
+test("administrador edita um ponto publicado", async ({ page }) => {
+  const { atualizacoes } = await simularAdmin(page, { ehAdmin: true });
+  await login(page);
+  await page.getByRole("tab", { name: "Publicados" }).click();
+  await expect(page.getByRole("heading", { name: "Pontos publicados (2)" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Editar Farmácia Central" }).click();
+  const form = page.getByRole("form", { name: "Editar Farmácia Central" });
+  await form.getByLabel("Nome do local *").fill("Farmácia Central do Centro");
+  await form.getByLabel("Horário").fill("Todos os dias: 8h–22h");
+  await form.getByLabel("Pilhas", { exact: true }).check();
+  await form.getByRole("button", { name: "Salvar alterações" }).click();
+
+  await expect(page.getByText("“Farmácia Central do Centro” foi atualizado.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Farmácia Central do Centro" })).toBeVisible();
+  expect(atualizacoes[0].url).toContain("id=eq.p1");
+  expect(atualizacoes[0].corpo).toMatchObject({
+    nome: "Farmácia Central do Centro",
+    horario: "Todos os dias: 8h–22h",
+    materiais: ["medicamentos-vencidos", "pilhas"],
+  });
+});
+
+test("a edição valida os campos antes de salvar", async ({ page }) => {
+  const { atualizacoes } = await simularAdmin(page, { ehAdmin: true });
+  await login(page);
+  await page.getByRole("button", { name: "Editar Farmácia Central" }).click();
+  const form = page.getByRole("form", { name: "Editar Farmácia Central" });
+  await form.getByLabel("Nome do local *").fill("");
+  await form.getByLabel("Fonte (link oficial)").fill("site sem http");
+  await form.getByRole("button", { name: "Salvar alterações" }).click();
+  await expect(form.getByText(/Informe o nome do local/)).toBeVisible();
+  await expect(form.getByText(/Use um link que comece com http/)).toBeVisible();
+  expect(atualizacoes).toHaveLength(0);
+  await form.getByRole("button", { name: "Cancelar" }).click();
+  await expect(page.getByRole("form")).toHaveCount(0);
+});
+
+test("administrador exclui um ponto depois de confirmar", async ({ page }) => {
+  const { exclusoes } = await simularAdmin(page, { ehAdmin: true });
+  await login(page);
+  await page.getByRole("tab", { name: "Publicados" }).click();
+
+  page.once("dialog", (d) => d.dismiss());
+  await page.getByRole("button", { name: "Excluir Loja do Bairro" }).click();
+  expect(exclusoes).toHaveLength(0);
+
+  page.once("dialog", (d) => d.accept());
+  await page.getByRole("button", { name: "Excluir Loja do Bairro" }).click();
+  await expect(page.getByText("“Loja do Bairro” foi excluído.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Pontos publicados (1)" })).toBeVisible();
+  expect(exclusoes[0]).toContain("id=eq.p2");
 });

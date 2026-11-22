@@ -8,7 +8,7 @@ O visual segue o [mockup](../../mockup/README.md) feito no Lovable.
 | Início (busca e categorias) | `/` | RF01 | `01`, `12` |
 | Buscar | `/buscar` | RF01 | `02`, `13` |
 | Material | `/material/[id]` | RF01 | `04`, `14` |
-| Pontos de coleta (lista e mapa) | `/pontos` | RF02 | `06`, `15`, `16` |
+| Pontos de coleta (busca, mapa e lista) | `/pontos` | RF02 | `06`, `15`, `16` |
 | Sugerir ponto | `/pontos/sugerir` | RF04 | — (não existe no mockup) |
 | Dicas | `/dicas` | RF03 | `07`, `17` |
 | Quiz Kids | `/kids` | RF05 | `08`, `18`, `19` |
@@ -19,7 +19,11 @@ O visual segue o [mockup](../../mockup/README.md) feito no Lovable.
 
 **Sugerir ponto:** formulário curto com mapa pequeno. O botão "Localizar no mapa" posiciona o pino pelo endereço; o usuário pode arrastá-lo ou usar "Estou aqui".
 
-**Admin:** tela de login simples e lista de pontos pendentes, cada um com os dados, o pino no mapa e os botões Aprovar e Rejeitar.
+**Admin:** tela de login simples e abas Pendentes, Publicados e Rejeitados; cada ponto tem os dados, o pino no mapa e os botões Aprovar, Rejeitar, Editar e Excluir (com confirmação).
+
+**Pontos de coleta:** campo de busca e filtro por material no topo, mapa logo abaixo e a lista em seguida, sem abas.
+
+**Início:** ilustração da Ponte Hercílio Luz e da paisagem de Florianópolis como fundo do topo.
 
 **Sobre:** equipe, orientadores, fontes usadas e o aviso de que é um projeto acadêmico e que o usuário deve confirmar horários antes de ir.
 

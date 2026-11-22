@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buscarMateriais, normalizar } from "@/lib/busca";
-import { categorias, materiais } from "@/lib/conteudo";
+import { categorias, materiais, nomesDosMateriais } from "@/lib/conteudo";
 
 const ids = (lista: { id: string }[]) => lista.map((m) => m.id);
 
@@ -69,5 +69,15 @@ describe("conteúdo", () => {
     for (const c of categorias) {
       expect(materiais.some((m) => m.categoria === c.id), c.id).toBe(true);
     }
+  });
+});
+
+describe("nomesDosMateriais", () => {
+  it("devolve os nomes em ordem alfabética", () => {
+    expect(nomesDosMateriais(["pilhas", "oleo-cozinha", "papel-papelao"])).toEqual([
+      "Óleo de cozinha usado",
+      "Papel e papelão",
+      "Pilhas",
+    ]);
   });
 });

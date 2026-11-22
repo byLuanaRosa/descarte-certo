@@ -62,6 +62,7 @@ UC05 – Verificar ponto sugerido
 - Alternativos / Exceções:
   - Se o login falhar, o sistema exibe "E-mail ou senha inválidos".
   - Se os dados estiverem errados, o Administrador rejeita e o ponto não é publicado.
+  - O Administrador pode editar os dados e a posição de qualquer ponto (pendente, publicado ou rejeitado) ou excluí-lo de vez, depois de confirmar.
 - Pós-condições: Ponto aprovado (visível) ou rejeitado.
 
 UC06 – Responder quiz Kids

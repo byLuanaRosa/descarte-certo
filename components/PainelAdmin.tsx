@@ -1,8 +1,21 @@
 "use client";
 
 import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { EditorPonto } from "@/components/EditorPonto";
 import { Mapa } from "@/components/Mapa";
-import { decidir, ehAdministrador, entrar, listarPendentes, sair, sessaoAtual, type Decisao } from "@/lib/admin";
+import {
+  atualizarPonto,
+  decidir,
+  ehAdministrador,
+  entrar,
+  excluirPonto,
+  listarPorStatus,
+  sair,
+  sessaoAtual,
+  type DadosEdicao,
+  type Decisao,
+  type StatusPonto,
+} from "@/lib/admin";
 import { buscarMaterialPorId } from "@/lib/conteudo";
 import type { Ponto } from "@/lib/pontos";
 import { supabaseConfigurado } from "@/lib/supabase";
@@ -20,8 +33,10 @@ export function PainelAdmin() {
   const [tela, setTela] = useState<Tela>(() =>
     supabaseConfigurado() ? { tipo: "carregando" } : { tipo: "indisponivel" },
   );
-  const [pendentes, setPendentes] = useState<Ponto[]>([]);
+  const [aba, setAba] = useState<StatusPonto>("pendente");
+  const [pontos, setPontos] = useState<Ponto[]>([]);
   const [selecionado, setSelecionado] = useState<string | null>(null);
+  const [editando, setEditando] = useState<string | null>(null);
   const [mensagem, setMensagem] = useState<string | null>(null);
   const [ocupado, setOcupado] = useState(false);
 
@@ -38,8 +53,9 @@ export function PainelAdmin() {
       return;
     }
     try {
-      const lista = await listarPendentes();
-      setPendentes(lista);
+      const lista = await listarPorStatus("pendente");
+      setAba("pendente");
+      setPontos(lista);
       setSelecionado(lista[0]?.id ?? null);
       setTela({ tipo: "painel" });
     } catch {
@@ -71,8 +87,32 @@ export function PainelAdmin() {
 
   async function fazerLogout() {
     await sair();
-    setPendentes([]);
+    setPontos([]);
+    setEditando(null);
     setTela({ tipo: "login", erro: null, enviando: false });
+  }
+
+  async function trocarAba(status: StatusPonto) {
+    setAba(status);
+    setEditando(null);
+    setMensagem(null);
+    setOcupado(true);
+    try {
+      const lista = await listarPorStatus(status);
+      setPontos(lista);
+      setSelecionado(lista[0]?.id ?? null);
+    } catch {
+      setPontos([]);
+      setMensagem("Não foi possível carregar a lista. Tente de novo.");
+    } finally {
+      setOcupado(false);
+    }
+  }
+
+  function tirarDaLista(id: string) {
+    const resto = pontos.filter((p) => p.id !== id);
+    setPontos(resto);
+    if (selecionado === id) setSelecionado(resto[0]?.id ?? null);
   }
 
   async function aplicar(ponto: Ponto, decisao: Decisao) {
@@ -84,11 +124,31 @@ export function PainelAdmin() {
       return;
     }
     setMensagem(decisao === "aprovado" ? `“${ponto.nome}” foi aprovado e já aparece no site.` : `“${ponto.nome}” foi rejeitado.`);
-    setPendentes((lista) => {
-      const resto = lista.filter((p) => p.id !== ponto.id);
-      setSelecionado(resto[0]?.id ?? null);
-      return resto;
-    });
+    tirarDaLista(ponto.id);
+  }
+
+  async function salvarEdicao(ponto: Ponto, dados: DadosEdicao): Promise<boolean> {
+    const ok = await atualizarPonto(ponto.id, dados);
+    if (ok) {
+      setPontos((lista) => lista.map((p) => (p.id === ponto.id ? { ...p, ...dados } : p)));
+      setEditando(null);
+      setMensagem(`“${dados.nome}” foi atualizado.`);
+    }
+    return ok;
+  }
+
+  async function excluir(ponto: Ponto) {
+    if (!window.confirm(`Excluir “${ponto.nome}” de vez? Essa ação não pode ser desfeita.`)) return;
+    setOcupado(true);
+    const ok = await excluirPonto(ponto.id);
+    setOcupado(false);
+    if (!ok) {
+      setMensagem(`Não foi possível excluir “${ponto.nome}”. Tente de novo.`);
+      return;
+    }
+    setMensagem(`“${ponto.nome}” foi excluído.`);
+    setEditando(null);
+    tirarDaLista(ponto.id);
   }
 
   if (tela.tipo === "indisponivel")
@@ -138,67 +198,121 @@ export function PainelAdmin() {
       </div>
     );
 
-  const atual = pendentes.find((p) => p.id === selecionado) ?? null;
+  const atual = pontos.find((p) => p.id === selecionado) ?? null;
+  const abas: { status: StatusPonto; rotulo: string; titulo: string }[] = [
+    { status: "pendente", rotulo: "Pendentes", titulo: "Pontos pendentes" },
+    { status: "aprovado", rotulo: "Publicados", titulo: "Pontos publicados" },
+    { status: "rejeitado", rotulo: "Rejeitados", titulo: "Pontos rejeitados" },
+  ];
+  const abaAtual = abas.find((a) => a.status === aba) ?? abas[0];
 
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-2xl font-bold">Pontos pendentes ({pendentes.length}{pendentes.length === 100 ? "+" : ""})</h2>
+        <div role="tablist" aria-label="Situação dos pontos" className="inline-flex flex-wrap rounded-full border border-border bg-card p-1">
+          {abas.map((a) => (
+            <button
+              key={a.status}
+              type="button"
+              role="tab"
+              aria-selected={aba === a.status}
+              onClick={() => trocarAba(a.status)}
+              className={`rounded-full px-4 py-2 font-semibold ${aba === a.status ? "bg-primary text-primary-foreground" : ""}`}
+            >
+              {a.rotulo}
+            </button>
+          ))}
+        </div>
         <button type="button" onClick={fazerLogout} className="rounded-full border border-border px-5 py-2">
           Sair
         </button>
       </div>
+      <h2 className="text-2xl font-bold">
+        {abaAtual.titulo} ({pontos.length}
+        {pontos.length === 100 ? "+" : ""})
+      </h2>
       <div aria-live="polite">
         {mensagem && <p className="rounded-lg bg-secondary px-4 py-3">{mensagem}</p>}
       </div>
-      {pendentes.length === 0 ? (
-        <p className="rounded-lg border border-border bg-card px-4 py-3">Nenhuma sugestão aguardando verificação. 🎉</p>
+      {pontos.length === 0 ? (
+        <p className="rounded-lg border border-border bg-card px-4 py-3">
+          {aba === "pendente" ? "Nenhuma sugestão aguardando verificação. 🎉" : "Nenhum ponto nesta lista."}
+        </p>
       ) : (
         <div className="grid gap-5 lg:grid-cols-2">
-          <ul aria-label="Sugestões pendentes" className="space-y-3">
-            {pendentes.map((p) => (
+          <ul aria-label={abaAtual.titulo} className="space-y-3">
+            {pontos.map((p) => (
               <li key={p.id}>
-                <article
-                  className={`rounded-[var(--radius-card)] border-2 bg-card p-4 ${p.id === selecionado ? "border-primary" : "border-border"}`}
-                >
-                  <h3 className="text-lg font-bold">{p.nome}</h3>
-                  <p className="text-muted">{p.endereco}</p>
-                  <p className="mt-1 text-sm">
-                    <span className="font-semibold">Materiais: </span>
-                    {p.materiais.map((id) => buscarMaterialPorId(id)?.nome ?? id).join(", ")}
-                  </p>
-                  {p.horario && <p className="text-sm">Horário: {p.horario}</p>}
-                  {p.telefone && <p className="text-sm">Telefone: {p.telefone}</p>}
-                  <p className="text-sm text-muted">Enviado em {new Date(p.criado_em).toLocaleDateString("pt-BR")}</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setSelecionado(p.id)}
-                      aria-pressed={p.id === selecionado}
-                      className="rounded-full border border-border px-4 py-2"
-                    >
-                      Ver no mapa
-                    </button>
-                    <button
-                      type="button"
-                      disabled={ocupado}
-                      onClick={() => aplicar(p, "aprovado")}
-                      aria-label={`Aprovar ${p.nome}`}
-                      className="rounded-full bg-primary px-4 py-2 font-bold text-primary-foreground disabled:opacity-60"
-                    >
-                      ✓ Aprovar
-                    </button>
-                    <button
-                      type="button"
-                      disabled={ocupado}
-                      onClick={() => aplicar(p, "rejeitado")}
-                      aria-label={`Rejeitar ${p.nome}`}
-                      className="rounded-full border-2 border-danger px-4 py-2 font-bold text-danger disabled:opacity-60"
-                    >
-                      ✗ Rejeitar
-                    </button>
-                  </div>
-                </article>
+                {editando === p.id ? (
+                  <EditorPonto ponto={p} aoSalvar={(d) => salvarEdicao(p, d)} aoCancelar={() => setEditando(null)} />
+                ) : (
+                  <article
+                    className={`rounded-[var(--radius-card)] border-2 bg-card p-4 ${p.id === selecionado ? "border-primary" : "border-border"}`}
+                  >
+                    <h3 className="text-lg font-bold">{p.nome}</h3>
+                    <p className="text-muted">{p.endereco}</p>
+                    <p className="mt-1 text-sm">
+                      <span className="font-semibold">Materiais: </span>
+                      {p.materiais.map((id) => buscarMaterialPorId(id)?.nome ?? id).join(", ")}
+                    </p>
+                    {p.horario && <p className="text-sm">Horário: {p.horario}</p>}
+                    {p.telefone && <p className="text-sm">Telefone: {p.telefone}</p>}
+                    <p className="text-sm text-muted">Enviado em {new Date(p.criado_em).toLocaleDateString("pt-BR")}</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setSelecionado(p.id)}
+                        aria-pressed={p.id === selecionado}
+                        className="rounded-full border border-border px-4 py-2"
+                      >
+                        Ver no mapa
+                      </button>
+                      {aba === "pendente" && (
+                        <>
+                          <button
+                            type="button"
+                            disabled={ocupado}
+                            onClick={() => aplicar(p, "aprovado")}
+                            aria-label={`Aprovar ${p.nome}`}
+                            className="rounded-full bg-primary px-4 py-2 font-bold text-primary-foreground disabled:opacity-60"
+                          >
+                            ✓ Aprovar
+                          </button>
+                          <button
+                            type="button"
+                            disabled={ocupado}
+                            onClick={() => aplicar(p, "rejeitado")}
+                            aria-label={`Rejeitar ${p.nome}`}
+                            className="rounded-full border-2 border-danger px-4 py-2 font-bold text-danger disabled:opacity-60"
+                          >
+                            ✗ Rejeitar
+                          </button>
+                        </>
+                      )}
+                      <button
+                        type="button"
+                        disabled={ocupado}
+                        onClick={() => {
+                          setEditando(p.id);
+                          setSelecionado(p.id);
+                        }}
+                        aria-label={`Editar ${p.nome}`}
+                        className="rounded-full border border-border px-4 py-2 font-semibold"
+                      >
+                        ✎ Editar
+                      </button>
+                      <button
+                        type="button"
+                        disabled={ocupado}
+                        onClick={() => excluir(p)}
+                        aria-label={`Excluir ${p.nome}`}
+                        className="rounded-full border border-border px-4 py-2 font-semibold text-danger"
+                      >
+                        Excluir
+                      </button>
+                    </div>
+                  </article>
+                )}
               </li>
             ))}
           </ul>
@@ -207,7 +321,7 @@ export function PainelAdmin() {
               rotulo="Mapa do ponto selecionado"
               altura="24rem"
               foco={atual}
-              marcadores={pendentes.map((p) => ({ id: p.id, latitude: p.latitude, longitude: p.longitude, titulo: p.nome }))}
+              marcadores={pontos.map((p) => ({ id: p.id, latitude: p.latitude, longitude: p.longitude, titulo: p.nome }))}
             />
           </div>
         </div>

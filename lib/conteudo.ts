@@ -65,3 +65,10 @@ export function formatarMesAno(valor: string): string {
   const [ano, mes] = valor.split("-");
   return mes && ano ? `${mes}/${ano}` : valor;
 }
+
+/** Nomes dos materiais em ordem alfabética (ids desconhecidos aparecem como estão). */
+export function nomesDosMateriais(ids: string[]): string[] {
+  return ids
+    .map((id) => buscarMaterialPorId(id)?.nome ?? id)
+    .sort((a, b) => a.localeCompare(b, "pt-BR"));
+}

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { CampoBusca } from "@/components/CampoBusca";
 import { GradeCategorias } from "@/components/GradeCategorias";
@@ -12,13 +13,28 @@ const atalhos = [
 export default function Home() {
   return (
     <div className="space-y-10">
-      <section className="-mx-4 rounded-b-3xl bg-gradient-to-b from-secondary to-background px-4 pb-10 pt-6">
-        <p className="font-semibold text-primary">Olá! Boas-vindas ao</p>
-        <h1 className="text-5xl font-extrabold text-primary-deep sm:text-6xl">Descarte Certo</h1>
-        <p className="mb-6 mt-3 max-w-xl text-lg text-muted">
-          Digite abaixo o nome do material que deseja descartar para receber a orientação de descarte.
-        </p>
-        <CampoBusca />
+      <section className="relative isolate -mx-4 -mt-6 flex min-h-[22rem] items-center overflow-hidden rounded-b-3xl px-4 pb-10 pt-8 md:min-h-[28rem]">
+        <Image
+          src="/hero-florianopolis.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="-z-20 object-cover object-[70%_center] dark:opacity-35"
+        />
+        {/* Degradê para o texto ficar legível sobre a ilustração */}
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-background/90 via-background/75 to-background/20 md:bg-gradient-to-r md:from-background md:via-background/70 md:to-transparent"
+        />
+        <div className="w-full">
+          <p className="font-semibold text-primary-deep">Olá! Boas-vindas ao</p>
+          <h1 className="text-5xl font-extrabold text-primary-deep sm:text-6xl">Descarte Certo</h1>
+          <p className="mb-6 mt-3 max-w-xl text-lg text-muted">
+            Digite abaixo o nome do material que deseja descartar para receber a orientação de descarte.
+          </p>
+          <CampoBusca />
+        </div>
       </section>
 
       <section aria-labelledby="titulo-categorias">

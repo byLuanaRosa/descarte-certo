@@ -72,6 +72,18 @@ describe("filtrarEOrdenar", () => {
   });
 });
 
+describe("busca de pontos por texto", () => {
+  it("filtra pelo nome ou endereço, sem acento e sem maiúsculas", () => {
+    expect(filtrarEOrdenar(todos, "", null, "CAPOEIRAS").map((p) => p.nome)).toEqual(["Capoeiras"]);
+    expect(filtrarEOrdenar(todos, "", null, "rua x ingleses").map((p) => p.nome)).toEqual(["Ingleses"]);
+    expect(filtrarEOrdenar(todos, "", null, "xyz")).toEqual([]);
+  });
+
+  it("combina texto e material", () => {
+    expect(filtrarEOrdenar(todos, "pilhas", null, "ingleses")).toEqual([]);
+  });
+});
+
 describe("formatação", () => {
   it("formata distância em metros e km", () => {
     expect(formatarDistancia(0.35)).toBe("350 m");

@@ -72,3 +72,11 @@ export function validarSugestao(
     },
   };
 }
+
+/** Fonte opcional do ponto (link oficial), usada na edição pelo administrador. */
+export function validarFonte(fonte: string): { ok: true; valor: string | null } | { ok: false; erro: string } {
+  const limpa = fonte.trim();
+  if (!limpa) return { ok: true, valor: null };
+  if (limpa.length > 300 || !/^https?:\/\/\S+$/.test(limpa)) return { ok: false, erro: "Use um link que comece com http:// ou https://." };
+  return { ok: true, valor: limpa };
+}
