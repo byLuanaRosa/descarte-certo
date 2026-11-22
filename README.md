@@ -84,7 +84,7 @@ insert into public.administradores (user_id)
 O formulário público aceita no máximo 30 sugestões por hora e 300 na fila de verificação (proteção contra spam, no próprio banco).
 
 ## Deploy (Vercel)
-O site está publicado em <https://descarte-certo-ifsc.vercel.app> (projeto `descarte-certo` na conta da Luana). Para publicar uma nova versão pela linha de comando: `vercel deploy --prod`.
+O site está publicado em <https://descarte-certo-ifsc.vercel.app> (projeto `descarte-certo` na conta da Luana). O repositório está conectado à Vercel: cada `git push` na `main` publica uma nova versão automaticamente, e cada Pull Request ganha uma URL de preview. Também dá para publicar pela linha de comando com `vercel deploy --prod`.
 
 Para configurar do zero:
 1. Em vercel.com, importe o repositório `byLuanaRosa/descarte-certo` (framework: Next.js, sem mudar os comandos).
