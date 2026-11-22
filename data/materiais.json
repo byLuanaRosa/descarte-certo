@@ -1,0 +1,211 @@
+[
+  {
+    "id": "papel-papelao",
+    "nome": "Papel e papelão",
+    "sinonimos": ["caixa", "jornal", "revista", "papelao", "caderno", "folha"],
+    "categoria": "reciclaveis",
+    "riscos": [],
+    "cuidados": ["Separe limpo e seco.", "Desmonte as caixas para ocupar menos espaço.", "Papel engordurado, guardanapo e papel higiênico usados não são recicláveis."],
+    "destino": "Coleta seletiva da Comcap ou ecoponto.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "plasticos",
+    "nome": "Plásticos",
+    "sinonimos": ["garrafa pet", "pet", "sacola", "pote", "embalagem plastica", "plastico"],
+    "categoria": "reciclaveis",
+    "riscos": [],
+    "cuidados": ["Esvazie e enxágue rapidamente as embalagens.", "Não precisa lavar com detergente: só tirar o excesso de resto."],
+    "destino": "Coleta seletiva da Comcap ou ecoponto.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "metais",
+    "nome": "Metais",
+    "sinonimos": ["lata", "latinha", "aluminio", "lata de conserva", "tampa", "metal"],
+    "categoria": "reciclaveis",
+    "riscos": ["Bordas de latas abertas podem cortar."],
+    "cuidados": ["Esvazie e enxágue.", "Amasse as latinhas para ocupar menos espaço.", "Dobre para dentro as bordas cortantes das tampas."],
+    "destino": "Coleta seletiva da Comcap ou ecoponto.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "vidro-inteiro",
+    "nome": "Vidro comum inteiro",
+    "sinonimos": ["garrafa", "pote de vidro", "frasco", "vidro"],
+    "categoria": "reciclaveis",
+    "riscos": ["Pode quebrar e cortar durante o transporte."],
+    "cuidados": ["Esvazie e enxágue.", "Retire tampas de metal ou plástico e descarte separadamente.", "Leve com cuidado para não quebrar."],
+    "destino": "Coleta seletiva da Comcap, contêineres de vidro ou ecoponto.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "cacos-vidro",
+    "nome": "Cacos de vidro comum",
+    "sinonimos": ["vidro quebrado", "caco", "copo quebrado", "garrafa quebrada"],
+    "categoria": "reciclaveis",
+    "riscos": ["Corta com facilidade, inclusive quem faz a coleta."],
+    "cuidados": ["Recolha com luvas grossas ou vassoura e pá, nunca com as mãos.", "Embrulhe em jornal grosso ou coloque em caixa ou garrafa PET cortada e fechada.", "Escreva \"VIDRO QUEBRADO\" na embalagem.", "Crianças não devem manusear."],
+    "destino": "Coleta seletiva, bem embalado e identificado. Confirme com a Comcap se o ecoponto recebe.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "espelhos-vidros-especiais",
+    "nome": "Espelhos e vidros especiais",
+    "sinonimos": ["espelho", "vidro temperado", "box de banheiro", "travessa refratária", "pirex", "cristal", "parabrisa"],
+    "categoria": "especiais",
+    "riscos": ["Cortam com facilidade.", "Têm composição diferente do vidro comum e atrapalham a reciclagem se misturados."],
+    "cuidados": ["Não misture com garrafas e potes.", "Embale com segurança e identifique o conteúdo."],
+    "destino": "Não vão para o vidro comum. Consulte a Comcap sobre o destino de resíduos volumosos ou especiais.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "lampada-fluorescente",
+    "nome": "Lâmpada fluorescente",
+    "sinonimos": ["lampada", "lampada fria", "lampada compacta", "tubular", "lampada de mercurio"],
+    "categoria": "lampadas",
+    "riscos": ["Contém mercúrio, que é tóxico se a lâmpada quebrar."],
+    "cuidados": ["Não quebre: guarde na embalagem original ou embrulhada em papel.", "Se quebrar, abra as janelas, saia do cômodo por 15 minutos e recolha os cacos com luvas e papel úmido. Não use aspirador.", "Não coloque no lixo comum nem no vidro."],
+    "destino": "Ponto de coleta do programa de logística reversa de lâmpadas (Reciclus), em lojas participantes.",
+    "fonte": { "titulo": "Reciclus – logística reversa de lâmpadas", "url": "https://reciclus.org.br/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "lampada-led",
+    "nome": "Lâmpada LED",
+    "sinonimos": ["lampada", "led", "lampada de led"],
+    "categoria": "lampadas",
+    "riscos": ["Tem componentes eletrônicos."],
+    "cuidados": ["Não quebre.", "Não coloque no lixo comum."],
+    "destino": "Ponto de coleta de lâmpadas ou de eletroeletrônicos que confirme o recebimento de LED.",
+    "fonte": { "titulo": "Reciclus – logística reversa de lâmpadas", "url": "https://reciclus.org.br/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "lampada-incandescente",
+    "nome": "Lâmpada incandescente ou halógena",
+    "sinonimos": ["lampada", "lampada amarela", "halogena", "lampada antiga"],
+    "categoria": "lampadas",
+    "riscos": ["O vidro pode cortar se quebrar."],
+    "cuidados": ["Embrulhe em papel ou na embalagem original para não cortar ninguém.", "Não coloque no vidro reciclável."],
+    "destino": "Rejeito (lixo comum), bem embalada. Confirme com a Comcap.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "pilhas",
+    "nome": "Pilhas",
+    "sinonimos": ["pilha", "pilha aa", "pilha aaa", "pilha palito", "pilha recarregavel", "bateria de relogio", "pilha botao"],
+    "categoria": "pilhas",
+    "riscos": ["Podem vazar substâncias nocivas se danificadas."],
+    "cuidados": ["Guarde em pote fechado, longe de calor e umidade.", "Não abra nem fure.", "Pilha vazando: manuseie com luvas e embale separada."],
+    "destino": "Coletor de pilhas da logística reversa (Green Eletron) ou ecoponto.",
+    "fonte": { "titulo": "Green Eletron – perguntas frequentes", "url": "https://greeneletron.org.br/perguntas-frequentes/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "baterias",
+    "nome": "Baterias portáteis",
+    "sinonimos": ["bateria", "bateria de celular", "bateria de notebook", "bateria de litio", "powerbank"],
+    "categoria": "pilhas",
+    "riscos": ["Baterias de lítio danificadas ou estufadas podem pegar fogo."],
+    "cuidados": ["Cubra os contatos com fita adesiva.", "Bateria estufada: não fure, não aqueça e mantenha longe de material inflamável.", "Baterias de carro e moto não entram aqui: devolva na loja onde comprou."],
+    "destino": "Coletor da logística reversa de eletroeletrônicos e pilhas (Green Eletron) ou ecoponto.",
+    "fonte": { "titulo": "Green Eletron – perguntas frequentes", "url": "https://greeneletron.org.br/perguntas-frequentes/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "celulares-eletronicos",
+    "nome": "Celulares e pequenos eletrônicos",
+    "sinonimos": ["celular", "smartphone", "tablet", "notebook", "computador", "teclado", "mouse", "carregador", "fone", "eletronico", "lixo eletronico"],
+    "categoria": "eletronicos",
+    "riscos": ["Contêm metais pesados e baterias."],
+    "cuidados": ["Apague seus dados pessoais e retire o chip e o cartão de memória.", "Se a bateria sair, entregue junto, com os contatos cobertos por fita."],
+    "destino": "Coletor da logística reversa de eletroeletrônicos (Green Eletron) ou ecoponto.",
+    "fonte": { "titulo": "Green Eletron – perguntas frequentes", "url": "https://greeneletron.org.br/perguntas-frequentes/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "cabos",
+    "nome": "Cabos e fios",
+    "sinonimos": ["cabo", "fio", "cabo usb", "extensao", "cabo de energia"],
+    "categoria": "eletronicos",
+    "riscos": [],
+    "cuidados": ["Enrole e prenda com um elástico."],
+    "destino": "Coletor de eletroeletrônicos (Green Eletron). Confirme se o ecoponto recebe.",
+    "fonte": { "titulo": "Green Eletron – perguntas frequentes", "url": "https://greeneletron.org.br/perguntas-frequentes/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "oleo-cozinha",
+    "nome": "Óleo de cozinha usado",
+    "sinonimos": ["oleo", "oleo de fritura", "gordura", "azeite usado"],
+    "categoria": "oleo",
+    "riscos": ["Na pia ou no ralo, entope o encanamento e polui rios e o mar."],
+    "cuidados": ["Espere esfriar.", "Coe e guarde em garrafa PET bem fechada.", "Nunca jogue na pia, no vaso ou no ralo."],
+    "destino": "Ecoponto da Comcap (até 5 litros) ou pontos de coleta de óleo.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "tinta-vazia",
+    "nome": "Lata de tinta vazia",
+    "sinonimos": ["lata de tinta", "galao de tinta", "embalagem de tinta"],
+    "categoria": "quimicos",
+    "riscos": [],
+    "cuidados": ["Só é reciclável se estiver vazia e com o resto de tinta totalmente seco.", "Deixe aberta em local ventilado até secar."],
+    "destino": "Coleta seletiva (metal ou plástico), quando seca.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "tinta-sobra",
+    "nome": "Sobra de tinta e solventes",
+    "sinonimos": ["tinta", "sobra de tinta", "solvente", "thinner", "aguarras", "verniz", "removedor"],
+    "categoria": "quimicos",
+    "riscos": ["Tóxicos e inflamáveis.", "Contaminam a água se jogados no ralo."],
+    "cuidados": ["Mantenha na embalagem original, bem fechada.", "Guarde longe de crianças e de fontes de calor.", "Nunca jogue no ralo, na pia ou no solo.", "Sobra de tinta pode ser doada para quem vai usar."],
+    "destino": "Consulte a Comcap ou a loja sobre pontos que recebem resíduos químicos domésticos.",
+    "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "medicamentos-vencidos",
+    "nome": "Medicamentos vencidos ou sem uso",
+    "sinonimos": ["remedio", "remedio vencido", "comprimido", "xarope", "pomada", "medicamento"],
+    "categoria": "medicamentos",
+    "riscos": ["Contaminam a água e o solo.", "Podem intoxicar crianças e animais."],
+    "cuidados": ["Mantenha na embalagem (blister ou frasco).", "Caixa de papelão e bula limpas vão para a coleta seletiva.", "Nunca jogue no vaso, na pia ou no lixo comum.", "Guarde fora do alcance de crianças até a entrega."],
+    "destino": "Farmácia ou drogaria participante da logística reversa de medicamentos.",
+    "fonte": { "titulo": "Decreto nº 10.388/2020 – logística reversa de medicamentos", "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2020/decreto/d10388.htm" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "agulhas-seringas",
+    "nome": "Agulhas e seringas",
+    "sinonimos": ["agulha", "seringa", "lanceta", "perfurocortante", "insulina"],
+    "categoria": "perfurocortantes",
+    "riscos": ["Furam e podem transmitir doenças.", "Causam acidentes com trabalhadores da coleta."],
+    "cuidados": ["Não reencape a agulha.", "Coloque em recipiente rígido com tampa (coletor próprio ou garrafa PET grossa ou frasco de amaciante).", "Feche bem, escreva \"PERFUROCORTANTE\" e não encha até a boca.", "Crianças nunca devem tocar."],
+    "destino": "Unidade de saúde (Centro de Saúde). Confirme o recebimento antes de ir.",
+    "fonte": { "titulo": "Prefeitura de Florianópolis – Secretaria de Saúde", "url": "https://www.pmf.sc.gov.br/entidades/saude/" },
+    "revisado_em": "2026-11"
+  },
+  {
+    "id": "canetas-injetaveis",
+    "nome": "Canetas injetáveis",
+    "sinonimos": ["caneta de insulina", "caneta injetavel", "refil de insulina"],
+    "categoria": "perfurocortantes",
+    "riscos": ["A agulha pode furar e transmitir doenças."],
+    "cuidados": ["Retire a agulha com o protetor e descarte como perfurocortante.", "Guarde a caneta no mesmo recipiente rígido e fechado."],
+    "destino": "Unidade de saúde (Centro de Saúde) ou farmácia que confirme o recebimento.",
+    "fonte": { "titulo": "Prefeitura de Florianópolis – Secretaria de Saúde", "url": "https://www.pmf.sc.gov.br/entidades/saude/" },
+    "revisado_em": "2026-11"
+  }
+]

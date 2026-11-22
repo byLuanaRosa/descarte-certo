@@ -1,0 +1,11 @@
+[
+  { "id": "reciclaveis", "nome": "Recicláveis", "icone": "♻️" },
+  { "id": "eletronicos", "nome": "Eletrônicos", "icone": "📱" },
+  { "id": "pilhas", "nome": "Pilhas e baterias", "icone": "🔋" },
+  { "id": "lampadas", "nome": "Lâmpadas", "icone": "💡" },
+  { "id": "quimicos", "nome": "Tintas e químicos", "icone": "🎨" },
+  { "id": "medicamentos", "nome": "Medicamentos", "icone": "💊" },
+  { "id": "perfurocortantes", "nome": "Agulhas e seringas", "icone": "💉" },
+  { "id": "oleo", "nome": "Óleo de cozinha usado", "icone": "🫙" },
+  { "id": "especiais", "nome": "Outros resíduos especiais", "icone": "⚠️" }
+]
