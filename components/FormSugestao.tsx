@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import type { Map as MapaLeafletTipo } from "leaflet";
+import { useCallback, useRef, useState, type FormEvent } from "react";
 import { Mapa } from "@/components/Mapa";
 import { categorias, materiais } from "@/lib/conteudo";
 import { buscarEndereco } from "@/lib/geocodificar";
@@ -34,6 +35,16 @@ export function FormSugestao() {
   const [localizando, setLocalizando] = useState(false);
   const [erros, setErros] = useState<ErrosSugestao>({});
   const [envio, setEnvio] = useState<Envio>({ situacao: "editando" });
+  const mapaRef = useRef<MapaLeafletTipo | null>(null);
+  const guardarMapa = useCallback((m: MapaLeafletTipo) => {
+    mapaRef.current = m;
+  }, []);
+
+  /** Alternativa pelo teclado: o mapa se move com as setas e o pino vai para o centro. */
+  function marcarNoCentro() {
+    const c = mapaRef.current?.getCenter();
+    if (c) marcar({ latitude: c.lat, longitude: c.lng }, "Pino colocado no centro do mapa.");
+  }
 
   function marcar(c: Coordenadas, mensagem: string | null = null) {
     setPosicao(c);
@@ -245,7 +256,10 @@ export function FormSugestao() {
           <Erro id="erro-endereco" texto={erros.endereco} />
         </div>
 
-        <p className="text-sm text-muted">Também dá para tocar no mapa para marcar o local e arrastar o pino vermelho.</p>
+        <p className="text-sm text-muted">
+          Também dá para tocar no mapa para marcar o local e arrastar o pino vermelho. Pelo teclado: selecione o mapa,
+          mova com as setas e use “Marcar no centro do mapa”. A posição marcada será publicada junto com o ponto.
+        </p>
         <div aria-live="polite">
           {aviso && <p className="rounded-lg bg-warning-soft px-4 py-2 text-warning-foreground">{aviso}</p>}
           {posicao && (
@@ -255,8 +269,17 @@ export function FormSugestao() {
           )}
         </div>
         <div id="campo-posicao" tabIndex={-1}>
-          <Mapa rotulo="Mapa para marcar o local do ponto" altura="22rem" foco={foco} pino={{ posicao, aoMudar: (c) => marcar(c) }} />
+          <Mapa
+            rotulo="Mapa para marcar o local do ponto"
+            altura="22rem"
+            foco={foco}
+            aoPronto={guardarMapa}
+            pino={{ posicao, aoMudar: (c) => marcar(c) }}
+          />
         </div>
+        <button type="button" onClick={marcarNoCentro} className="rounded-full border border-border px-5 py-2 font-semibold">
+          ⌖ Marcar no centro do mapa
+        </button>
         <Erro id="erro-posicao" texto={erros.posicao} />
       </fieldset>
 

@@ -76,7 +76,10 @@ O projeto já está criado na conta da Luana (`descarte-certo`, região São Pau
 insert into public.administradores (user_id)
   select id from auth.users where email = 'email-do-admin@exemplo.com';
 ```
-3. Recomendado: em Authentication → Sign In / Providers, desative "Allow new users to sign up". Mesmo com o cadastro ligado, quem não está na tabela `administradores` não consegue aprovar nada.
+3. Em Authentication → Sign In / Providers, desative "Allow new users to sign up" (RN02). Mesmo com o cadastro ligado, quem não está na tabela `administradores` não consegue aprovar nada.
+4. Depois de desligar o cadastro, crie no GitHub a variável `VERIFICAR_CADASTRO_DESLIGADO` com valor `1` (Settings → Secrets and variables → Actions → Variables). A CI passa a testar que ninguém consegue criar conta pelo site.
+
+O formulário público aceita no máximo 30 sugestões por hora e 300 na fila de verificação (proteção contra spam, no próprio banco).
 
 ## Deploy (Vercel)
 1. Em vercel.com, importe o repositório `byLuanaRosa/descarte-certo` (framework: Next.js, sem mudar os comandos).

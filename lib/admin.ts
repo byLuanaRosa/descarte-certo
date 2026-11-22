@@ -14,8 +14,13 @@ export async function sessaoAtual(): Promise<Session | null> {
 }
 
 export async function entrar(email: string, senha: string): Promise<{ erro: string | null }> {
-  const { error } = await obterSupabase().auth.signInWithPassword({ email: email.trim(), password: senha });
-  return { erro: error ? "E-mail ou senha inválidos." : null };
+  try {
+    const { error } = await obterSupabase().auth.signInWithPassword({ email: email.trim(), password: senha });
+    if (!error) return { erro: null };
+    return { erro: error.status === 400 ? "E-mail ou senha inválidos." : "Não foi possível entrar agora. Tente de novo." };
+  } catch {
+    return { erro: "Sem conexão com o servidor. Tente de novo." };
+  }
 }
 
 export async function sair(): Promise<void> {
@@ -25,7 +30,8 @@ export async function sair(): Promise<void> {
 /** Confere se o usuário logado está na tabela de administradores. */
 export async function ehAdministrador(userId: string): Promise<boolean> {
   const { data, error } = await obterSupabase().from("administradores").select("user_id").eq("user_id", userId);
-  return !error && (data ?? []).length > 0;
+  if (error) throw error; // falha de rede/banco é diferente de "não é administrador"
+  return (data ?? []).length > 0;
 }
 
 export async function listarPendentes(): Promise<Ponto[]> {
@@ -33,7 +39,8 @@ export async function listarPendentes(): Promise<Ponto[]> {
     .from("pontos_coleta")
     .select("id, nome, endereco, latitude, longitude, materiais, horario, telefone, fonte, status, criado_em, verificado_em")
     .eq("status", "pendente")
-    .order("criado_em", { ascending: true });
+    .order("criado_em", { ascending: true })
+    .limit(100);
   if (error) throw error;
   return (data ?? []) as Ponto[];
 }

@@ -104,6 +104,34 @@ grant update (status, verificado_em, nome, endereco, latitude, longitude, materi
   on public.pontos_coleta to authenticated;
 grant delete on public.pontos_coleta to authenticated;
 
+-- Limite contra abuso do formulário público: no máximo 30 sugestões por hora
+-- e 300 pendentes na fila de verificação.
+create or replace function privado.limitar_sugestoes()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  if new.status = 'pendente' then
+    if (select count(*) from public.pontos_coleta
+        where status = 'pendente' and criado_em > now() - interval '1 hour') >= 30 then
+      raise exception 'Muitas sugestões recebidas na última hora. Tente mais tarde.' using errcode = 'P0001';
+    end if;
+    if (select count(*) from public.pontos_coleta where status = 'pendente') >= 300 then
+      raise exception 'Fila de verificação cheia. Tente mais tarde.' using errcode = 'P0001';
+    end if;
+  end if;
+  return new;
+end;
+$$;
+revoke all on function privado.limitar_sugestoes() from public;
+
+drop trigger if exists limitar_sugestoes on public.pontos_coleta;
+create trigger limitar_sugestoes
+  before insert on public.pontos_coleta
+  for each row execute function privado.limitar_sugestoes();
+
 -- 3. Criar o primeiro administrador -----------------------------------------
 -- a) No painel: Authentication → Users → Add user (e-mail e senha).
 -- b) Depois rode, trocando o e-mail:

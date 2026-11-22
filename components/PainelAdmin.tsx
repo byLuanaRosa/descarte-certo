@@ -26,7 +26,14 @@ export function PainelAdmin() {
   const [ocupado, setOcupado] = useState(false);
 
   const carregarPainel = useCallback(async (userId: string) => {
-    if (!(await ehAdministrador(userId))) {
+    let admin: boolean;
+    try {
+      admin = await ehAdministrador(userId);
+    } catch {
+      setTela({ tipo: "login", erro: "Não foi possível verificar sua permissão. Tente de novo.", enviando: false });
+      return;
+    }
+    if (!admin) {
       setTela({ tipo: "sem-permissao" });
       return;
     }
@@ -57,8 +64,9 @@ export function PainelAdmin() {
       setTela({ tipo: "login", erro, enviando: false });
       return;
     }
-    const s = await sessaoAtual();
+    const s = await sessaoAtual().catch(() => null);
     if (s) await carregarPainel(s.user.id);
+    else setTela({ tipo: "login", erro: "Não foi possível iniciar a sessão. Tente de novo.", enviando: false });
   }
 
   async function fazerLogout() {
@@ -135,7 +143,7 @@ export function PainelAdmin() {
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-2xl font-bold">Pontos pendentes ({pendentes.length})</h2>
+        <h2 className="text-2xl font-bold">Pontos pendentes ({pendentes.length}{pendentes.length === 100 ? "+" : ""})</h2>
         <button type="button" onClick={fazerLogout} className="rounded-full border border-border px-5 py-2">
           Sair
         </button>

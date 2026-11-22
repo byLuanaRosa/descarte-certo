@@ -82,3 +82,19 @@ test("robô que preenche o campo invisível não grava nada", async ({ page }) =
   await expect(page.getByRole("heading", { name: /Seu ponto será verificado/ })).toBeVisible();
   expect(inseridos).toHaveLength(0);
 });
+
+test("pelo teclado: move o mapa com as setas e marca no centro", async ({ page, isMobile }) => {
+  test.skip(isMobile, "teclado só no desktop");
+  const { inseridos } = await prepararPagina(page, false);
+  await preencherBasico(page);
+  const mapa = page.locator(".leaflet-container");
+  await mapa.focus();
+  await page.keyboard.press("ArrowUp");
+  await page.getByRole("button", { name: /Marcar no centro do mapa/ }).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByText(/Local marcado:/)).toBeVisible();
+  await page.getByRole("button", { name: "Enviar sugestão" }).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("heading", { name: /Seu ponto será verificado/ })).toBeVisible();
+  expect(inseridos).toHaveLength(1);
+});

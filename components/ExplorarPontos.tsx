@@ -133,6 +133,7 @@ export function ExplorarPontos({ materialInicial }: { materialInicial: string })
               <div id="painel-mapa" role="tabpanel" aria-labelledby="aba-mapa">
                 <Mapa
                   rotulo="Mapa dos pontos de coleta"
+                  voce={origem}
                   marcadores={lista.map((p) => ({
                     id: p.id,
                     latitude: p.latitude,

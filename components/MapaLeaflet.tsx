@@ -14,6 +14,10 @@ export type PropsMapa = {
   pino?: { posicao: Coordenadas | null; aoMudar: (c: Coordenadas) => void };
   /** Centraliza o mapa nesta posição quando ela muda. */
   foco?: Coordenadas | null;
+  /** Posição do usuário (só exibida no mapa, nunca enviada). */
+  voce?: Coordenadas | null;
+  /** Recebe o mapa pronto, para ações como "marcar no centro do mapa". */
+  aoPronto?: (mapa: L.Map) => void;
   altura?: string;
   rotulo: string;
 };
@@ -34,6 +38,21 @@ const iconePino = L.divIcon({
   iconAnchor: [20, 40],
 });
 
+const iconeVoce = L.divIcon({
+  className: "",
+  html: '<div style="width:18px;height:18px;border-radius:50%;background:#1d6fd8;border:3px solid #fff;box-shadow:0 0 0 4px rgba(29,111,216,.3)"></div>',
+  iconSize: [18, 18],
+  iconAnchor: [9, 9],
+});
+
+function Pronto({ aoPronto }: { aoPronto?: (mapa: L.Map) => void }) {
+  const mapa = useMap();
+  useEffect(() => {
+    aoPronto?.(mapa);
+  }, [mapa, aoPronto]);
+  return null;
+}
+
 function CliqueNoMapa({ aoClicar }: { aoClicar: (c: Coordenadas) => void }) {
   useMapEvents({ click: (e) => aoClicar({ latitude: e.latlng.lat, longitude: e.latlng.lng }) });
   return null;
@@ -47,25 +66,26 @@ function Centralizar({ foco }: { foco: Coordenadas | null | undefined }) {
   return null;
 }
 
-/** Ajusta o enquadramento para mostrar todos os marcadores na primeira carga. */
+/** Ajusta o enquadramento para mostrar todos os marcadores sempre que o conjunto muda. */
 function Enquadrar({ marcadores }: { marcadores: Marcador[] }) {
   const mapa = useMap();
+  const chave = marcadores.map((m) => m.id).join(",");
   useEffect(() => {
     if (marcadores.length > 1) {
       mapa.fitBounds(L.latLngBounds(marcadores.map((m) => [m.latitude, m.longitude])), { padding: [40, 40] });
     } else if (marcadores.length === 1) {
       mapa.setView([marcadores[0].latitude, marcadores[0].longitude], 14);
     }
-    // Só na montagem e quando a quantidade muda.
+    // Reenquadra só quando o conjunto de pontos muda (não a cada renderização).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marcadores.length, mapa]);
+  }, [chave, mapa]);
   return null;
 }
 
-export default function MapaLeaflet({ marcadores = [], pino, foco, altura = "28rem", rotulo }: PropsMapa) {
+export default function MapaLeaflet({ marcadores = [], pino, foco, voce, aoPronto, altura = "28rem", rotulo }: PropsMapa) {
   const centro = pino?.posicao ?? CENTRO_FLORIANOPOLIS;
   return (
-    <div role="region" aria-label={rotulo} className="overflow-hidden rounded-[var(--radius-card)] border border-border">
+    <div role="region" aria-label={rotulo} className="isolate overflow-hidden rounded-[var(--radius-card)] border border-border">
       <MapContainer
         center={[centro.latitude, centro.longitude]}
         zoom={pino?.posicao ? 16 : 11}
@@ -74,10 +94,12 @@ export default function MapaLeaflet({ marcadores = [], pino, foco, altura = "28r
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {marcadores.length > 0 && !pino && <Enquadrar marcadores={marcadores} />}
         <Centralizar foco={foco} />
+        <Pronto aoPronto={aoPronto} />
+        {voce && <Marker position={[voce.latitude, voce.longitude]} icon={iconeVoce} title="Você está aqui" alt="Você está aqui" />}
         {marcadores.map((m) => (
           <Marker key={m.id} position={[m.latitude, m.longitude]} icon={iconePonto} title={m.titulo} alt={m.titulo}>
             <Popup>

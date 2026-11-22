@@ -77,3 +77,17 @@ describe.skipIf(!url || !chave)("RLS de pontos_coleta (usuário sem login)", () 
     expect(error).not.toBeNull();
   });
 });
+
+// RN02: não existe cadastro público. Só roda depois que o cadastro for desligado no painel
+// (Authentication > Sign In / Providers) e a variável VERIFICAR_CADASTRO_DESLIGADO=1 for definida.
+// Com o cadastro desligado, a tentativa falha e nada é gravado.
+describe.skipIf(!url || !chave || process.env.VERIFICAR_CADASTRO_DESLIGADO !== "1")("cadastro público (RN02)", () => {
+  it("não permite criar conta pelo site", async () => {
+    const supabase = createClient(url!, chave!, { auth: { persistSession: false } });
+    const { data, error } = await supabase.auth.signUp({
+      email: `teste-${Date.now()}@exemplo.invalid`,
+      password: "Senha-de-teste-123",
+    });
+    expect(error !== null || data.user === null).toBe(true);
+  });
+});

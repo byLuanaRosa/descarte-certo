@@ -12,7 +12,7 @@ export function CampoBusca({ valorInicial = "", categoria }: Props) {
         name="q"
         type="search"
         defaultValue={valorInicial}
-        placeholder="O que você quer descartar?"
+        placeholder="Ex.: pilha, remédio, óleo"
         autoComplete="off"
         className="min-w-0 flex-1 rounded-full border border-border bg-card px-5 py-3 text-lg shadow-sm placeholder:text-muted"
       />

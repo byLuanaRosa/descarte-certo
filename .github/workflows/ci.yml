@@ -52,5 +52,11 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - name: Testes de RLS (pulados se os secrets não existirem)
+      - name: Avisa se os secrets do Supabase não estão configurados
+        if: env.NEXT_PUBLIC_SUPABASE_URL == ''
+        run: echo "::warning title=Testes de segurança pulados::Cadastre NEXT_PUBLIC_SUPABASE_URL e NEXT_PUBLIC_SUPABASE_ANON_KEY em Settings > Secrets and variables > Actions para testar o RLS no banco real."
+      - name: Testes de RLS no banco real
+        if: env.NEXT_PUBLIC_SUPABASE_URL != ''
         run: npm run test:seguranca
+        env:
+          VERIFICAR_CADASTRO_DESLIGADO: ${{ vars.VERIFICAR_CADASTRO_DESLIGADO }}
