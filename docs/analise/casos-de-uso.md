@@ -57,7 +57,7 @@ UC05 – Verificar ponto sugerido
 - Ator(es): Administrador
 - Objetivo: Publicar apenas pontos verdadeiros.
 - Requisitos: RF04, RN01
-- Pré-condições: Conta de administrador criada pela equipe no painel do Supabase; existe ponto pendente.
+- Pré-condições: Conta de administrador criada pela equipe no painel do Supabase e incluída na tabela de administradores; existe ponto pendente.
 - Fluxo principal: O Administrador acessa /admin e entra com e-mail e senha. O sistema mostra a lista de pendentes, cada um com seus dados e o pino no mapa. O Administrador confere e aprova, e o sistema muda o status para "aprovado", registra a data da verificação e passa a exibir o ponto.
 - Alternativos / Exceções:
   - Se o login falhar, o sistema exibe "E-mail ou senha inválidos".

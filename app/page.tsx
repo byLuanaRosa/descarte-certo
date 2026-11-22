@@ -54,7 +54,7 @@ export default function Home() {
       </section>
 
       <section className="rounded-[var(--radius-card)] bg-secondary p-6">
-        <p className="text-sm font-bold uppercase tracking-wide text-primary">Pequenas atitudes</p>
+        <p className="text-sm font-bold uppercase tracking-wide text-primary-deep">Pequenas atitudes</p>
         <h2 className="text-2xl font-bold text-primary-deep">Segurança antes da localização</h2>
         <p className="mt-2 max-w-2xl">
           Primeiro identifique o material e sua condição. Só depois procure onde entregar: um local que recebe

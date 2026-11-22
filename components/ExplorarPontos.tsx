@@ -120,13 +120,15 @@ export function ExplorarPontos({ materialInicial }: { materialInicial: string })
               ))}
             </div>
             {visao === "lista" ? (
-              <ul id="painel-lista" role="tabpanel" aria-labelledby="aba-lista" className="grid gap-4 md:grid-cols-2">
-                {lista.map((p) => (
-                  <li key={p.id}>
-                    <CardPonto ponto={p} />
-                  </li>
-                ))}
-              </ul>
+              <div id="painel-lista" role="tabpanel" aria-labelledby="aba-lista">
+                <ul className="grid gap-4 md:grid-cols-2">
+                  {lista.map((p) => (
+                    <li key={p.id}>
+                      <CardPonto ponto={p} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ) : (
               <div id="painel-mapa" role="tabpanel" aria-labelledby="aba-mapa">
                 <Mapa

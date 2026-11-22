@@ -53,13 +53,14 @@ flowchart LR
 
 | Parte | Tecnologia | Por quê |
 |---|---|---|
-| Frontend | Next.js (App Router) + Tailwind CSS | Páginas estáticas e simples; tema escuro com a variante `dark:` do Tailwind. |
+| Frontend | Next.js 16 (App Router) + TypeScript + Tailwind CSS v4 | Páginas estáticas e simples; tema escuro por variáveis CSS que seguem a preferência do aparelho. |
 | Hospedagem | Vercel (plano gratuito) | Deploy automático a cada `git push`. |
 | Conteúdo fixo | Arquivos JSON no repositório | Materiais, dicas e quiz mudam pouco e não precisam de banco. |
 | Banco e login | Supabase (plano gratuito) | Pontos de coleta e login do admin por e-mail e senha. |
 | Mapa | Leaflet + OpenStreetMap | Gratuito, sem chave de API. Carregado só no navegador (`dynamic` com `ssr: false`). |
 | Endereço → coordenadas | Nominatim (OpenStreetMap) | Gratuito, sem chave. Uma busca por clique em "Localizar no mapa", respeitando o limite de 1 requisição por segundo. |
 | PWA | `app/manifest.ts` do Next.js | Torna o site instalável. Sem modo offline no MVP. |
+| Testes e CI | Vitest, Playwright, axe e GitHub Actions | Cada push roda lint, tipos, testes unitários, build, testes de ponta a ponta, acessibilidade e as regras de segurança do banco. |
 
 ## 3. Como o ponto sugerido ganha coordenadas (RN04)
 
@@ -83,12 +84,17 @@ Apenas os pontos de coleta ficam no Supabase. Os pontos oficiais (ecopontos da C
 
 ```mermaid
 erDiagram
+    ADMINISTRADORES ||--o{ PONTOS_COLETA : "aprova ou rejeita"
+    ADMINISTRADORES {
+        uuid user_id PK "conta do Supabase Auth"
+        timestamp criado_em
+    }
     PONTOS_COLETA {
         uuid id PK
-        text nome "obrigatório, até 120 caracteres"
+        text nome "obrigatório, 3 a 120 caracteres"
         text endereco "obrigatório"
-        float latitude "obrigatório"
-        float longitude "obrigatório"
+        float latitude "obrigatório, dentro de SC"
+        float longitude "obrigatório, dentro de SC"
         text_array materiais "ids do materiais.json"
         text horario
         text telefone
@@ -101,17 +107,20 @@ erDiagram
 
 No banco, `materiais` é do tipo `text[]` (lista de textos).
 
-**Segurança (RLS e configurações):**
+**Segurança (RLS e configurações):** o script completo está em [`supabase/schema.sql`](../../supabase/schema.sql).
 
 | Quem | Pode fazer |
 |---|---|
-| Público (anon) | Ler só pontos com `status = 'aprovado'`. Inserir só com `status = 'pendente'`. |
-| Admin (logado) | Ler todos os pontos, aprovar, rejeitar e apagar. |
+| Público (anon) | Ler só pontos com `status = 'aprovado'`. Inserir só com `status = 'pendente'` (o público nem tem permissão na coluna `status`). |
+| Usuário logado que não é admin | O mesmo que o público. |
+| Admin (está na tabela `administradores`) | Ler todos os pontos, aprovar, rejeitar e apagar. |
 
-- O cadastro público de contas fica desligado no Supabase Auth; a conta do admin é criada pela equipe no painel.
+- A verificação de admin usa a função `privado.eh_admin()`, num schema que não fica exposto pela API.
+- O formulário envia com `insert` **sem** `.select()`, porque o público não pode ler pontos pendentes.
 - A chave `service_role` nunca vai para o código do site nem para variáveis `NEXT_PUBLIC_`.
-- O banco valida tamanhos e campos obrigatórios (constraints `check`), além da validação do formulário.
-- O formulário tem um campo invisível (*honeypot*) contra robôs de spam. CAPTCHA só se aparecer spam.
+- O banco valida tamanhos, campos obrigatórios, a região (SC) e a lista de materiais.
+- O formulário tem um campo invisível (*honeypot*) contra robôs de spam.
+- Testes: `tests/seguranca/rls.test.ts` (público, contra o banco real) e `supabase/testes-rls-admin.sql` (admin, com rollback).
 
 Estrutura de `materiais.json` (exemplo):
 

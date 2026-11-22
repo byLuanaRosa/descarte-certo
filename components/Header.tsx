@@ -42,12 +42,8 @@ export function Header() {
             })}
           </ul>
         </nav>
-        <Link
-          href="/sobre"
-          className="rounded-full border border-border px-3 py-2 text-sm md:hidden"
-          aria-label="Sobre o Descarte Certo"
-        >
-          ℹ️ Sobre
+        <Link href="/sobre" className="rounded-full border border-border px-3 py-2 text-sm md:hidden">
+          <span aria-hidden>ℹ️ </span>Sobre
         </Link>
       </div>
     </header>
