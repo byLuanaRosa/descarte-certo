@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* Tokens de design (docs/analise/design.md). O tema escuro segue o aparelho (RNF04). */
+:root {
+  --background: #fbfdfa;
+  --foreground: #1c2b24;
+  --muted: #4f5d56;
+  --card: #ffffff;
+  --border: #dfe8e1;
+  --primary: #2f7a4b;
+  --primary-deep: #1f4f35;
+  --primary-foreground: #ffffff;
+  --secondary: #dcf0d4;
+  --accent: #cfe8b4;
+  --warning-soft: #fdf1c9;
+  --warning-border: #e6b93f;
+  --warning-foreground: #5a4205;
+  --danger: #b42318;
+  --danger-soft: #fde8e6;
+  --kids: #e3f4fb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #14201a;
+    --foreground: #e8f0ea;
+    --muted: #a9b8ae;
+    --card: #1c2b23;
+    --border: #2f4237;
+    --primary: #5fbf84;
+    --primary-deep: #9fdcb5;
+    --primary-foreground: #0c1a12;
+    --secondary: #24402f;
+    --accent: #2c4a33;
+    --warning-soft: #3d3313;
+    --warning-border: #a88426;
+    --warning-foreground: #f6e3a6;
+    --danger: #ff8a7d;
+    --danger-soft: #3f1d1a;
+    --kids: #17303a;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-deep: var(--primary-deep);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-border: var(--warning-border);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-kids: var(--kids);
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+  --font-display: var(--font-baloo), var(--font-nunito), sans-serif;
+  --radius-card: 1rem;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

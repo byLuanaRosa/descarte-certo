@@ -21,3 +21,13 @@ npm-debug.log*
 yarn-debug.log*
 .DS_Store
 Thumbs.db
+
+# testes
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+*.pem
+
+!.env.example
