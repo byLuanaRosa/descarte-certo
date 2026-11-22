@@ -31,3 +31,4 @@ Thumbs.db
 *.pem
 
 !.env.example
+.env*

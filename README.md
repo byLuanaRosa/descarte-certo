@@ -1,4 +1,6 @@
 # Projeto Descarte Certo - IFSC
+**Site:** <https://descarte-certo-ifsc.vercel.app>
+
 ## Sobre o Projeto
 O **Descarte Certo** é uma aplicação web que orienta a população da Grande Florianópolis sobre **como** e **onde** descartar corretamente cada tipo de resíduo, como pilhas, lâmpadas, eletrônicos, medicamentos e óleo de cozinha.
 
@@ -82,7 +84,11 @@ insert into public.administradores (user_id)
 O formulário público aceita no máximo 30 sugestões por hora e 300 na fila de verificação (proteção contra spam, no próprio banco).
 
 ## Deploy (Vercel)
+O site está publicado em <https://descarte-certo-ifsc.vercel.app> (projeto `descarte-certo` na conta da Luana). Para publicar uma nova versão pela linha de comando: `vercel deploy --prod`.
+
+Para configurar do zero:
 1. Em vercel.com, importe o repositório `byLuanaRosa/descarte-certo` (framework: Next.js, sem mudar os comandos).
 2. Em Settings → Environment Variables, cadastre `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` para **Production e Preview**.
-3. Faça o deploy. A partir daí, a Vercel publica a cada `git push` na `main` e cria uma URL de preview para cada Pull Request.
+3. Faça o deploy. Com o repositório conectado (Settings → Git, ou `vercel git connect`), a Vercel publica a cada `git push` na `main` e cria uma URL de preview para cada Pull Request.
+   Atenção ao colar os valores das variáveis: no PowerShell, use `printf` pelo Git Bash ou o painel da Vercel, pois o PowerShell pode inserir um caractere invisível (BOM) no início do valor.
 4. No GitHub (Settings → Secrets and variables → Actions), cadastre as mesmas duas variáveis para a CI rodar o teste de segurança contra o banco real.
