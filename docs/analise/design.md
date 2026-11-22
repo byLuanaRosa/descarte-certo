@@ -12,7 +12,7 @@ O visual segue o [mockup](../../mockup/README.md) feito no Lovable.
 | Sugerir ponto | `/pontos/sugerir` | RF04 | — (não existe no mockup) |
 | Dicas | `/dicas` | RF03 | `07`, `17` |
 | Quiz Kids | `/kids` | RF05 | `08`, `18`, `19` |
-| Admin (login e pendentes) | `/admin` | RF04 | `10` (no MVP, login por e-mail e senha) |
+| Admin (login e pendentes) | `/admin` | RF04 | `10` (no MVP, login por nome de usuário e senha) |
 | Sobre (créditos e aviso) | `/sobre` | — | `09`, `20` |
 
 **Navegação:** menu no topo no computador e barra fixa embaixo no celular (Início, Buscar, Pontos, Dicas, Kids).

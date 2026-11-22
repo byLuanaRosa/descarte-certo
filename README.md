@@ -71,12 +71,12 @@ A CI (`.github/workflows/ci.yml`) roda todos eles a cada push na `main` e em cad
 ## Banco de dados (Supabase)
 O projeto já está criado na conta da Luana (`descarte-certo`, região São Paulo), com a tabela, as regras de segurança e 4 ecopontos verificados. Para recriar em outro projeto, rode no SQL Editor `supabase/schema.sql` e depois `supabase/seed.sql`.
 
-**Criar o administrador:**
-1. No painel do Supabase: Authentication → Users → Add user (e-mail e senha).
-2. No SQL Editor, troque o e-mail e rode:
+**Criar o administrador:** o login do site usa **nome de usuário e senha**. Por baixo, o nome de usuário vira um e-mail interno `usuario@admin.descarte-certo.app` no Supabase Auth (ex.: usuário `teste` → `teste@admin.descarte-certo.app`).
+1. No painel do Supabase: Authentication → Users → Add user → Create new user. Em e-mail, use `nome-de-usuario@admin.descarte-certo.app`; defina a senha (mínimo 6 caracteres) e marque **Auto Confirm User**.
+2. No SQL Editor, rode (trocando o nome de usuário):
 ```sql
 insert into public.administradores (user_id)
-  select id from auth.users where email = 'email-do-admin@exemplo.com';
+  select id from auth.users where email = 'teste@admin.descarte-certo.app';
 ```
 3. Em Authentication → Sign In / Providers, desative "Allow new users to sign up" (RN02). Mesmo com o cadastro ligado, quem não está na tabela `administradores` não consegue aprovar nada.
 4. Depois de desligar o cadastro, crie no GitHub a variável `VERIFICAR_CADASTRO_DESLIGADO` com valor `1` (Settings → Secrets and variables → Actions → Variables). A CI passa a testar que ninguém consegue criar conta pelo site.

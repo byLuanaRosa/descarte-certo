@@ -13,11 +13,20 @@ export async function sessaoAtual(): Promise<Session | null> {
   return data.session;
 }
 
-export async function entrar(email: string, senha: string): Promise<{ erro: string | null }> {
+/** Domínio interno: o administrador digita só o nome de usuário; o Supabase Auth usa este e-mail por baixo. */
+export const DOMINIO_USUARIOS = "admin.descarte-certo.app";
+
+/** Converte o nome de usuário ("teste") no e-mail interno do Supabase ("teste@admin.descarte-certo.app"). */
+export function emailDoUsuario(usuario: string): string {
+  const limpo = usuario.trim().toLowerCase();
+  return limpo.includes("@") ? limpo : `${limpo}@${DOMINIO_USUARIOS}`;
+}
+
+export async function entrar(usuario: string, senha: string): Promise<{ erro: string | null }> {
   try {
-    const { error } = await obterSupabase().auth.signInWithPassword({ email: email.trim(), password: senha });
+    const { error } = await obterSupabase().auth.signInWithPassword({ email: emailDoUsuario(usuario), password: senha });
     if (!error) return { erro: null };
-    return { erro: error.status === 400 ? "E-mail ou senha inválidos." : "Não foi possível entrar agora. Tente de novo." };
+    return { erro: error.status === 400 ? "Usuário ou senha inválidos." : "Não foi possível entrar agora. Tente de novo." };
   } catch {
     return { erro: "Sem conexão com o servidor. Tente de novo." };
   }

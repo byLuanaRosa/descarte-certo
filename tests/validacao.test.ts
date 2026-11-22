@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { emailDoUsuario } from "@/lib/admin";
 import { buscarEndereco, montarUrlBusca } from "@/lib/geocodificar";
 import { dentroDeSantaCatarina, validarFonte, validarSugestao, type DadosSugestao } from "@/lib/validacao";
 
@@ -89,5 +90,12 @@ describe("validarFonte", () => {
     expect(validarFonte("")).toEqual({ ok: true, valor: null });
     expect(validarFonte(" https://www.pmf.sc.gov.br ")).toEqual({ ok: true, valor: "https://www.pmf.sc.gov.br" });
     expect(validarFonte("pmf.sc.gov.br").ok).toBe(false);
+  });
+});
+
+describe("emailDoUsuario", () => {
+  it("converte o nome de usuário no e-mail interno do Supabase", () => {
+    expect(emailDoUsuario(" Teste ")).toBe("teste@admin.descarte-certo.app");
+    expect(emailDoUsuario("maria@exemplo.org")).toBe("maria@exemplo.org");
   });
 });

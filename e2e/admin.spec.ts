@@ -37,9 +37,11 @@ const pendentes = [
 async function simularAdmin(page: Page, opcoes: { ehAdmin: boolean; senhaCerta?: string }) {
   const atualizacoes: { url: string; corpo: unknown }[] = [];
   const exclusoes: string[] = [];
+  const emailsUsados: string[] = [];
   await page.route("**/tile.openstreetmap.org/**", (r) => r.fulfill({ status: 204, body: "" }));
   await page.route("**/auth/v1/token**", async (route) => {
-    const corpo = route.request().postDataJSON() as { password?: string };
+    const corpo = route.request().postDataJSON() as { email?: string; password?: string };
+    emailsUsados.push(corpo.email ?? "");
     if (corpo.password !== (opcoes.senhaCerta ?? "senha-certa")) {
       return route.fulfill({
         status: 400,
@@ -82,12 +84,12 @@ async function simularAdmin(page: Page, opcoes: { ehAdmin: boolean; senhaCerta?:
       json: pendentes.map((p) => ({ ...p, status })),
     });
   });
-  return { atualizacoes, exclusoes };
+  return { atualizacoes, exclusoes, emailsUsados };
 }
 
 async function login(page: Page, senha = "senha-certa") {
   await page.goto("/admin");
-  await page.getByLabel("E-mail").fill("admin@exemplo.org");
+  await page.getByLabel("Usuário").fill("teste");
   await page.getByLabel("Senha").fill(senha);
   await page.getByRole("button", { name: "Entrar" }).click();
 }
@@ -102,7 +104,7 @@ test("sem login, mostra só o formulário de login", async ({ page }) => {
 test("senha errada mostra mensagem de erro", async ({ page }) => {
   await simularAdmin(page, { ehAdmin: true });
   await login(page, "errada");
-  await expect(page.getByRole("alert").filter({ hasText: "E-mail ou senha" })).toHaveText("E-mail ou senha inválidos.");
+  await expect(page.getByRole("alert").filter({ hasText: "Usuário ou senha" })).toHaveText("Usuário ou senha inválidos.");
 });
 
 test("conta que não é administradora não vê o painel", async ({ page }) => {
@@ -184,4 +186,15 @@ test("administrador exclui um ponto depois de confirmar", async ({ page }) => {
   await expect(page.getByText("“Loja do Bairro” foi excluído.")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Pontos publicados (1)" })).toBeVisible();
   expect(exclusoes[0]).toContain("id=eq.p2");
+});
+
+test("o login usa nome de usuário (convertido no e-mail interno)", async ({ page }) => {
+  const { emailsUsados } = await simularAdmin(page, { ehAdmin: true });
+  await page.goto("/admin");
+  await expect(page.getByLabel("E-mail")).toHaveCount(0);
+  await page.getByLabel("Usuário").fill("  Teste ");
+  await page.getByLabel("Senha").fill("senha-certa");
+  await page.getByRole("button", { name: "Entrar" }).click();
+  await expect(page.getByRole("heading", { name: /Pontos pendentes/ })).toBeVisible();
+  expect(emailsUsados[0]).toBe("teste@admin.descarte-certo.app");
 });

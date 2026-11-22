@@ -75,7 +75,7 @@ export function PainelAdmin() {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     setTela({ tipo: "login", erro: null, enviando: true });
-    const { erro } = await entrar(String(form.get("email") ?? ""), String(form.get("senha") ?? ""));
+    const { erro } = await entrar(String(form.get("usuario") ?? ""), String(form.get("senha") ?? ""));
     if (erro) {
       setTela({ tipo: "login", erro, enviando: false });
       return;
@@ -161,10 +161,19 @@ export function PainelAdmin() {
       <form onSubmit={fazerLogin} className="mx-auto max-w-md space-y-4 rounded-[var(--radius-card)] border border-border bg-card p-6 shadow-sm">
         <h2 className="text-2xl font-bold">Entrar</h2>
         <div>
-          <label htmlFor="email" className="mb-1 block font-semibold">
-            E-mail
+          <label htmlFor="usuario" className="mb-1 block font-semibold">
+            Usuário
           </label>
-          <input id="email" name="email" type="email" required autoComplete="username" className={campo} />
+          <input
+            id="usuario"
+            name="usuario"
+            type="text"
+            required
+            autoComplete="username"
+            autoCapitalize="none"
+            spellCheck={false}
+            className={campo}
+          />
         </div>
         <div>
           <label htmlFor="senha" className="mb-1 block font-semibold">
