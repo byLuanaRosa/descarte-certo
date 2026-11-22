@@ -6,9 +6,9 @@ import { creditosImagens } from "@/lib/conteudo";
 export const metadata: Metadata = { title: "Sobre o Descarte Certo" };
 
 const objetivos = [
-  { titulo: "Informar", texto: "Disponibilizar orientações específicas e seguras para cada material." },
+  { titulo: "Informar", texto: "Disponibilizar orientações específicas e seguras para o descarte de cada material." },
   { titulo: "Facilitar", texto: "Divulgar locais que realmente recebem cada resíduo." },
-  { titulo: "Conscientizar", texto: "Promover a redução, a reutilização e a prevenção de acidentes, inclusive para crianças." },
+  { titulo: "Conscientizar", texto: "Promover a redução, a reutilização e a prevenção de acidentes relacionados ao descarte incorreto de resíduos." },
 ];
 
 const ods = [
