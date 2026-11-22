@@ -4,9 +4,13 @@
     "nome": "Papel e papelão",
     "sinonimos": ["caixa", "jornal", "revista", "papelao", "caderno", "folha"],
     "categoria": "reciclaveis",
-    "riscos": [],
-    "cuidados": ["Separe limpo e seco.", "Desmonte as caixas para ocupar menos espaço.", "Papel engordurado, guardanapo e papel higiênico usados não são recicláveis."],
-    "destino": "Coleta seletiva da Comcap ou ecoponto.",
+    "riscos": ["Papel molhado ou sujo de gordura estraga a reciclagem dos outros papéis."],
+    "passos": [
+      "Veja se o papel está limpo e seco. Guardanapo, papel higiênico e papel engordurado vão no lixo comum.",
+      "Desmonte as caixas e dobre o papelão para ocupar menos espaço.",
+      "Coloque junto com os outros recicláveis secos."
+    ],
+    "destino": "Coleta seletiva da Comcap ou um ecoponto.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -15,9 +19,14 @@
     "nome": "Plásticos",
     "sinonimos": ["garrafa pet", "pet", "sacola", "pote", "embalagem plastica", "plastico"],
     "categoria": "reciclaveis",
-    "riscos": [],
-    "cuidados": ["Esvazie e enxágue rapidamente as embalagens.", "Não precisa lavar com detergente: só tirar o excesso de resto."],
-    "destino": "Coleta seletiva da Comcap ou ecoponto.",
+    "riscos": ["Plástico jogado na rua vai parar nos rios e no mar e demora centenas de anos para sumir."],
+    "passos": [
+      "Esvazie a embalagem.",
+      "Tire os restos de comida com um guardanapo usado ou um pouco de água de reuso. Não precisa lavar com detergente.",
+      "Amasse garrafas e potes para ocupar menos espaço.",
+      "Coloque junto com os outros recicláveis secos."
+    ],
+    "destino": "Coleta seletiva da Comcap ou um ecoponto.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -26,9 +35,14 @@
     "nome": "Metais",
     "sinonimos": ["lata", "latinha", "aluminio", "lata de conserva", "tampa", "metal"],
     "categoria": "reciclaveis",
-    "riscos": ["Bordas de latas abertas podem cortar."],
-    "cuidados": ["Esvazie e enxágue.", "Amasse as latinhas para ocupar menos espaço.", "Dobre para dentro as bordas cortantes das tampas."],
-    "destino": "Coleta seletiva da Comcap ou ecoponto.",
+    "riscos": ["A borda de uma lata aberta pode cortar quem faz a coleta."],
+    "passos": [
+      "Esvazie a lata e tire os restos de comida.",
+      "Dobre para dentro a tampa cortante de latas de conserva.",
+      "Amasse as latinhas para ocupar menos espaço.",
+      "Coloque junto com os outros recicláveis secos."
+    ],
+    "destino": "Coleta seletiva da Comcap ou um ecoponto.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -37,9 +51,13 @@
     "nome": "Vidro comum inteiro",
     "sinonimos": ["garrafa", "pote de vidro", "frasco", "vidro"],
     "categoria": "reciclaveis",
-    "riscos": ["Pode quebrar e cortar durante o transporte."],
-    "cuidados": ["Esvazie e enxágue.", "Retire tampas de metal ou plástico e descarte separadamente.", "Leve com cuidado para não quebrar."],
-    "destino": "Coleta seletiva da Comcap, contêineres de vidro ou ecoponto.",
+    "riscos": ["Se quebrar no caminho, o vidro pode cortar alguém."],
+    "passos": [
+      "Esvazie e tire os restos de dentro.",
+      "Retire a tampa. Tampa de metal ou plástico vai separada, nos recicláveis.",
+      "Não quebre o vidro. Leve inteiro e com cuidado."
+    ],
+    "destino": "Coleta seletiva da Comcap, contêiner de vidro ou ecoponto.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -48,8 +66,13 @@
     "nome": "Cacos de vidro comum",
     "sinonimos": ["vidro quebrado", "caco", "copo quebrado", "garrafa quebrada"],
     "categoria": "reciclaveis",
-    "riscos": ["Corta com facilidade, inclusive quem faz a coleta."],
-    "cuidados": ["Recolha com luvas grossas ou vassoura e pá, nunca com as mãos.", "Embrulhe em jornal grosso ou coloque em caixa ou garrafa PET cortada e fechada.", "Escreva \"VIDRO QUEBRADO\" na embalagem.", "Crianças não devem manusear."],
+    "riscos": ["Vidro quebrado corta com facilidade, inclusive quem faz a coleta."],
+    "passos": [
+      "Recolha com vassoura e pá ou com luvas grossas. Nunca pegue com as mãos.",
+      "Embrulhe em jornal grosso ou coloque dentro de uma caixa ou garrafa PET cortada.",
+      "Feche bem e escreva “VIDRO QUEBRADO” por fora.",
+      "Mantenha longe de crianças."
+    ],
     "destino": "Coleta seletiva, bem embalado e identificado. Confirme com a Comcap se o ecoponto recebe.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
@@ -59,9 +82,16 @@
     "nome": "Espelhos e vidros especiais",
     "sinonimos": ["espelho", "vidro temperado", "box de banheiro", "travessa refratária", "pirex", "cristal", "parabrisa"],
     "categoria": "especiais",
-    "riscos": ["Cortam com facilidade.", "Têm composição diferente do vidro comum e atrapalham a reciclagem se misturados."],
-    "cuidados": ["Não misture com garrafas e potes.", "Embale com segurança e identifique o conteúdo."],
-    "destino": "Não vão para o vidro comum. Consulte a Comcap sobre o destino de resíduos volumosos ou especiais.",
+    "riscos": [
+      "Cortam com facilidade.",
+      "São feitos de um vidro diferente e atrapalham a reciclagem se forem misturados com garrafas e potes."
+    ],
+    "passos": [
+      "Não coloque junto com garrafas e potes de vidro.",
+      "Embale bem, protegendo as pontas, e escreva o que tem dentro.",
+      "Pergunte à Comcap onde entregar, porque o destino depende do tamanho e do tipo."
+    ],
+    "destino": "Consulte a Comcap sobre resíduos volumosos ou especiais.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -70,9 +100,13 @@
     "nome": "Lâmpada fluorescente",
     "sinonimos": ["lampada", "lampada fria", "lampada compacta", "tubular", "lampada de mercurio"],
     "categoria": "lampadas",
-    "riscos": ["Contém mercúrio, que é tóxico se a lâmpada quebrar."],
-    "cuidados": ["Não quebre: guarde na embalagem original ou embrulhada em papel.", "Se quebrar, abra as janelas, saia do cômodo por 15 minutos e recolha os cacos com luvas e papel úmido. Não use aspirador.", "Não coloque no lixo comum nem no vidro."],
-    "destino": "Ponto de coleta do programa de logística reversa de lâmpadas (Reciclus), em lojas participantes.",
+    "riscos": ["Tem mercúrio, que é tóxico. Se a lâmpada quebrar no lixo comum, contamina o solo e a água."],
+    "passos": [
+      "Não quebre. Guarde na caixa original ou embrulhada em papel.",
+      "Se quebrar: abra as janelas, saia do cômodo por 15 minutos e depois recolha os cacos com luvas e papel úmido. Não use aspirador.",
+      "Não coloque no lixo comum nem junto com o vidro."
+    ],
+    "destino": "Loja que participa da coleta de lâmpadas (programa Reciclus).",
     "fonte": { "titulo": "Reciclus – logística reversa de lâmpadas", "url": "https://reciclus.org.br/" },
     "revisado_em": "2026-11"
   },
@@ -81,9 +115,12 @@
     "nome": "Lâmpada LED",
     "sinonimos": ["lampada", "led", "lampada de led"],
     "categoria": "lampadas",
-    "riscos": ["Tem componentes eletrônicos."],
-    "cuidados": ["Não quebre.", "Não coloque no lixo comum."],
-    "destino": "Ponto de coleta de lâmpadas ou de eletroeletrônicos que confirme o recebimento de LED.",
+    "riscos": ["Tem peças eletrônicas que não podem ir para o lixo comum."],
+    "passos": [
+      "Não quebre. Guarde na caixa ou embrulhada em papel.",
+      "Não coloque no lixo comum nem junto com o vidro."
+    ],
+    "destino": "Ponto de coleta de lâmpadas ou de eletrônicos que receba LED.",
     "fonte": { "titulo": "Reciclus – logística reversa de lâmpadas", "url": "https://reciclus.org.br/" },
     "revisado_em": "2026-11"
   },
@@ -93,8 +130,12 @@
     "sinonimos": ["lampada", "lampada amarela", "halogena", "lampada antiga"],
     "categoria": "lampadas",
     "riscos": ["O vidro pode cortar se quebrar."],
-    "cuidados": ["Embrulhe em papel ou na embalagem original para não cortar ninguém.", "Não coloque no vidro reciclável."],
-    "destino": "Rejeito (lixo comum), bem embalada. Confirme com a Comcap.",
+    "passos": [
+      "Embrulhe em papel ou guarde na caixa original.",
+      "Não coloque junto com o vidro reciclável.",
+      "Descarte no lixo comum (rejeito), bem embalada."
+    ],
+    "destino": "Lixo comum (rejeito), bem embalada. Confirme com a Comcap.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -103,9 +144,13 @@
     "nome": "Pilhas",
     "sinonimos": ["pilha", "pilha aa", "pilha aaa", "pilha palito", "pilha recarregavel", "bateria de relogio", "pilha botao"],
     "categoria": "pilhas",
-    "riscos": ["Podem vazar substâncias nocivas se danificadas."],
-    "cuidados": ["Guarde em pote fechado, longe de calor e umidade.", "Não abra nem fure.", "Pilha vazando: manuseie com luvas e embale separada."],
-    "destino": "Coletor de pilhas da logística reversa (Green Eletron) ou ecoponto.",
+    "riscos": ["No lixo comum, as pilhas soltam substâncias que contaminam o solo e a água."],
+    "passos": [
+      "Junte as pilhas usadas num pote fechado, longe do calor.",
+      "Não abra nem fure as pilhas.",
+      "Se uma pilha estiver vazando, pegue com luvas e embale separada."
+    ],
+    "destino": "Coletor de pilhas (Green Eletron), em lojas e supermercados, ou um ecoponto.",
     "fonte": { "titulo": "Green Eletron – perguntas frequentes", "url": "https://greeneletron.org.br/perguntas-frequentes/" },
     "revisado_em": "2026-11"
   },
@@ -114,9 +159,13 @@
     "nome": "Baterias portáteis",
     "sinonimos": ["bateria", "bateria de celular", "bateria de notebook", "bateria de litio", "powerbank"],
     "categoria": "pilhas",
-    "riscos": ["Baterias de lítio danificadas ou estufadas podem pegar fogo."],
-    "cuidados": ["Cubra os contatos com fita adesiva.", "Bateria estufada: não fure, não aqueça e mantenha longe de material inflamável.", "Baterias de carro e moto não entram aqui: devolva na loja onde comprou."],
-    "destino": "Coletor da logística reversa de eletroeletrônicos e pilhas (Green Eletron) ou ecoponto.",
+    "riscos": ["Bateria amassada ou estufada pode pegar fogo no caminhão de lixo."],
+    "passos": [
+      "Cubra os contatos (as partes de metal) com fita adesiva.",
+      "Se a bateria estiver estufada, não fure e não deixe perto do calor.",
+      "Bateria de carro e de moto não vai aqui: devolva na loja onde comprou."
+    ],
+    "destino": "Coletor de eletrônicos e pilhas (Green Eletron) ou um ecoponto.",
     "fonte": { "titulo": "Green Eletron – perguntas frequentes", "url": "https://greeneletron.org.br/perguntas-frequentes/" },
     "revisado_em": "2026-11"
   },
@@ -125,9 +174,13 @@
     "nome": "Celulares e pequenos eletrônicos",
     "sinonimos": ["celular", "smartphone", "tablet", "notebook", "computador", "teclado", "mouse", "carregador", "fone", "eletronico", "lixo eletronico"],
     "categoria": "eletronicos",
-    "riscos": ["Contêm metais pesados e baterias."],
-    "cuidados": ["Apague seus dados pessoais e retire o chip e o cartão de memória.", "Se a bateria sair, entregue junto, com os contatos cobertos por fita."],
-    "destino": "Coletor da logística reversa de eletroeletrônicos (Green Eletron) ou ecoponto.",
+    "riscos": ["Têm metais pesados e baterias que contaminam o meio ambiente se forem para o lixo comum."],
+    "passos": [
+      "Apague suas fotos e dados e tire o chip e o cartão de memória.",
+      "Se a bateria sair, entregue junto, com as partes de metal cobertas por fita.",
+      "Junte carregadores e fones no mesmo saco."
+    ],
+    "destino": "Coletor de eletrônicos (Green Eletron) ou um ecoponto.",
     "fonte": { "titulo": "Green Eletron – perguntas frequentes", "url": "https://greeneletron.org.br/perguntas-frequentes/" },
     "revisado_em": "2026-11"
   },
@@ -136,9 +189,12 @@
     "nome": "Cabos e fios",
     "sinonimos": ["cabo", "fio", "cabo usb", "extensao", "cabo de energia"],
     "categoria": "eletronicos",
-    "riscos": [],
-    "cuidados": ["Enrole e prenda com um elástico."],
-    "destino": "Coletor de eletroeletrônicos (Green Eletron). Confirme se o ecoponto recebe.",
+    "riscos": ["O cobre e o plástico dos fios não se desfazem e poluem se forem para o lixo comum."],
+    "passos": [
+      "Enrole os cabos e prenda com um elástico.",
+      "Junte com outros eletrônicos pequenos, se tiver."
+    ],
+    "destino": "Coletor de eletrônicos (Green Eletron). Confirme se o ecoponto recebe.",
     "fonte": { "titulo": "Green Eletron – perguntas frequentes", "url": "https://greeneletron.org.br/perguntas-frequentes/" },
     "revisado_em": "2026-11"
   },
@@ -147,9 +203,14 @@
     "nome": "Óleo de cozinha usado",
     "sinonimos": ["oleo", "oleo de fritura", "gordura", "azeite usado"],
     "categoria": "oleo",
-    "riscos": ["Na pia ou no ralo, entope o encanamento e polui rios e o mar."],
-    "cuidados": ["Espere esfriar.", "Coe e guarde em garrafa PET bem fechada.", "Nunca jogue na pia, no vaso ou no ralo."],
-    "destino": "Ecoponto da Comcap (até 5 litros) ou pontos de coleta de óleo.",
+    "riscos": ["Na pia ou no ralo, o óleo entope os canos e polui os rios e o mar."],
+    "passos": [
+      "Espere o óleo esfriar.",
+      "Coe e coloque numa garrafa PET.",
+      "Feche bem a garrafa.",
+      "Nunca jogue na pia, no vaso ou no ralo."
+    ],
+    "destino": "Ecoponto da Comcap (até 5 litros) ou outro ponto de coleta de óleo.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -158,9 +219,12 @@
     "nome": "Lata de tinta vazia",
     "sinonimos": ["lata de tinta", "galao de tinta", "embalagem de tinta"],
     "categoria": "quimicos",
-    "riscos": [],
-    "cuidados": ["Só é reciclável se estiver vazia e com o resto de tinta totalmente seco.", "Deixe aberta em local ventilado até secar."],
-    "destino": "Coleta seletiva (metal ou plástico), quando seca.",
+    "riscos": ["Lata com resto de tinta molhada não pode ser reciclada e suja os outros materiais."],
+    "passos": [
+      "Deixe a lata aberta num lugar ventilado até o resto de tinta secar por completo.",
+      "Quando estiver seca, coloque junto com os recicláveis (metal ou plástico)."
+    ],
+    "destino": "Coleta seletiva, quando a tinta estiver totalmente seca.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -169,9 +233,14 @@
     "nome": "Sobra de tinta e solventes",
     "sinonimos": ["tinta", "sobra de tinta", "solvente", "thinner", "aguarras", "verniz", "removedor"],
     "categoria": "quimicos",
-    "riscos": ["Tóxicos e inflamáveis.", "Contaminam a água se jogados no ralo."],
-    "cuidados": ["Mantenha na embalagem original, bem fechada.", "Guarde longe de crianças e de fontes de calor.", "Nunca jogue no ralo, na pia ou no solo.", "Sobra de tinta pode ser doada para quem vai usar."],
-    "destino": "Consulte a Comcap ou a loja sobre pontos que recebem resíduos químicos domésticos.",
+    "riscos": ["São tóxicos e pegam fogo fácil. No ralo, contaminam a água."],
+    "passos": [
+      "Deixe na embalagem original, bem fechada.",
+      "Guarde longe de crianças e do calor.",
+      "Se a tinta ainda presta, doe para alguém que vai usar.",
+      "Nunca jogue no ralo, na pia ou na terra."
+    ],
+    "destino": "Pergunte à Comcap ou à loja onde comprou sobre pontos que recebem produtos químicos de casa.",
     "fonte": { "titulo": "Comcap – Prefeitura de Florianópolis", "url": "https://www.pmf.sc.gov.br/entidades/comcap/" },
     "revisado_em": "2026-11"
   },
@@ -180,9 +249,17 @@
     "nome": "Medicamentos vencidos ou sem uso",
     "sinonimos": ["remedio", "remedio vencido", "comprimido", "xarope", "pomada", "medicamento"],
     "categoria": "medicamentos",
-    "riscos": ["Contaminam a água e o solo.", "Podem intoxicar crianças e animais."],
-    "cuidados": ["Mantenha na embalagem (blister ou frasco).", "Caixa de papelão e bula limpas vão para a coleta seletiva.", "Nunca jogue no vaso, na pia ou no lixo comum.", "Guarde fora do alcance de crianças até a entrega."],
-    "destino": "Farmácia ou drogaria participante da logística reversa de medicamentos.",
+    "riscos": [
+      "No lixo ou no vaso, os remédios contaminam a água e o solo.",
+      "Crianças e animais podem se intoxicar se encontrarem."
+    ],
+    "passos": [
+      "Deixe os remédios na cartela ou no frasco.",
+      "Separe a caixa de papelão e a bula: elas vão para os recicláveis.",
+      "Guarde longe das crianças até levar.",
+      "Nunca jogue no vaso, na pia ou no lixo comum."
+    ],
+    "destino": "Farmácia que recebe medicamentos vencidos.",
     "fonte": { "titulo": "Decreto nº 10.388/2020 – logística reversa de medicamentos", "url": "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2020/decreto/d10388.htm" },
     "revisado_em": "2026-11"
   },
@@ -191,9 +268,14 @@
     "nome": "Agulhas e seringas",
     "sinonimos": ["agulha", "seringa", "lanceta", "perfurocortante", "insulina"],
     "categoria": "perfurocortantes",
-    "riscos": ["Furam e podem transmitir doenças.", "Causam acidentes com trabalhadores da coleta."],
-    "cuidados": ["Não reencape a agulha.", "Coloque em recipiente rígido com tampa (coletor próprio ou garrafa PET grossa ou frasco de amaciante).", "Feche bem, escreva \"PERFUROCORTANTE\" e não encha até a boca.", "Crianças nunca devem tocar."],
-    "destino": "Unidade de saúde (Centro de Saúde). Confirme o recebimento antes de ir.",
+    "riscos": ["Furam e podem passar doenças para quem faz a coleta."],
+    "passos": [
+      "Não coloque a tampinha de volta na agulha.",
+      "Coloque num pote duro com tampa (coletor próprio, garrafa PET grossa ou frasco de amaciante).",
+      "Quando o pote estiver quase cheio, feche bem e escreva “PERFUROCORTANTE”.",
+      "Crianças nunca devem tocar."
+    ],
+    "destino": "Centro de Saúde (posto de saúde). Confirme se recebe antes de ir.",
     "fonte": { "titulo": "Prefeitura de Florianópolis – Secretaria de Saúde", "url": "https://www.pmf.sc.gov.br/entidades/saude/" },
     "revisado_em": "2026-11"
   },
@@ -202,9 +284,12 @@
     "nome": "Canetas injetáveis",
     "sinonimos": ["caneta de insulina", "caneta injetavel", "refil de insulina"],
     "categoria": "perfurocortantes",
-    "riscos": ["A agulha pode furar e transmitir doenças."],
-    "cuidados": ["Retire a agulha com o protetor e descarte como perfurocortante.", "Guarde a caneta no mesmo recipiente rígido e fechado."],
-    "destino": "Unidade de saúde (Centro de Saúde) ou farmácia que confirme o recebimento.",
+    "riscos": ["A agulha pode furar e passar doenças."],
+    "passos": [
+      "Retire a agulha com o protetor e coloque no pote duro de perfurocortantes.",
+      "Guarde a caneta no mesmo pote, bem fechado."
+    ],
+    "destino": "Centro de Saúde ou farmácia que receba. Confirme antes de ir.",
     "fonte": { "titulo": "Prefeitura de Florianópolis – Secretaria de Saúde", "url": "https://www.pmf.sc.gov.br/entidades/saude/" },
     "revisado_em": "2026-11"
   }

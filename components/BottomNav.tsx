@@ -10,7 +10,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Menu inferior"
-      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-border bg-background md:hidden"
+      className="fixed inset-x-0 bottom-0 z-[1000] border-t border-border bg-background lg:hidden"
     >
       <ul className="grid grid-cols-5">
         {itensMenu.map((item) => {
@@ -20,7 +20,7 @@ export function BottomNav() {
               <Link
                 href={item.href}
                 aria-current={ativo ? "page" : undefined}
-                className={`flex flex-col items-center gap-0.5 py-2 text-xs ${
+                className={`flex h-full flex-col items-center gap-0.5 px-1 py-2 text-center text-xs leading-tight ${
                   ativo ? "font-bold text-primary" : "text-muted"
                 }`}
               >

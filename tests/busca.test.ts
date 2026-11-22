@@ -56,7 +56,8 @@ describe("conteúdo", () => {
       expect(idsCategorias.has(m.categoria), m.id).toBe(true);
       expect(m.fonte.url, m.id).toMatch(/^https:\/\//);
       expect(m.destino.length, m.id).toBeGreaterThan(10);
-      expect(m.cuidados.length, m.id).toBeGreaterThan(0);
+      expect(m.passos.length, m.id).toBeGreaterThan(0);
+      expect(m.riscos.length, m.id).toBeGreaterThan(0);
     }
   });
 

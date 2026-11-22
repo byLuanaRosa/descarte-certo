@@ -40,34 +40,39 @@ export default async function MaterialPage({ params }: PageProps<"/material/[id]
         </div>
       </header>
 
-      {material.riscos.length > 0 && (
-        <section
-          aria-labelledby="riscos"
-          className="rounded-[var(--radius-card)] border-2 border-warning-border bg-warning-soft p-5 text-warning-foreground"
-        >
-          <h2 id="riscos" className="text-xl font-bold">
-            ⚠️ Riscos associados
-          </h2>
-          <ul className="mt-2 list-disc space-y-1 pl-6">
-            {material.riscos.map((r) => (
-              <li key={r}>{r}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      <section aria-labelledby="cuidados" className="rounded-[var(--radius-card)] border border-border bg-card p-5 shadow-sm">
-        <h2 id="cuidados" className="text-xl font-bold">
-          Cuidados antes de descartar
+      <section
+        aria-labelledby="riscos"
+        className="rounded-[var(--radius-card)] border-2 border-warning-border bg-warning-soft p-5 text-warning-foreground"
+      >
+        <h2 id="riscos" className="text-xl font-bold">
+          ⚠️ Riscos do descarte incorreto
         </h2>
         <ul className="mt-2 list-disc space-y-1 pl-6">
-          {material.cuidados.map((c) => (
-            <li key={c}>{c}</li>
+          {material.riscos.map((r) => (
+            <li key={r}>{r}</li>
           ))}
         </ul>
+      </section>
 
-        <h2 className="mt-5 text-xl font-bold">Destino correto</h2>
-        <p className="mt-1">{material.destino}</p>
+      <section aria-labelledby="passo-a-passo" className="rounded-[var(--radius-card)] border border-border bg-card p-5 shadow-sm">
+        <h2 id="passo-a-passo" className="text-xl font-bold">
+          Passo a passo para descarte
+        </h2>
+        <ol className="mt-4 space-y-4">
+          {[...material.passos, `Leve para: ${material.destino}`].map((passo, i, todos) => (
+            <li key={passo} className="flex gap-3">
+              <span
+                aria-hidden
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-bold ${
+                  i === todos.length - 1 ? "bg-primary text-primary-foreground" : "bg-secondary text-primary-deep"
+                }`}
+              >
+                {i + 1}
+              </span>
+              <span className={`pt-1 ${i === todos.length - 1 ? "font-semibold" : ""}`}>{passo}</span>
+            </li>
+          ))}
+        </ol>
 
         <div className="mt-5 border-t border-border pt-4 text-sm text-muted">
           <p>

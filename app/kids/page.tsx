@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { QuizKids } from "@/components/QuizKids";
-import { perguntasQuiz } from "@/lib/conteudo";
+import { niveisQuiz } from "@/lib/conteudo";
 
 export const metadata: Metadata = {
   title: "Descarte Certo Kids",
@@ -34,7 +34,7 @@ export default function KidsPage() {
       </div>
 
       <div className="mx-auto max-w-4xl">
-        <QuizKids perguntas={perguntasQuiz} />
+        <QuizKids niveis={niveisQuiz} />
       </div>
     </div>
   );

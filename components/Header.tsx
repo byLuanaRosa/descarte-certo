@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BotaoTema } from "@/components/BotaoTema";
 import { estaAtivo, itensMenu } from "@/lib/navegacao";
 
 export function Header() {
@@ -22,7 +23,7 @@ export function Header() {
             Certo
           </span>
         </Link>
-        <nav aria-label="Menu principal" className="hidden md:block">
+        <nav aria-label="Menu principal" className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {[...itensMenu, { href: "/sobre", rotulo: "Sobre", icone: "ℹ️" }].map((item) => {
               const ativo = estaAtivo(item.href, caminho);
@@ -31,7 +32,7 @@ export function Header() {
                   <Link
                     href={item.href}
                     aria-current={ativo ? "page" : undefined}
-                    className={`rounded-full px-4 py-2 text-base transition-colors ${
+                    className={`rounded-full px-3 py-2 text-base transition-colors ${
                       ativo ? "bg-primary font-bold text-primary-foreground" : "hover:bg-secondary"
                     }`}
                   >
@@ -42,9 +43,12 @@ export function Header() {
             })}
           </ul>
         </nav>
-        <Link href="/sobre" className="rounded-full border border-border px-3 py-2 text-sm md:hidden">
-          <span aria-hidden>ℹ️ </span>Sobre
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link href="/sobre" className="rounded-full border border-border px-3 py-2 text-sm lg:hidden">
+            <span aria-hidden>ℹ️ </span>Sobre
+          </Link>
+          <BotaoTema />
+        </div>
       </div>
     </header>
   );

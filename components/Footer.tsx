@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="mt-12 border-t border-border bg-secondary/40 pb-24 md:pb-8">
+    <footer className="mt-12 border-t border-border bg-secondary/40 pb-28 lg:pb-8">
       <div className="mx-auto max-w-6xl space-y-2 px-4 py-6 text-sm text-muted">
         <p className="font-semibold text-foreground">O descarte de hoje define o futuro de amanhã.</p>
         <p>

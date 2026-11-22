@@ -28,3 +28,24 @@ test("o menu leva às páginas", async ({ page, isMobile }) => {
   await expect(page).toHaveURL(/\/dicas$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Dicas/);
 });
+
+test("tema claro é o padrão e o botão alterna e lembra a escolha", async ({ page }) => {
+  await page.goto("/");
+  const html = page.locator("html");
+  await expect(html).toHaveAttribute("data-tema", "claro");
+  const botao = page.getByRole("button", { name: "Modo escuro" });
+  await expect(botao).toHaveAttribute("aria-pressed", "false");
+  await botao.click();
+  await expect(html).toHaveAttribute("data-tema", "escuro");
+  await page.goto("/sobre");
+  await expect(html).toHaveAttribute("data-tema", "escuro");
+  await expect(page.getByRole("button", { name: "Modo escuro" })).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Modo escuro" }).click();
+  await expect(html).toHaveAttribute("data-tema", "claro");
+});
+
+test("o menu mostra 'Pontos de coleta'", async ({ page, isMobile }) => {
+  await page.goto("/");
+  const menu = page.getByRole("navigation", { name: isMobile ? "Menu inferior" : "Menu principal" });
+  await expect(menu.getByRole("link", { name: /Pontos de coleta/ })).toBeVisible();
+});

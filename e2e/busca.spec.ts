@@ -23,13 +23,14 @@ test("termo inexistente mostra 'Nenhum resultado'", async ({ page }) => {
 test("ficha do material mostra riscos antes do destino e a fonte", async ({ page }) => {
   await page.goto("/material/lampada-fluorescente");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Lâmpada fluorescente");
-  const riscos = page.getByRole("heading", { name: /Riscos associados/ });
-  const destino = page.getByRole("heading", { name: "Destino correto" });
+  const riscos = page.getByRole("heading", { name: /Riscos do descarte incorreto/ });
+  const destino = page.getByRole("heading", { name: "Passo a passo para descarte" });
   await expect(riscos).toBeVisible();
   const yRiscos = (await riscos.boundingBox())!.y;
   const yDestino = (await destino.boundingBox())!.y;
   expect(yRiscos).toBeLessThan(yDestino);
   await expect(page.getByRole("link", { name: /Reciclus/ })).toBeVisible();
+  await expect(page.getByRole("listitem").filter({ hasText: /Leve para: Loja/ })).toBeVisible();
 });
 
 test("material inexistente responde 404", async ({ page }) => {

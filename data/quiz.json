@@ -1,114 +1,256 @@
 [
   {
-    "id": "caixa-cereal",
-    "emoji": "📦",
-    "item": "Caixa de cereal",
-    "descricao": "Caixa vazia e limpa, feita de papelão.",
-    "pergunta": "De qual material ela é feita?",
-    "alternativas": [
-      { "texto": "Papel", "emoji": "📄" },
-      { "texto": "Plástico", "emoji": "🧴" },
-      { "texto": "Metal", "emoji": "🥫" }
-    ],
-    "correta": 0,
-    "explicacao": "Papelão é papel! Desmonte a caixa e coloque nos recicláveis."
+    "id": "pequenos",
+    "nome": "Até 10 anos",
+    "descricao": "Perguntas curtas e fáceis",
+    "perguntas": [
+      {
+        "id": "caixa",
+        "imagem": "/kids/caixa.jpg",
+        "alt": "Caixa de papelão",
+        "item": "Caixa de papelão",
+        "pergunta": "Do que é feita esta caixa?",
+        "alternativas": [
+          { "texto": "Papel", "imagem": "/kids/papel.jpg", "alt": "Folhas de papel" },
+          { "texto": "Plástico", "imagem": "/kids/plastico.jpg", "alt": "Garrafas de plástico" },
+          { "texto": "Metal", "imagem": "/kids/lata.jpg", "alt": "Latinhas de metal" }
+        ],
+        "correta": 0,
+        "explicacao": "Isso! Papelão é papel. Ele vai para a reciclagem.",
+        "dica": "Pense: a caixa rasga como uma folha de caderno?"
+      },
+      {
+        "id": "lata",
+        "imagem": "/kids/lata.jpg",
+        "alt": "Latinhas de alumínio",
+        "item": "Latinha vazia",
+        "pergunta": "Onde vai a latinha?",
+        "alternativas": [
+          { "texto": "Lixeira de reciclar", "imagem": "/kids/reciclaveis.jpg", "alt": "Lixeiras coloridas de reciclagem" },
+          { "texto": "Lixo comum", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" },
+          { "texto": "Pia", "imagem": "/kids/pia.jpg", "alt": "Pia de cozinha" }
+        ],
+        "correta": 0,
+        "explicacao": "Muito bem! A latinha é reciclada e vira latinha de novo.",
+        "dica": "A latinha pode virar uma latinha nova!"
+      },
+      {
+        "id": "garrafa",
+        "imagem": "/kids/plastico.jpg",
+        "alt": "Garrafas de água",
+        "item": "Garrafa de água",
+        "pergunta": "Do que é feita a garrafa?",
+        "alternativas": [
+          { "texto": "Vidro", "imagem": "/kids/vidro.jpg", "alt": "Potes de vidro" },
+          { "texto": "Plástico", "imagem": "/kids/plastico.jpg", "alt": "Garrafas de plástico" },
+          { "texto": "Papel", "imagem": "/kids/papel.jpg", "alt": "Folhas de papel" }
+        ],
+        "correta": 1,
+        "explicacao": "Acertou! A garrafa é de plástico.",
+        "dica": "Ela é leve e amassa quando você aperta."
+      },
+      {
+        "id": "pilha",
+        "imagem": "/kids/pilha.jpg",
+        "alt": "Pilha",
+        "item": "Pilha gasta",
+        "pergunta": "A pilha acabou. O que fazer?",
+        "alternativas": [
+          { "texto": "Jogar no lixo", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" },
+          { "texto": "Enterrar", "imagem": "/kids/terra.jpg", "alt": "Terra do jardim" },
+          { "texto": "Dar para um adulto levar", "imagem": "/kids/adulto.jpg", "alt": "Mão de adulto segurando a mão de uma criança" }
+        ],
+        "correta": 2,
+        "explicacao": "Isso! Um adulto leva a pilha ao coletor de pilhas.",
+        "dica": "Pilha faz mal para a terra e para a água."
+      },
+      {
+        "id": "agulha",
+        "imagem": "/kids/seringa.jpg",
+        "alt": "Seringa com agulha",
+        "item": "Agulha no chão",
+        "pergunta": "Você achou uma agulha. E agora?",
+        "alternativas": [
+          { "texto": "Pegar com a mão", "imagem": "/kids/maos.jpg", "alt": "Mão de criança no chão" },
+          { "texto": "Não tocar e chamar um adulto", "imagem": "/kids/adulto.jpg", "alt": "Mão de adulto segurando a mão de uma criança" },
+          { "texto": "Levar para casa", "imagem": "/kids/casa.jpg", "alt": "Casa" }
+        ],
+        "correta": 1,
+        "explicacao": "Isso mesmo! Agulha machuca. Nunca toque e chame um adulto.",
+        "dica": "Agulha é perigosa. Quem pode ajudar?"
+      },
+      {
+        "id": "pote",
+        "imagem": "/kids/vidro.jpg",
+        "alt": "Potes de vidro",
+        "item": "Pote de vidro vazio",
+        "pergunta": "Qual é a melhor ideia?",
+        "alternativas": [
+          { "texto": "Usar de novo", "imagem": "/kids/vidro.jpg", "alt": "Potes de vidro" },
+          { "texto": "Quebrar", "imagem": "/kids/vidro-quebrado.jpg", "alt": "Vidro quebrado" },
+          { "texto": "Lixo comum", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" }
+        ],
+        "correta": 0,
+        "explicacao": "Ótimo! Usar de novo é o melhor. Quando não servir mais, vai inteiro para a reciclagem.",
+        "dica": "O pote ainda pode guardar lápis ou biscoitos!"
+      },
+      {
+        "id": "jornal",
+        "imagem": "/kids/jornal.jpg",
+        "alt": "Jornais dobrados",
+        "item": "Jornal velho",
+        "pergunta": "Do que é feito o jornal?",
+        "alternativas": [
+          { "texto": "Papel", "imagem": "/kids/papel.jpg", "alt": "Folhas de papel" },
+          { "texto": "Metal", "imagem": "/kids/lata.jpg", "alt": "Latinhas de metal" },
+          { "texto": "Plástico", "imagem": "/kids/plastico.jpg", "alt": "Garrafas de plástico" }
+        ],
+        "correta": 0,
+        "explicacao": "Acertou! Jornal é papel e vai para a reciclagem.",
+        "dica": "Você consegue rasgar o jornal com a mão."
+      },
+      {
+        "id": "remedio",
+        "imagem": "/kids/remedio.jpg",
+        "alt": "Comprimidos coloridos",
+        "item": "Remédio velho",
+        "pergunta": "Quem cuida do remédio velho?",
+        "alternativas": [
+          { "texto": "Eu jogo no vaso", "imagem": "/kids/vaso.jpg", "alt": "Desenho de vaso sanitário" },
+          { "texto": "Eu guardo na mochila", "imagem": "/kids/mochila.jpg", "alt": "Mochila" },
+          { "texto": "Um adulto leva à farmácia", "imagem": "/kids/farmacia.jpg", "alt": "Placa de farmácia" }
+        ],
+        "correta": 2,
+        "explicacao": "Isso! Remédio não é brinquedo. Um adulto leva à farmácia.",
+        "dica": "Remédio é coisa de adulto."
+      }
+    ]
   },
   {
-    "id": "latinha",
-    "emoji": "🥫",
-    "item": "Latinha de suco",
-    "descricao": "Lata de alumínio vazia.",
-    "pergunta": "Onde ela deve ir?",
-    "alternativas": [
-      { "texto": "Lixo comum", "emoji": "🗑️" },
-      { "texto": "Recicláveis", "emoji": "♻️" },
-      { "texto": "Pia", "emoji": "🚰" }
-    ],
-    "correta": 1,
-    "explicacao": "Latinhas de alumínio são recicláveis e podem virar latinhas novas muitas vezes."
-  },
-  {
-    "id": "pilha",
-    "emoji": "🔋",
-    "item": "Pilha do controle remoto",
-    "descricao": "A pilha acabou.",
-    "pergunta": "O que fazer com ela?",
-    "alternativas": [
-      { "texto": "Jogar no lixo comum", "emoji": "🗑️" },
-      { "texto": "Enterrar no jardim", "emoji": "🌱" },
-      { "texto": "Pedir a um adulto para levar ao coletor de pilhas", "emoji": "🧑" }
-    ],
-    "correta": 2,
-    "explicacao": "Pilhas têm substâncias que fazem mal à natureza. Um adulto leva ao coletor de pilhas."
-  },
-  {
-    "id": "garrafa-pet",
-    "emoji": "🧴",
-    "item": "Garrafa de refrigerante",
-    "descricao": "Garrafa PET vazia.",
-    "pergunta": "De qual material ela é feita?",
-    "alternativas": [
-      { "texto": "Vidro", "emoji": "🫙" },
-      { "texto": "Plástico", "emoji": "🧴" },
-      { "texto": "Papel", "emoji": "📄" }
-    ],
-    "correta": 1,
-    "explicacao": "A garrafa PET é de plástico. Esvazie e coloque nos recicláveis."
-  },
-  {
-    "id": "agulha",
-    "emoji": "💉",
-    "item": "Agulha na calçada",
-    "descricao": "Você encontrou uma agulha no chão.",
-    "pergunta": "O que você faz?",
-    "alternativas": [
-      { "texto": "Pego e jogo no lixo", "emoji": "✋" },
-      { "texto": "Não toco e chamo um adulto", "emoji": "🙅" },
-      { "texto": "Levo para casa", "emoji": "🏠" }
-    ],
-    "correta": 1,
-    "explicacao": "Agulhas podem machucar e passar doenças. Nunca toque: chame um adulto!"
-  },
-  {
-    "id": "oleo",
-    "emoji": "🍳",
-    "item": "Óleo da fritura",
-    "descricao": "Sobrou óleo na panela.",
-    "pergunta": "Onde ele deve ir?",
-    "alternativas": [
-      { "texto": "Na pia", "emoji": "🚰" },
-      { "texto": "Numa garrafa fechada, para o ecoponto", "emoji": "🧴" },
-      { "texto": "No vaso sanitário", "emoji": "🚽" }
-    ],
-    "correta": 1,
-    "explicacao": "Óleo na pia polui a água. Depois de frio, um adulto guarda na garrafa e leva ao ecoponto."
-  },
-  {
-    "id": "pote-vidro",
-    "emoji": "🫙",
-    "item": "Pote de geleia",
-    "descricao": "Pote de vidro vazio, inteiro.",
-    "pergunta": "Qual a melhor ideia?",
-    "alternativas": [
-      { "texto": "Reutilizar para guardar coisas", "emoji": "🖍️" },
-      { "texto": "Quebrar antes de jogar", "emoji": "🔨" },
-      { "texto": "Jogar no lixo comum", "emoji": "🗑️" }
-    ],
-    "correta": 0,
-    "explicacao": "Reutilizar é ótimo! Quando não servir mais, vai inteiro para os recicláveis. Nunca quebre o vidro."
-  },
-  {
-    "id": "remedio",
-    "emoji": "💊",
-    "item": "Remédio vencido",
-    "descricao": "Uma cartela de comprimidos que venceu.",
-    "pergunta": "Quem cuida disso?",
-    "alternativas": [
-      { "texto": "Eu jogo no vaso sanitário", "emoji": "🚽" },
-      { "texto": "Eu guardo na mochila", "emoji": "🎒" },
-      { "texto": "Um adulto leva à farmácia", "emoji": "🏥" }
-    ],
-    "correta": 2,
-    "explicacao": "Remédio não é brinquedo. Um adulto leva à farmácia que recebe medicamentos vencidos."
+    "id": "grandes",
+    "nome": "A partir de 10 anos",
+    "descricao": "Perguntas com situações do dia a dia",
+    "perguntas": [
+      {
+        "id": "oleo",
+        "imagem": "/kids/oleo.jpg",
+        "alt": "Garrafa de óleo de cozinha",
+        "item": "Óleo de fritura",
+        "pergunta": "Sobrou óleo de fritura. Qual é o destino certo?",
+        "alternativas": [
+          { "texto": "Ralo da pia", "imagem": "/kids/pia.jpg", "alt": "Pia de cozinha" },
+          { "texto": "Garrafa fechada levada ao ecoponto", "imagem": "/kids/ecoponto.jpg", "alt": "Materiais separados para reciclagem" },
+          { "texto": "Vaso sanitário", "imagem": "/kids/vaso.jpg", "alt": "Desenho de vaso sanitário" }
+        ],
+        "correta": 1,
+        "explicacao": "Correto! Depois de frio, o óleo vai numa garrafa fechada até o ecoponto. No ralo, ele entope canos e polui rios e o mar.",
+        "dica": "O que acontece com o encanamento quando a gordura esfria?"
+      },
+      {
+        "id": "lampada",
+        "imagem": "/kids/lampada.jpg",
+        "alt": "Lâmpada fluorescente em espiral",
+        "item": "Lâmpada fluorescente",
+        "pergunta": "Para onde vai a lâmpada fluorescente queimada?",
+        "alternativas": [
+          { "texto": "Loja que recolhe lâmpadas", "imagem": "/kids/loja.jpg", "alt": "Loja" },
+          { "texto": "Lixo comum", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" },
+          { "texto": "Junto com o vidro reciclável", "imagem": "/kids/vidro.jpg", "alt": "Potes de vidro" }
+        ],
+        "correta": 0,
+        "explicacao": "Isso! Ela tem mercúrio, que é tóxico. Por isso volta para lojas que participam da coleta de lâmpadas.",
+        "dica": "Essa lâmpada tem uma substância tóxica dentro."
+      },
+      {
+        "id": "celular",
+        "imagem": "/kids/celular.jpg",
+        "alt": "Celular antigo",
+        "item": "Celular quebrado",
+        "pergunta": "Seu celular antigo quebrou de vez. O que fazer?",
+        "alternativas": [
+          { "texto": "Coletor de eletrônicos ou ecoponto", "imagem": "/kids/ecoponto.jpg", "alt": "Materiais separados para reciclagem" },
+          { "texto": "Lixo comum", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" },
+          { "texto": "Esquecer numa gaveta", "imagem": "/kids/gaveta.jpg", "alt": "Gaveta bagunçada" }
+        ],
+        "correta": 0,
+        "explicacao": "Mandou bem! Eletrônicos têm metais que podem ser reaproveitados e substâncias que não podem ir para o lixo.",
+        "dica": "Dentro do celular há metais valiosos e uma bateria."
+      },
+      {
+        "id": "iogurte",
+        "imagem": "/kids/iogurte.jpg",
+        "alt": "Pote de iogurte",
+        "item": "Pote de iogurte",
+        "pergunta": "Antes de colocar o pote na reciclagem, você precisa…",
+        "alternativas": [
+          { "texto": "Lavar com detergente e muita água", "imagem": "/kids/detergente.jpg", "alt": "Louça sendo lavada" },
+          { "texto": "Tirar o resto com uma colher ou guardanapo", "imagem": "/kids/iogurte.jpg", "alt": "Pote de iogurte" },
+          { "texto": "Nada: pode ir cheio de iogurte", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" }
+        ],
+        "correta": 1,
+        "explicacao": "Isso! Não precisa lavar: basta tirar os restos. Assim você economiza água e ajuda os catadores.",
+        "dica": "Gastar muita água também faz mal ao planeta."
+      },
+      {
+        "id": "copo-quebrado",
+        "imagem": "/kids/vidro-quebrado.jpg",
+        "alt": "Vidro quebrado",
+        "item": "Copo quebrado",
+        "pergunta": "Um copo quebrou. Como um adulto deve descartar?",
+        "alternativas": [
+          { "texto": "Embrulhar em jornal e escrever VIDRO QUEBRADO", "imagem": "/kids/jornal.jpg", "alt": "Jornais dobrados" },
+          { "texto": "Jogar os cacos soltos no lixo", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" },
+          { "texto": "Juntar os cacos com as mãos", "imagem": "/kids/maos.jpg", "alt": "Mão de criança no chão" }
+        ],
+        "correta": 0,
+        "explicacao": "Correto! Bem embrulhado e identificado, ninguém se corta na coleta.",
+        "dica": "Pense em quem vai recolher esse lixo depois."
+      },
+      {
+        "id": "tinta",
+        "imagem": "/kids/tinta.jpg",
+        "alt": "Latas de tinta",
+        "item": "Lata com resto de tinta",
+        "pergunta": "A lata ainda tem tinta molhada. O que fazer?",
+        "alternativas": [
+          { "texto": "Jogar o resto no ralo", "imagem": "/kids/pia.jpg", "alt": "Pia de cozinha" },
+          { "texto": "Deixar secar e depois reciclar a lata", "imagem": "/kids/tinta.jpg", "alt": "Latas de tinta" },
+          { "texto": "Enterrar no quintal", "imagem": "/kids/terra.jpg", "alt": "Terra do jardim" }
+        ],
+        "correta": 1,
+        "explicacao": "Isso! Tinta no ralo ou na terra contamina a água. Seca, a lata pode ser reciclada.",
+        "dica": "Tinta molhada contamina a água e o solo."
+      },
+      {
+        "id": "pilhas",
+        "imagem": "/kids/pilha.jpg",
+        "alt": "Pilha",
+        "item": "Pilhas usadas",
+        "pergunta": "Onde descartar pilhas usadas?",
+        "alternativas": [
+          { "texto": "Coletor de pilhas ou ecoponto", "imagem": "/kids/ecoponto.jpg", "alt": "Materiais separados para reciclagem" },
+          { "texto": "Lixo comum", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" },
+          { "texto": "Vaso sanitário", "imagem": "/kids/vaso.jpg", "alt": "Desenho de vaso sanitário" }
+        ],
+        "correta": 0,
+        "explicacao": "Exato! Muitas lojas e supermercados têm coletor de pilhas. No lixo comum, elas contaminam o solo e a água.",
+        "dica": "Pilhas têm metais que contaminam o meio ambiente."
+      },
+      {
+        "id": "remedios",
+        "imagem": "/kids/remedio.jpg",
+        "alt": "Comprimidos coloridos",
+        "item": "Remédios vencidos",
+        "pergunta": "Para onde vão os remédios vencidos da casa?",
+        "alternativas": [
+          { "texto": "Farmácia que recebe remédios", "imagem": "/kids/farmacia.jpg", "alt": "Placa de farmácia" },
+          { "texto": "Vaso sanitário", "imagem": "/kids/vaso.jpg", "alt": "Desenho de vaso sanitário" },
+          { "texto": "Lixo comum", "imagem": "/kids/lixo-comum.jpg", "alt": "Lixeira comum" }
+        ],
+        "correta": 0,
+        "explicacao": "Isso! Farmácias que participam da coleta recebem remédios vencidos sem contaminar a água.",
+        "dica": "Onde você compra remédio?"
+      }
+    ]
   }
 ]

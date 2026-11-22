@@ -19,7 +19,7 @@ UC01 – Buscar material
 - Objetivo: Saber como descartar um resíduo.
 - Requisitos: RF01
 - Pré-condições: Nenhuma.
-- Fluxo principal: O Usuário digita o nome do resíduo ou escolhe uma categoria, e o sistema lista os materiais encontrados. Ao escolher um material, o sistema mostra riscos, cuidados, destino correto e a fonte da informação.
+- Fluxo principal: O Usuário digita o nome do resíduo ou escolhe uma categoria, e o sistema lista os materiais encontrados. Ao escolher um material, o sistema mostra os riscos do descarte incorreto, o passo a passo para descarte (terminando em onde levar) e a fonte da informação.
 - Alternativos / Exceções: Se nada for encontrado, o sistema exibe "Nenhum resultado" e sugere as categorias.
 - Pós-condições: Orientação de descarte exibida.
 
@@ -69,6 +69,8 @@ UC06 – Responder quiz Kids
 - Objetivo: Aprender de forma lúdica a separar os materiais.
 - Requisitos: RF05
 - Pré-condições: Nenhuma.
-- Fluxo principal: O Usuário abre a área Kids, vê o aviso de segurança, inicia o quiz e escolhe uma alternativa em cada pergunta, e o sistema indica se acertou, explica a resposta e mostra a pontuação no final.
-- Alternativos / Exceções: O Usuário pode reiniciar o quiz a qualquer momento.
-- Pós-condições: Pontuação exibida (não é salva no servidor).
+- Fluxo principal: O Usuário abre a área Kids, vê o aviso de segurança e escolhe o nível (até 10 anos ou a partir de 10 anos). O sistema mostra uma pergunta com foto e três alternativas com foto. Ao acertar, o sistema mostra brilhos, toca uma musiquinha com palmas, explica a resposta e, depois de alguns segundos, passa sozinho para a próxima pergunta. No fim, mostra as estrelas pelos acertos de primeira.
+- Alternativos / Exceções:
+  - Se o Usuário errar, o sistema mostra uma animação e uma dica, desativa a alternativa errada e repete a mesma pergunta até ele acertar.
+  - O Usuário pode desligar o som, trocar de nível ou recomeçar a qualquer momento.
+- Pós-condições: Resultado exibido (não é salvo no servidor).

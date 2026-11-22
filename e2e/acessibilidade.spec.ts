@@ -8,7 +8,7 @@ const paginas = ["/", "/buscar?q=lampada", "/material/pilhas", "/pontos", "/pont
 for (const caminho of paginas) {
   for (const tema of ["light", "dark"] as const) {
     test(`acessibilidade de ${caminho} (tema ${tema === "light" ? "claro" : "escuro"})`, async ({ page }) => {
-      await page.emulateMedia({ colorScheme: tema });
+      await page.addInitScript((t) => localStorage.setItem("descarte-certo:tema", t), tema === "dark" ? "escuro" : "claro");
       await page.route("**/tile.openstreetmap.org/**", (r) => r.fulfill({ status: 204, body: "" }));
       await simularSupabase(page);
       await page.goto(caminho);
@@ -39,4 +39,10 @@ test("página inexistente mostra a página 404 amigável", async ({ page }) => {
   const r = await page.goto("/pagina-que-nao-existe");
   expect(r?.status()).toBe(404);
   await expect(page.getByRole("heading", { name: "Página não encontrada" })).toBeVisible();
+});
+
+test("página Sobre mostra os ícones dos ODS relacionados", async ({ page }) => {
+  await page.goto("/sobre");
+  await expect(page.getByRole("heading", { name: "Objetivos de Desenvolvimento Sustentável (ODS) relacionados ao projeto" })).toBeVisible();
+  for (const n of [12, 3, 4, 11]) await expect(page.getByRole("img", { name: new RegExp(`^ODS ${n}:`) })).toBeVisible();
 });

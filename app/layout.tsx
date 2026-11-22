@@ -3,6 +3,7 @@ import { Baloo_2, Nunito_Sans } from "next/font/google";
 import { BottomNav } from "@/components/BottomNav";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { SCRIPT_TEMA } from "@/lib/tema";
 import "./globals.css";
 
 const baloo = Baloo_2({ variable: "--font-baloo", subsets: ["latin"], weight: ["600", "700", "800"] });
@@ -24,7 +25,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${baloo.variable} ${nunito.variable} h-full antialiased`}>
+    <html
+      lang="pt-BR"
+      data-tema="claro"
+      suppressHydrationWarning
+      className={`${baloo.variable} ${nunito.variable} h-full antialiased`}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
+      </head>
       <body className="flex min-h-full flex-col font-sans">
         <a
           href="#conteudo"

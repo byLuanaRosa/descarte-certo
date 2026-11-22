@@ -3,7 +3,7 @@ export type ItemMenu = { href: string; rotulo: string; icone: string };
 export const itensMenu: ItemMenu[] = [
   { href: "/", rotulo: "Início", icone: "🏠" },
   { href: "/buscar", rotulo: "Buscar", icone: "🔎" },
-  { href: "/pontos", rotulo: "Pontos", icone: "📍" },
+  { href: "/pontos", rotulo: "Pontos de coleta", icone: "📍" },
   { href: "/dicas", rotulo: "Dicas", icone: "🌱" },
   { href: "/kids", rotulo: "Kids", icone: "🙂" },
 ];

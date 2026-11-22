@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { creditosImagens } from "@/lib/conteudo";
 
 export const metadata: Metadata = { title: "Sobre o Descarte Certo" };
 
@@ -70,21 +72,25 @@ export default function SobrePage() {
 
       <section aria-labelledby="ods">
         <h2 id="ods" className="mb-3 text-2xl font-bold">
-          Objetivos de Desenvolvimento Sustentável (ONU)
+          Objetivos de Desenvolvimento Sustentável (ODS) relacionados ao projeto
         </h2>
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {ods.map((o) => (
-            <li key={o.numero} className="flex items-center gap-3 rounded-[var(--radius-card)] border border-border bg-card p-4">
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary text-xl font-bold text-primary-foreground">
-                {o.numero}
-              </span>
-              <span>
-                {o.nome}
-                {o.principal && <span className="ml-2 rounded-full bg-secondary px-2 py-0.5 text-xs font-bold">Principal</span>}
-              </span>
+            <li key={o.numero} className="flex flex-col items-center gap-2 text-center">
+              <Image
+                src={`/ods/ods-${o.numero}.png`}
+                alt={`ODS ${o.numero}: ${o.nome}`}
+                width={200}
+                height={200}
+                className="w-full max-w-[200px] rounded-lg shadow-sm"
+              />
+              {o.principal && <span className="rounded-full bg-secondary px-3 py-1 text-sm font-bold">Principal</span>}
             </li>
           ))}
         </ul>
+        <p className="mt-2 text-sm text-muted">
+          Ícones oficiais dos ODS da ONU, obtidos na galeria do Governo do Paraná (sgdes.pr.gov.br).
+        </p>
       </section>
 
       <section aria-labelledby="fontes">
@@ -100,6 +106,31 @@ export default function SobrePage() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section aria-labelledby="creditos">
+        <details>
+          <summary id="creditos" className="cursor-pointer text-xl font-bold">
+            Créditos das imagens do Descarte Certo Kids
+          </summary>
+          <p className="mt-2 text-sm text-muted">
+            Todas são de domínio público ou licença CC0 (sem direitos autorais), encontradas pelo Openverse.
+          </p>
+          <ul className="mt-2 list-disc space-y-1 pl-6 text-sm">
+            {creditosImagens.map((c) => (
+              <li key={c.arquivo}>
+                {c.pagina ? (
+                  <a href={c.pagina} target="_blank" rel="noreferrer" className="text-primary underline">
+                    {c.titulo}
+                  </a>
+                ) : (
+                  c.titulo
+                )}
+                {c.autor ? ` – ${c.autor}` : ""} ({c.licenca}, {c.fonte})
+              </li>
+            ))}
+          </ul>
+        </details>
       </section>
 
       <section aria-labelledby="privacidade" className="space-y-2">

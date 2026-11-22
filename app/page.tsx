@@ -16,7 +16,7 @@ export default function Home() {
         <p className="font-semibold text-primary">Olá! Boas-vindas ao</p>
         <h1 className="text-5xl font-extrabold text-primary-deep sm:text-6xl">Descarte Certo</h1>
         <p className="mb-6 mt-3 max-w-xl text-lg text-muted">
-          Orientação para descartar cada resíduo com segurança e um futuro mais sustentável.
+          Digite abaixo o nome do material que deseja descartar para receber a orientação de descarte.
         </p>
         <CampoBusca />
       </section>

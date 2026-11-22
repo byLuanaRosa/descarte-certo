@@ -1,6 +1,7 @@
 import categoriasJson from "@/data/categorias.json";
 import dicasJson from "@/data/dicas.json";
 import materiaisJson from "@/data/materiais.json";
+import creditosJson from "@/data/creditos-imagens.json";
 import quizJson from "@/data/quiz.json";
 
 export type Categoria = { id: string; nome: string; icone: string };
@@ -11,7 +12,7 @@ export type Material = {
   sinonimos: string[];
   categoria: string;
   riscos: string[];
-  cuidados: string[];
+  passos: string[];
   destino: string;
   fonte: { titulo: string; url: string };
   revisado_em: string;
@@ -19,21 +20,37 @@ export type Material = {
 
 export type Dica = { id: string; tema: string; tipo: string; titulo: string; texto: string };
 
+export type ImagemQuiz = { texto: string; imagem: string; alt: string };
+
 export type PerguntaQuiz = {
   id: string;
-  emoji: string;
+  imagem: string;
+  alt: string;
   item: string;
-  descricao: string;
   pergunta: string;
-  alternativas: { texto: string; emoji: string }[];
+  alternativas: ImagemQuiz[];
   correta: number;
   explicacao: string;
+  /** Mostrada quando a criança erra, antes de tentar de novo. */
+  dica: string;
+};
+
+export type NivelQuiz = { id: string; nome: string; descricao: string; perguntas: PerguntaQuiz[] };
+
+export type CreditoImagem = {
+  arquivo: string;
+  titulo: string;
+  autor: string | null;
+  licenca: string;
+  fonte: string;
+  pagina: string | null;
 };
 
 export const categorias: Categoria[] = categoriasJson;
 export const materiais: Material[] = materiaisJson;
 export const dicas: Dica[] = dicasJson;
-export const perguntasQuiz: PerguntaQuiz[] = quizJson;
+export const niveisQuiz: NivelQuiz[] = quizJson;
+export const creditosImagens: CreditoImagem[] = creditosJson;
 
 export function buscarMaterialPorId(id: string): Material | undefined {
   return materiais.find((m) => m.id === id);
