@@ -13,19 +13,19 @@ const atalhos = [
 export default function Home() {
   return (
     <div className="space-y-10">
-      <section className="relative isolate -mx-4 -mt-6 flex min-h-[22rem] items-center overflow-hidden rounded-b-3xl px-4 pb-10 pt-8 md:min-h-[28rem]">
+      <section className="relative isolate -mx-4 -mt-6 flex items-center overflow-hidden rounded-b-3xl bg-gradient-to-b from-secondary/60 to-background px-4 pb-8 pt-8 md:min-h-[28rem] md:bg-none md:pb-10">
+        {/* Computador: ilustração de fundo, com o texto sobre a parte branca da esquerda */}
         <Image
           src="/hero-florianopolis.jpg"
           alt=""
           fill
           priority
-          sizes="100vw"
-          className="-z-20 object-cover object-[70%_center] dark:opacity-35"
+          sizes="(min-width: 768px) 100vw, 1px"
+          className="-z-20 hidden object-cover object-[70%_center] md:block dark:opacity-35"
         />
-        {/* Degradê para o texto ficar legível sobre a ilustração */}
         <div
           aria-hidden
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-background/90 via-background/75 to-background/20 md:bg-gradient-to-r md:from-background md:via-background/70 md:to-transparent"
+          className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-background via-background/70 to-transparent md:block"
         />
         <div className="w-full">
           <p className="font-semibold text-primary-deep">Olá! Boas-vindas ao</p>
@@ -34,6 +34,16 @@ export default function Home() {
             Digite abaixo o nome do material que deseja descartar para receber a orientação de descarte.
           </p>
           <CampoBusca />
+          {/* Celular: a ilustração vem abaixo da busca, enquadrada na ponte Hercílio Luz */}
+          <div className="relative mt-6 aspect-[4/3] w-full overflow-hidden rounded-2xl md:hidden">
+            <Image
+              src="/hero-florianopolis.jpg"
+              alt="Ilustração da Ponte Hercílio Luz e da paisagem de Florianópolis"
+              fill
+              sizes="(max-width: 767px) 100vw, 1px"
+              className="origin-[62%_58%] scale-[1.45] object-cover object-[78%_center] dark:opacity-60"
+            />
+          </div>
         </div>
       </section>
 
