@@ -13,26 +13,19 @@ const atalhos = [
 export default function Home() {
   return (
     <div className="space-y-10">
-      <section className="relative isolate -mx-4 -mt-6 flex min-h-[38rem] items-start overflow-hidden rounded-b-3xl px-4 pb-10 pt-8 md:min-h-[28rem] md:items-center">
-        {/*
-          Ilustração de fundo, atrás do texto e da busca.
-          Celular: ancorada embaixo e ampliada, para a Ponte Hercílio Luz aparecer logo abaixo da busca.
-          Computador: ocupa todo o topo, com o texto sobre a parte branca da esquerda.
-        */}
-        <div className="absolute inset-x-0 bottom-0 -z-20 h-[115vw] md:inset-0 md:h-auto">
-          <Image
-            src="/hero-florianopolis.jpg"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[74%_center] md:object-[70%_center] dark:opacity-35"
-          />
-        </div>
+      <section className="relative isolate -mx-4 -mt-6 flex min-h-[22rem] items-center overflow-hidden rounded-b-3xl px-4 pb-10 pt-8 md:min-h-[28rem]">
+        <Image
+          src="/hero-florianopolis.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="-z-20 object-cover object-[86%_center] md:object-[70%_center] dark:opacity-35"
+        />
         {/* Degradê para o texto ficar legível sobre a ilustração */}
         <div
           aria-hidden
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-background from-35% via-background/60 via-55% to-transparent to-75% md:bg-gradient-to-r md:from-background md:from-0% md:via-background/70 md:via-50% md:to-transparent md:to-100%"
+          className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/35 to-transparent md:bg-gradient-to-r md:from-background md:via-background/70 md:to-transparent"
         />
         <div className="w-full">
           <p className="font-semibold text-primary-deep">Olá! Boas-vindas ao</p>
