@@ -30,7 +30,8 @@ export default function Home() {
         <div className="w-full">
           <p className="font-semibold text-primary-deep">Olá! Boas-vindas ao</p>
           <h1 className="text-5xl font-extrabold text-primary-deep sm:text-6xl">Descarte Certo</h1>
-          <p className="mb-6 mt-3 max-w-xl text-lg text-muted">
+          {/* No celular o texto fica sobre a ilustração: cor forte, negrito e um halo da cor do fundo */}
+          <p className="mb-6 mt-3 max-w-xl text-lg font-semibold text-foreground [text-shadow:0_0_6px_var(--background),0_0_12px_var(--background),0_0_2px_var(--background)] md:font-normal md:text-muted md:[text-shadow:none]">
             Digite abaixo o nome do material que deseja descartar para receber a orientação de descarte.
           </p>
           <CampoBusca />
