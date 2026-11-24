@@ -69,7 +69,7 @@ npm run dev
 A CI (`.github/workflows/ci.yml`) roda todos eles a cada push na `main` e em cada Pull Request.
 
 ## Banco de dados (Supabase)
-O projeto já está criado na conta da Luana (`descarte-certo`, região São Paulo), com a tabela, as regras de segurança e 4 ecopontos verificados. Para recriar em outro projeto, rode no SQL Editor `supabase/schema.sql` e depois `supabase/seed.sql`.
+O projeto já está criado na conta da Luana (`descarte-certo`, região São Paulo), com a tabela, as regras de segurança e 45 pontos de coleta verificados na Grande Florianópolis. Para recriar em outro projeto, rode no SQL Editor `supabase/schema.sql` e depois `supabase/seed.sql`.
 
 **Criar o administrador:** o login do site usa **nome de usuário e senha**. Por baixo, o nome de usuário vira um e-mail interno `usuario@admin.descarte-certo.app` no Supabase Auth (ex.: usuário `teste` → `teste@admin.descarte-certo.app`).
 1. No painel do Supabase: Authentication → Users → Add user → Create new user. Em e-mail, use `nome-de-usuario@admin.descarte-certo.app`; defina a senha (mínimo 6 caracteres) e marque **Auto Confirm User**.
