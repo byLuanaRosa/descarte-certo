@@ -68,3 +68,34 @@ export async function simularSupabase(page: Page, opcoes: { falhar?: boolean } =
   });
   return { inseridos };
 }
+
+/** Dicas usadas nos testes de ponta a ponta. */
+export const dicasSimuladas = [
+  {
+    id: "d1",
+    tema: "Reduzir",
+    tipo: "Atitude prática",
+    titulo: "Leve sua própria sacola",
+    texto: "Sacolas reutilizáveis evitam o uso de sacolas descartáveis.",
+    fonte_titulo: "Fonte de teste A",
+    fonte_url: "https://exemplo.org/a",
+  },
+  {
+    id: "d2",
+    tema: "Reciclagem",
+    tipo: "Você sabia?",
+    titulo: "Separe secos e úmidos",
+    texto: "Recicláveis secos num lado, restos de comida no outro.",
+    fonte_titulo: "Fonte de teste B",
+    fonte_url: "https://exemplo.org/b",
+  },
+];
+
+/** Intercepta a leitura pública das dicas (GET em /rest/v1/dicas). */
+export async function simularDicas(page: Page, opcoes: { falhar?: boolean } = {}) {
+  await page.route("**/rest/v1/dicas**", (route) =>
+    opcoes.falhar
+      ? route.fulfill({ status: 500, contentType: "application/json", json: { message: "indisponível" } })
+      : route.fulfill({ status: 200, contentType: "application/json", json: dicasSimuladas }),
+  );
+}

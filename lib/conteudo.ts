@@ -1,5 +1,4 @@
 import categoriasJson from "@/data/categorias.json";
-import dicasJson from "@/data/dicas.json";
 import materiaisJson from "@/data/materiais.json";
 import creditosJson from "@/data/creditos-imagens.json";
 import quizJson from "@/data/quiz.json";
@@ -16,16 +15,6 @@ export type Material = {
   destino: string;
   fonte: { titulo: string; url: string };
   revisado_em: string;
-};
-
-export type Dica = {
-  id: string;
-  tema: string;
-  tipo: string;
-  titulo: string;
-  texto: string;
-  /** De onde veio a informação, quando a dica se apoia numa publicação. */
-  fonte?: { titulo: string; url: string };
 };
 
 export type ImagemQuiz = { texto: string; imagem: string; alt: string };
@@ -56,7 +45,6 @@ export type CreditoImagem = {
 
 export const categorias: Categoria[] = categoriasJson;
 export const materiais: Material[] = materiaisJson;
-export const dicas: Dica[] = dicasJson;
 export const niveisQuiz: NivelQuiz[] = quizJson;
 export const creditosImagens: CreditoImagem[] = creditosJson;
 

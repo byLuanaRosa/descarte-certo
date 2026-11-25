@@ -1,6 +1,6 @@
 -- Descarte Certo – esquema do banco (Supabase / PostgreSQL)
 -- Aplique uma vez no SQL Editor do Supabase (ou via migração).
--- Só os pontos de coleta e a lista de administradores ficam no banco.
+-- Ficam no banco os pontos de coleta, as dicas e a lista de administradores.
 
 -- 1. Administradores --------------------------------------------------------
 -- Só quem está nesta tabela pode ver pendentes, aprovar, rejeitar e apagar.
@@ -132,7 +132,48 @@ create trigger limitar_sugestoes
   before insert on public.pontos_coleta
   for each row execute function privado.limitar_sugestoes();
 
--- 3. Criar o primeiro administrador -----------------------------------------
+-- 3. Dicas ambientais -------------------------------------------------------
+-- Toda dica tem fonte (título e link https). O público só lê; administradores
+-- criam, editam e excluem pelo painel /admin.
+create table if not exists public.dicas (
+  id uuid primary key default gen_random_uuid(),
+  tema text not null check (char_length(btrim(tema)) between 2 and 40),
+  tipo text not null check (tipo in ('Atitude prática', 'Você sabia?', 'Erros comuns')),
+  titulo text not null check (char_length(btrim(titulo)) between 3 and 80),
+  texto text not null check (char_length(btrim(texto)) between 10 and 400),
+  fonte_titulo text not null check (char_length(btrim(fonte_titulo)) between 3 and 300),
+  fonte_url text not null check (char_length(fonte_url) <= 500 and fonte_url ~ '^https://'),
+  criado_em timestamptz not null default now(),
+  atualizado_em timestamptz not null default now()
+);
+
+alter table public.dicas enable row level security;
+
+drop policy if exists "publico le dicas" on public.dicas;
+create policy "publico le dicas" on public.dicas
+  for select to anon, authenticated using (true);
+
+drop policy if exists "admin cria dicas" on public.dicas;
+create policy "admin cria dicas" on public.dicas
+  for insert to authenticated with check ((select privado.eh_admin()));
+
+drop policy if exists "admin atualiza dicas" on public.dicas;
+create policy "admin atualiza dicas" on public.dicas
+  for update to authenticated
+  using ((select privado.eh_admin()))
+  with check ((select privado.eh_admin()));
+
+drop policy if exists "admin apaga dicas" on public.dicas;
+create policy "admin apaga dicas" on public.dicas
+  for delete to authenticated using ((select privado.eh_admin()));
+
+revoke all on public.dicas from anon, authenticated;
+grant select on public.dicas to anon, authenticated;
+grant insert (tema, tipo, titulo, texto, fonte_titulo, fonte_url) on public.dicas to authenticated;
+grant update (tema, tipo, titulo, texto, fonte_titulo, fonte_url, atualizado_em) on public.dicas to authenticated;
+grant delete on public.dicas to authenticated;
+
+-- 4. Criar o primeiro administrador -----------------------------------------
 -- a) No painel: Authentication → Users → Add user (e-mail e senha).
 -- b) Depois rode, trocando o e-mail:
 -- insert into public.administradores (user_id)

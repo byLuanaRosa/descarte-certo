@@ -37,7 +37,8 @@ UC03 – Ver dicas
 - Objetivo: Aprender a reduzir o lixo.
 - Requisitos: RF03
 - Pré-condições: Nenhuma.
-- Fluxo principal: O Usuário abre a página de dicas e filtra por tema, e o sistema exibe as dicas do tema escolhido.
+- Fluxo principal: O Usuário abre a página de dicas e filtra por tema, e o sistema exibe as dicas do tema escolhido, cada uma com a fonte.
+- Manutenção: o Administrador cria, edita e exclui dicas no painel; toda dica exige fonte com link.
 - Alternativos / Exceções: —
 - Pós-condições: Dicas exibidas.
 

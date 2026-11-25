@@ -30,7 +30,7 @@ O MVP permite:
 ```
 app/              páginas (Next.js App Router)
 components/       componentes de tela (mapa, quiz, formulário, admin…)
-data/             conteúdo fixo em JSON (materiais, categorias, dicas, quiz)
+data/             conteúdo fixo em JSON (materiais, categorias, quiz)
 lib/              regras do sistema (busca, distância, validação, Supabase…)
 supabase/         schema.sql, seed.sql e teste das regras de admin
 tests/            testes unitários (Vitest) e tests/seguranca (RLS no banco real)

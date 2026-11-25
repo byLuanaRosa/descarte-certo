@@ -78,6 +78,45 @@ describe.skipIf(!url || !chave)("RLS de pontos_coleta (usuário sem login)", () 
   });
 });
 
+describe.skipIf(!url || !chave)("RLS de dicas (usuário sem login)", () => {
+  const supabase = createClient(url ?? "http://x", chave ?? "x", { auth: { persistSession: false } });
+  const dicaValida = {
+    tema: "Teste",
+    tipo: "Você sabia?",
+    titulo: "Dica de teste",
+    texto: "Texto de teste de segurança.",
+    fonte_titulo: "Fonte de teste",
+    fonte_url: "https://exemplo.org",
+  };
+
+  it("lê as dicas publicadas, todas com fonte", async () => {
+    const { data, error } = await supabase.from("dicas").select("id, fonte_url");
+    expect(error).toBeNull();
+    expect(data!.length).toBeGreaterThan(0);
+    expect(data!.every((d) => d.fonte_url.startsWith("https://"))).toBe(true);
+  });
+
+  it("não consegue criar dica", async () => {
+    const { error } = await supabase.from("dicas").insert(dicaValida);
+    expect(error).not.toBeNull();
+  });
+
+  it("não consegue alterar nem apagar dicas", async () => {
+    const { data: alteradas, error: e1 } = await supabase
+      .from("dicas")
+      .update({ titulo: "Alterada" })
+      .neq("id", "00000000-0000-0000-0000-000000000000")
+      .select("id");
+    expect(e1 !== null || (alteradas ?? []).length === 0).toBe(true);
+    const { data: apagadas, error: e2 } = await supabase
+      .from("dicas")
+      .delete()
+      .neq("id", "00000000-0000-0000-0000-000000000000")
+      .select("id");
+    expect(e2 !== null || (apagadas ?? []).length === 0).toBe(true);
+  });
+});
+
 // RN02: não existe cadastro público. Só roda depois que o cadastro for desligado no painel
 // (Authentication > Sign In / Providers) e a variável VERIFICAR_CADASTRO_DESLIGADO=1 for definida.
 // Com o cadastro desligado, a tentativa falha e nada é gravado.

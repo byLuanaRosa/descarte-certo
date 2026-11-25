@@ -7,7 +7,7 @@ Requisitos do **MVP** do Descarte Certo. Eles são um recorte do [mockup](../../
 |---|---|---|
 | RF01 | Buscar informações sobre descarte de diversos tipos de resíduos | Busca por nome ou categoria mostra os riscos do descarte incorreto e um passo a passo simples para descarte, com destino e fonte. |
 | RF02 | Mostrar pontos de coleta de acordo com a localização do usuário em mapa e lista | Mapa acima da lista, com busca por nome ou bairro e filtro por material; pontos aprovados ordenados pela distância, materiais aceitos em ordem alfabética e botão "Como chegar". |
-| RF03 | Mostrar dicas para diminuir o lixo e o impacto ambiental do consumo | Página com dicas separadas por tema. |
+| RF03 | Mostrar dicas para diminuir o lixo e o impacto ambiental do consumo | Página com dicas separadas por tema, cada uma com a fonte da informação. O administrador cria, edita e exclui dicas pelo painel. |
 | RF04 | Cadastro comunitário de pontos de coleta com formulário e verificação | O formulário localiza o endereço no mapa e salva o ponto como "pendente"; o administrador faz login, aprova ou rejeita, e pode editar ou excluir qualquer ponto. |
 | RF05 | Quiz educativo sobre reciclagem e descarte correto | Quiz Kids com dois níveis (até 10 anos e a partir de 10 anos), ilustrações 2D coloridas livres de direitos autorais, brilhos, sons e palmas ao acertar e avanço automático; ao errar, animação, dica e repetição da pergunta até acertar; aviso de segurança para crianças. |
 
@@ -39,4 +39,4 @@ Funcionalidades que existem no mockup, mas ficam para depois:
 - restante da área Kids (jogo, desafios, curiosidades, escolas); o MVP terá só o quiz Kids;
 - botão de aumentar fonte (no MVP, a fonte segue o zoom do navegador);
 - funcionamento offline do PWA;
-- edição de materiais e dicas pelo admin (no MVP, esse conteúdo fica em arquivos no código).
+- edição de materiais pelo admin (no MVP, esse conteúdo fica em arquivos no código).

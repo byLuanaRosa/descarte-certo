@@ -1,12 +1,21 @@
 import { expect, test } from "@playwright/test";
+import { simularDicas } from "./supabase-simulado";
 
-test("dicas filtram por tema e trazem a dica de não lavar embalagens", async ({ page }) => {
+test("dicas vêm do banco, mostram a fonte e filtram por tema", async ({ page }) => {
+  await simularDicas(page);
   await page.goto("/dicas");
-  await expect(page.getByText(/10 dica\(s\) encontrada\(s\)/)).toBeVisible();
-  await expect(page.getByText(/Não precisa lavar! Um guardanapo usado/)).toBeVisible();
+  await expect(page.getByText(/2 dica\(s\) encontrada\(s\)/)).toBeVisible();
+  await expect(page.getByRole("link", { name: "Fonte de teste A" })).toHaveAttribute("href", "https://exemplo.org/a");
   await page.getByRole("navigation", { name: "Filtrar por tema" }).getByRole("link", { name: "Reduzir" }).click();
   await expect(page).toHaveURL(/tema=Reduzir/);
-  await expect(page.getByText(/2 dica\(s\) encontrada\(s\)/)).toBeVisible();
+  await expect(page.getByText(/1 dica\(s\) encontrada\(s\)/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Separe secos e úmidos" })).toHaveCount(0);
+});
+
+test("dicas mostram aviso se o banco não responder", async ({ page }) => {
+  await simularDicas(page, { falhar: true });
+  await page.goto("/dicas");
+  await expect(page.getByRole("alert").filter({ hasText: "Não foi possível carregar as dicas" })).toBeVisible();
 });
 
 test.describe("quiz Kids", () => {

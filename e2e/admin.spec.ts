@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { dicasSimuladas } from "./supabase-simulado";
 
 const USUARIO_ID = "11111111-1111-1111-1111-111111111111";
 
@@ -37,6 +38,7 @@ const pendentes = [
 async function simularAdmin(page: Page, opcoes: { ehAdmin: boolean; senhaCerta?: string }) {
   const atualizacoes: { url: string; corpo: unknown }[] = [];
   const exclusoes: string[] = [];
+  const dicasEnviadas: { metodo: string; url: string; corpo: unknown }[] = [];
   const emailsUsados: string[] = [];
   await page.route("**/tile.openstreetmap.org/**", (r) => r.fulfill({ status: 204, body: "" }));
   await page.route("**/auth/v1/token**", async (route) => {
@@ -84,7 +86,17 @@ async function simularAdmin(page: Page, opcoes: { ehAdmin: boolean; senhaCerta?:
       json: pendentes.map((p) => ({ ...p, status })),
     });
   });
-  return { atualizacoes, exclusoes, emailsUsados };
+  await page.route("**/rest/v1/dicas**", async (route) => {
+    const req = route.request();
+    const metodo = req.method();
+    if (metodo === "GET") return route.fulfill({ contentType: "application/json", json: dicasSimuladas });
+    const corpo = metodo === "DELETE" ? null : req.postDataJSON();
+    dicasEnviadas.push({ metodo, url: req.url(), corpo });
+    const id = new URL(req.url()).searchParams.get("id")?.replace("eq.", "") ?? "nova-id";
+    const linha = { id, ...(corpo as object) };
+    return route.fulfill({ status: metodo === "POST" ? 201 : 200, contentType: "application/json", json: [linha] });
+  });
+  return { atualizacoes, exclusoes, emailsUsados, dicasEnviadas };
 }
 
 async function login(page: Page, senha = "senha-certa") {
@@ -197,4 +209,65 @@ test("o login usa nome de usuário (convertido no e-mail interno)", async ({ pag
   await page.getByRole("button", { name: "Entrar" }).click();
   await expect(page.getByRole("heading", { name: /Pontos pendentes/ })).toBeVisible();
   expect(emailsUsados[0]).toBe("teste@admin.descarte-certo.app");
+});
+
+
+test.describe("dicas no painel", () => {
+  async function abrirDicas(page: Page) {
+    await login(page);
+    await page.getByRole("button", { name: "🌱 Dicas" }).click();
+    await expect(page.getByRole("heading", { name: "Dicas publicadas (2)" })).toBeVisible();
+  }
+
+  test("cria uma dica com fonte", async ({ page }) => {
+    const { dicasEnviadas } = await simularAdmin(page, { ehAdmin: true });
+    await abrirDicas(page);
+    await page.getByRole("button", { name: "+ Nova dica" }).click();
+    const form = page.getByRole("form", { name: "Nova dica" });
+    await form.getByLabel("Tema").fill("Coleta e limpeza pública");
+    await form.getByLabel("Tipo").selectOption("Você sabia?");
+    await form.getByLabel("Título").fill("Horário da coleta");
+    await form.getByLabel("Texto").fill("Coloque o lixo na rua perto do horário da coleta.");
+    await form.getByLabel("Fonte (como aparece no site)").fill("Comcap – Prefeitura de Florianópolis");
+    await form.getByLabel("Link da fonte").fill("https://www.pmf.sc.gov.br/comcap");
+    await form.getByRole("button", { name: "Publicar dica" }).click();
+
+    await expect(page.getByText("A dica “Horário da coleta” foi publicada.")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Dicas publicadas (3)" })).toBeVisible();
+    expect(dicasEnviadas[0]).toMatchObject({
+      metodo: "POST",
+      corpo: { tema: "Coleta e limpeza pública", tipo: "Você sabia?", fonte_url: "https://www.pmf.sc.gov.br/comcap" },
+    });
+  });
+
+  test("não salva dica sem fonte", async ({ page }) => {
+    const { dicasEnviadas } = await simularAdmin(page, { ehAdmin: true });
+    await abrirDicas(page);
+    await page.getByRole("button", { name: "+ Nova dica" }).click();
+    const form = page.getByRole("form", { name: "Nova dica" });
+    await form.getByLabel("Tema").fill("Reciclagem");
+    await form.getByLabel("Título").fill("Dica sem fonte");
+    await form.getByLabel("Texto").fill("Um texto qualquer sem fonte nenhuma.");
+    await form.getByRole("button", { name: "Publicar dica" }).click();
+    await expect(form.getByRole("alert")).toContainText("Link da fonte");
+    expect(dicasEnviadas).toHaveLength(0);
+  });
+
+  test("edita e exclui uma dica", async ({ page }) => {
+    const { dicasEnviadas } = await simularAdmin(page, { ehAdmin: true });
+    await abrirDicas(page);
+    await page.getByRole("button", { name: "Editar Leve sua própria sacola" }).click();
+    const form = page.getByRole("form", { name: "Editar “Leve sua própria sacola”" });
+    await form.getByLabel("Título").fill("Leve sua sacola retornável");
+    await form.getByRole("button", { name: "Salvar alterações" }).click();
+    await expect(page.getByText("A dica “Leve sua sacola retornável” foi atualizada.")).toBeVisible();
+    expect(dicasEnviadas[0].metodo).toBe("PATCH");
+    expect(dicasEnviadas[0].url).toContain("id=eq.d1");
+
+    page.once("dialog", (d) => d.accept());
+    await page.getByRole("button", { name: "Excluir Separe secos e úmidos" }).click();
+    await expect(page.getByText("A dica “Separe secos e úmidos” foi excluída.")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Dicas publicadas (1)" })).toBeVisible();
+    expect(dicasEnviadas[1]).toMatchObject({ metodo: "DELETE" });
+  });
 });

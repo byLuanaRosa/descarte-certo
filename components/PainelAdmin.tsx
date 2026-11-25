@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { EditorPonto } from "@/components/EditorPonto";
+import { GerenciarDicas } from "@/components/GerenciarDicas";
 import { Mapa } from "@/components/Mapa";
 import {
   atualizarPonto,
@@ -33,6 +34,7 @@ export function PainelAdmin() {
   const [tela, setTela] = useState<Tela>(() =>
     supabaseConfigurado() ? { tipo: "carregando" } : { tipo: "indisponivel" },
   );
+  const [secao, setSecao] = useState<"pontos" | "dicas">("pontos");
   const [aba, setAba] = useState<StatusPonto>("pendente");
   const [pontos, setPontos] = useState<Ponto[]>([]);
   const [selecionado, setSelecionado] = useState<string | null>(null);
@@ -215,8 +217,49 @@ export function PainelAdmin() {
   ];
   const abaAtual = abas.find((a) => a.status === aba) ?? abas[0];
 
+  const secoes = [
+    { id: "pontos", rotulo: "📍 Pontos de coleta" },
+    { id: "dicas", rotulo: "🌱 Dicas" },
+  ] as const;
+
+  const menuSecoes = (
+    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
+      <nav aria-label="Áreas do painel" className="flex flex-wrap gap-2">
+        {secoes.map((s) => (
+          <button
+            key={s.id}
+            type="button"
+            aria-current={secao === s.id ? "page" : undefined}
+            onClick={() => {
+              setSecao(s.id);
+              setMensagem(null);
+              setEditando(null);
+            }}
+            className={`rounded-xl border-2 px-4 py-2 font-bold ${
+              secao === s.id ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card"
+            }`}
+          >
+            {s.rotulo}
+          </button>
+        ))}
+      </nav>
+      <button type="button" onClick={fazerLogout} className="rounded-full border border-border px-5 py-2">
+        Sair
+      </button>
+    </div>
+  );
+
+  if (secao === "dicas")
+    return (
+      <div className="space-y-5">
+        {menuSecoes}
+        <GerenciarDicas />
+      </div>
+    );
+
   return (
     <div className="space-y-5">
+      {menuSecoes}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div role="tablist" aria-label="Situação dos pontos" className="inline-flex flex-wrap rounded-full border border-border bg-card p-1">
           {abas.map((a) => (
@@ -232,9 +275,6 @@ export function PainelAdmin() {
             </button>
           ))}
         </div>
-        <button type="button" onClick={fazerLogout} className="rounded-full border border-border px-5 py-2">
-          Sair
-        </button>
       </div>
       <h2 className="text-2xl font-bold">
         {abaAtual.titulo} ({pontos.length}

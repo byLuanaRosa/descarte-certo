@@ -32,11 +32,11 @@ flowchart LR
 
     subgraph Vercel
         next[Next.js<br/>páginas]
-        json[(Arquivos JSON<br/>materiais, dicas, quiz)]
+        json[(Arquivos JSON<br/>materiais, quiz)]
     end
 
     subgraph Supabase
-        db[(PostgreSQL<br/>pontos_coleta + RLS)]
+        db[(PostgreSQL<br/>pontos_coleta, dicas + RLS)]
         auth[Auth<br/>login do admin]
     end
 
@@ -55,8 +55,8 @@ flowchart LR
 |---|---|---|
 | Frontend | Next.js 16 (App Router) + TypeScript + Tailwind CSS v4 | Páginas estáticas e simples; tema escuro por variáveis CSS que seguem a preferência do aparelho. |
 | Hospedagem | Vercel (plano gratuito) | Deploy automático a cada `git push`. |
-| Conteúdo fixo | Arquivos JSON no repositório | Materiais, dicas e quiz mudam pouco e não precisam de banco. |
-| Banco e login | Supabase (plano gratuito) | Pontos de coleta e login do admin por nome de usuário e senha. |
+| Conteúdo fixo | Arquivos JSON no repositório | Materiais e quiz mudam pouco e não precisam de banco. |
+| Banco e login | Supabase (plano gratuito) | Pontos de coleta, dicas (editáveis pelo admin, sempre com fonte) e login do admin por nome de usuário e senha. |
 | Mapa | Leaflet + OpenStreetMap | Gratuito, sem chave de API. Carregado só no navegador (`dynamic` com `ssr: false`). |
 | Endereço → coordenadas | Nominatim (OpenStreetMap) | Gratuito, sem chave. Uma busca por clique em "Localizar no mapa", respeitando o limite de 1 requisição por segundo. |
 | PWA | `app/manifest.ts` do Next.js | Torna o site instalável. Sem modo offline no MVP. |

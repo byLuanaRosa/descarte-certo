@@ -88,3 +88,54 @@ from (values
   ('Farmácias Nissei – Campinas','Rua Presidente Kennedy, 656 – Campinas, São José',-27.6007497,-48.6125293,array['medicamentos-vencidos']::text[],null,null,'https://www.logmed.org.br/onde-descartar')
 ) as v(nome, endereco, latitude, longitude, materiais, horario, telefone, fonte)
 where not exists (select 1 from public.pontos_coleta p where p.nome = v.nome);
+
+-- Dicas ambientais: todas com fonte conferida em 25/11/2026. Idempotente (não repete pelo título).
+insert into public.dicas (tema, tipo, titulo, texto, fonte_titulo, fonte_url, criado_em)
+select v.tema, v.tipo, v.titulo, v.texto, v.fonte_titulo, v.fonte_url, now() + (v.ordem * interval '1 second')
+from (values
+  (1, 'Reduzir', 'Atitude prática', 'Leve sua própria sacola',
+   'Quando for às compras, leve sua sacola retornável e recuse as sacolas plásticas. Recusar o que não é necessário é um dos 7 Rs do consumo sustentável.',
+   'Idec (2019). Conheça e pratique os 7 Rs do consumo sustentável',
+   'https://idec.org.br/consultas/dicas-e-direitos/pratique-os-7-rs-repense-respeite-responsabilize-se-recuse-reduza-reaproveite-e-recicle'),
+  (2, 'Reduzir', 'Atitude prática', 'Garrafa reutilizável',
+   'Garrafas descartáveis de água e refrigerante estão entre os maiores causadores de lixo plástico. Use uma garrafa reutilizável: onde a água é própria para beber, é só enchê-la.',
+   'ONU Brasil (2019), reproduzido pelo IHU-Unisinos. A FAO listou cinco maneiras de reduzir o uso de plásticos no dia a dia',
+   'https://ihu.unisinos.br/categorias/590360-a-fao-listou-cinco-maneiras-de-reduzir-o-uso-de-plasticos-no-dia-a-dia'),
+  (3, 'Reutilizar', 'Atitude prática', 'Potes ganham nova vida',
+   'Troque plásticos de uso único por opções reutilizáveis, como sacos de pano e recipientes de vidro para guardar alimentos.',
+   'ONU Brasil (2019), reproduzido pelo IHU-Unisinos. A FAO listou cinco maneiras de reduzir o uso de plásticos no dia a dia',
+   'https://ihu.unisinos.br/categorias/590360-a-fao-listou-cinco-maneiras-de-reduzir-o-uso-de-plasticos-no-dia-a-dia'),
+  (4, 'Consumo consciente', 'Atitude prática', 'Pense antes de comprar',
+   'Antes de comprar, pergunte: preciso mesmo deste produto? Ele é durável? Dá para consertar, reutilizar ou reciclar depois?',
+   'Folha de S.Paulo (2019), reproduzido pelo Idec. Saiba como se tornar consumidor consciente em passos simples',
+   'https://idec.org.br/idec-na-imprensa/saiba-como-se-tornar-consumidor-consciente-em-passos-simples'),
+  (5, 'Consumo consciente', 'Você sabia?', 'Consertar também é sustentável',
+   'A bateria é a peça que mais falha nos celulares. Trocar a peça em vez do aparelho prolonga o uso do celular e evita lixo eletrônico, o tipo de resíduo que mais cresce no planeta.',
+   'O Globo (2023), via Folha de Pernambuco. Por que a vida média de um celular é de apenas 3 anos, mas deveria ser de 25',
+   'https://www.folhape.com.br/economia/por-que-a-vida-media-de-um-celular-e-de-apenas-3-anos-mas-deveria-ser/295788/'),
+  (6, 'Reciclagem', 'Erros comuns', 'Recicláveis vão limpos para a coleta',
+   'Em Florianópolis, os recicláveis devem ir limpos para a coleta seletiva: esvazie as embalagens e tire os restos de comida. Amasse e desmonte as embalagens e use sacos claros ou transparentes.',
+   'Prefeitura de Florianópolis – SMMA. A coleta de resíduos domiciliares',
+   'https://www.pmf.sc.gov.br/servicos/index.php?pagina=servpagina&id=260'),
+  (7, 'Reciclagem', 'Atitude prática', 'Separe secos, vidro e rejeitos',
+   'Separe plástico, metal e papel dos restos de comida e dos rejeitos. Em Florianópolis, o vidro vai separado dos outros recicláveis: entregue nos PEVs de vidro, nos ecopontos ou na coleta só de vidro do seu bairro.',
+   'Prefeitura de Florianópolis – SMMA. A coleta de resíduos domiciliares',
+   'https://www.pmf.sc.gov.br/servicos/index.php?pagina=servpagina&id=260'),
+  (8, 'Resíduos especiais', 'Você sabia?', 'Nem tudo vai para o lixo comum',
+   'Pilhas e baterias, lâmpadas fluorescentes e eletroeletrônicos têm um sistema próprio de devolução previsto em lei, a logística reversa. Use a busca para ver onde entregar.',
+   'Brasil. Lei nº 12.305/2010 (Política Nacional de Resíduos Sólidos), art. 33',
+   'https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2010/lei/l12305.htm'),
+  (9, 'Impactos ambientais', 'Erros comuns', 'Óleo na pia polui a água',
+   'Não jogue óleo de cozinha na pia: ele entope a rede de esgoto e polui rios e o mar. Espere esfriar, guarde em garrafa PET limpa e seca e leve a um ecoponto ou a um ponto do ReÓleo.',
+   'Tribunal de Justiça de Santa Catarina – Gestão Socioambiental. Descarte de óleo de cozinha',
+   'https://www.tjsc.jus.br/web/gestao-socioambiental/descarte-de-oleo-de-cozinha'),
+  (10, 'Segurança para famílias', 'Atitude prática', 'Resíduos perigosos fora do alcance',
+   'Até a hora de entregar no ponto de coleta, guarde remédios, produtos de limpeza e pesticidas em armário alto e trancado, fora do alcance das crianças.',
+   'Sociedade Brasileira de Pediatria (2025). Dicas de prevenção da intoxicação',
+   'https://www.sbp.com.br/pediatria-para-familias/seguranca-e-prevencao/dicas-de-prevencao-da-intoxicacao'),
+  (11, 'Coleta e limpeza pública', 'Atitude prática', 'Respeite os dias e horários da coleta',
+   'A limpeza da cidade é responsabilidade de todos: moradores, prefeitura e empresas. Confira os dias e horários da coleta no seu bairro e só coloque o lixo na rua perto da hora em que o caminhão passa. Lixo exposto antes do tempo atrai animais e se espalha pela rua.',
+   'Lucena et al. (2025). Impactos do descarte inadequado de resíduos sólidos nos centros urbanos e do Brasil sobre a saúde pública e o meio ambiente. Epitaya E-books, v. 1, n. 115, p. 32-36',
+   'https://portal.epitaya.com.br/index.php/ebooks/article/view/1581')
+) as v(ordem, tema, tipo, titulo, texto, fonte_titulo, fonte_url)
+where not exists (select 1 from public.dicas d where d.titulo = v.titulo);
