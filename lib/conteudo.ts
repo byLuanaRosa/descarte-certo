@@ -18,7 +18,15 @@ export type Material = {
   revisado_em: string;
 };
 
-export type Dica = { id: string; tema: string; tipo: string; titulo: string; texto: string };
+export type Dica = {
+  id: string;
+  tema: string;
+  tipo: string;
+  titulo: string;
+  texto: string;
+  /** De onde veio a informação, quando a dica se apoia numa publicação. */
+  fonte?: { titulo: string; url: string };
+};
 
 export type ImagemQuiz = { texto: string; imagem: string; alt: string };
 

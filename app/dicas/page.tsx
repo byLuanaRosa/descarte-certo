@@ -50,6 +50,14 @@ export default async function DicasPage({ searchParams }: PageProps<"/dicas">) {
               <p className="text-sm font-semibold text-primary">{d.tema}</p>
               <h2 className="mt-1 text-xl font-bold">{d.titulo}</h2>
               <p className="mt-2">{d.texto}</p>
+              {d.fonte && (
+                <p className="mt-3 text-xs text-muted">
+                  <span className="font-semibold text-foreground">Fonte: </span>
+                  <a href={d.fonte.url} target="_blank" rel="noreferrer" className="text-primary underline">
+                    {d.fonte.titulo}
+                  </a>
+                </p>
+              )}
               <p className="mt-3 inline-block rounded-full bg-secondary px-3 py-1 text-xs font-semibold">{d.tipo}</p>
             </article>
           </li>
