@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { EditorPonto } from "@/components/EditorPonto";
 import { GerenciarDicas } from "@/components/GerenciarDicas";
+import { useModoAdmin } from "@/components/ModoAdmin";
 import { Mapa } from "@/components/Mapa";
 import {
   atualizarPonto,
@@ -11,7 +12,6 @@ import {
   entrar,
   excluirPonto,
   listarPorStatus,
-  sair,
   sessaoAtual,
   type DadosEdicao,
   type Decisao,
@@ -19,7 +19,7 @@ import {
 } from "@/lib/admin";
 import { buscarMaterialPorId } from "@/lib/conteudo";
 import type { Ponto } from "@/lib/pontos";
-import { supabaseConfigurado } from "@/lib/supabase";
+import { obterSupabase, supabaseConfigurado } from "@/lib/supabase";
 
 type Tela =
   | { tipo: "carregando" }
@@ -30,11 +30,37 @@ type Tela =
 
 const campo = "w-full rounded-xl border border-border bg-background px-4 py-3";
 
-export function PainelAdmin() {
+export type AreaAdmin = "pontos" | "dicas";
+
+const CHAVE_AREA = "descarte-certo:area-admin";
+
+/** Guarda a área escolhida na URL (?area=dicas) e no navegador, para voltar nela depois. */
+function lembrarArea(area: AreaAdmin) {
+  try {
+    localStorage.setItem(CHAVE_AREA, area);
+  } catch {
+    /* navegador sem armazenamento: tudo bem */
+  }
+  const url = new URL(window.location.href);
+  url.searchParams.set("area", area);
+  window.history.replaceState(null, "", url);
+}
+
+function areaGuardada(): AreaAdmin | null {
+  try {
+    const v = localStorage.getItem(CHAVE_AREA);
+    return v === "pontos" || v === "dicas" ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+export function PainelAdmin({ areaInicial }: { areaInicial: AreaAdmin | null }) {
+  const { sairDoAdmin, reverificar } = useModoAdmin();
   const [tela, setTela] = useState<Tela>(() =>
     supabaseConfigurado() ? { tipo: "carregando" } : { tipo: "indisponivel" },
   );
-  const [secao, setSecao] = useState<"pontos" | "dicas">("pontos");
+  const [secao, setSecao] = useState<AreaAdmin>(areaInicial ?? "pontos");
   const [aba, setAba] = useState<StatusPonto>("pendente");
   const [pontos, setPontos] = useState<Ponto[]>([]);
   const [selecionado, setSelecionado] = useState<string | null>(null);
@@ -68,6 +94,24 @@ export function PainelAdmin() {
 
   useEffect(() => {
     if (!supabaseConfigurado()) return;
+    const guardada = areaInicial ? null : areaGuardada();
+    const t = guardada ? setTimeout(() => setSecao(guardada), 0) : undefined;
+    // Saiu pelo botão da faixa de administrador (ou em outra aba): volta para o login.
+    const { data } = obterSupabase().auth.onAuthStateChange((evento) => {
+      if (evento === "SIGNED_OUT") {
+        setPontos([]);
+        setEditando(null);
+        setTela({ tipo: "login", erro: null, enviando: false });
+      }
+    });
+    return () => {
+      if (t) clearTimeout(t);
+      data.subscription.unsubscribe();
+    };
+  }, [areaInicial]);
+
+  useEffect(() => {
+    if (!supabaseConfigurado()) return;
     sessaoAtual()
       .then((s) => (s ? carregarPainel(s.user.id) : setTela({ tipo: "login", erro: null, enviando: false })))
       .catch(() => setTela({ tipo: "login", erro: null, enviando: false }));
@@ -83,12 +127,15 @@ export function PainelAdmin() {
       return;
     }
     const s = await sessaoAtual().catch(() => null);
-    if (s) await carregarPainel(s.user.id);
+    if (s) {
+      await carregarPainel(s.user.id);
+      reverificar();
+    }
     else setTela({ tipo: "login", erro: "Não foi possível iniciar a sessão. Tente de novo.", enviando: false });
   }
 
   async function fazerLogout() {
-    await sair();
+    await sairDoAdmin();
     setPontos([]);
     setEditando(null);
     setTela({ tipo: "login", erro: null, enviando: false });
@@ -232,6 +279,7 @@ export function PainelAdmin() {
             aria-current={secao === s.id ? "page" : undefined}
             onClick={() => {
               setSecao(s.id);
+              lembrarArea(s.id);
               setMensagem(null);
               setEditando(null);
             }}
@@ -243,9 +291,6 @@ export function PainelAdmin() {
           </button>
         ))}
       </nav>
-      <button type="button" onClick={fazerLogout} className="rounded-full border border-border px-5 py-2">
-        Sair
-      </button>
     </div>
   );
 

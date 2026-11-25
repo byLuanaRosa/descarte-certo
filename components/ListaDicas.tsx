@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { GerenciarDicas } from "@/components/GerenciarDicas";
+import { useModoAdmin } from "@/components/ModoAdmin";
 import { carregarDicasPublicas, type Dica } from "@/lib/dicas";
 
 type Estado = { tipo: "carregando" } | { tipo: "erro" } | { tipo: "pronto"; dicas: Dica[] };
@@ -12,6 +14,7 @@ type Estado = { tipo: "carregando" } | { tipo: "erro" } | { tipo: "pronto"; dica
  */
 export function ListaDicas({ tema: temaPedido }: { tema: string }) {
   const [estado, setEstado] = useState<Estado>({ tipo: "carregando" });
+  const { estado: modo } = useModoAdmin();
 
   useEffect(() => {
     let ativo = true;
@@ -22,6 +25,9 @@ export function ListaDicas({ tema: temaPedido }: { tema: string }) {
       ativo = false;
     };
   }, []);
+
+  // No perfil de administrador, a própria página de dicas vira a área de edição.
+  if (modo === "admin") return <GerenciarDicas />;
 
   if (estado.tipo === "carregando") return <p className="text-muted">Carregando dicas…</p>;
   if (estado.tipo === "erro")

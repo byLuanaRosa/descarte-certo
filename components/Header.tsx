@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BotaoTema } from "@/components/BotaoTema";
+import { BarraAdmin } from "@/components/ModoAdmin";
 import { estaAtivo, itensMenu } from "@/lib/navegacao";
 
 export function Header() {
   const caminho = usePathname();
   return (
     <header className="sticky top-0 z-[1000] border-b border-border bg-background/95 backdrop-blur">
+      <BarraAdmin />
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/" className="flex items-center gap-2" aria-label="Descarte Certo, página inicial">
           <span

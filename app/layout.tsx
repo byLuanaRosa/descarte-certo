@@ -3,6 +3,7 @@ import { Baloo_2, Nunito_Sans } from "next/font/google";
 import { BottomNav } from "@/components/BottomNav";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { ProvedorAdmin } from "@/components/ModoAdmin";
 import { SCRIPT_TEMA } from "@/lib/tema";
 import "./globals.css";
 
@@ -41,12 +42,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Pular para o conteúdo
         </a>
-        <Header />
-        <main id="conteudo" className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
-          {children}
-        </main>
-        <Footer />
-        <BottomNav />
+        <ProvedorAdmin>
+          <Header />
+          <main id="conteudo" className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">
+            {children}
+          </main>
+          <Footer />
+          <BottomNav />
+        </ProvedorAdmin>
       </body>
     </html>
   );

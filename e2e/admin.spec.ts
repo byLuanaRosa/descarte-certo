@@ -142,8 +142,9 @@ test("administrador vê pendentes, aprova e rejeita", async ({ page }) => {
   await expect(page.getByText("Nenhuma sugestão aguardando verificação. 🎉")).toBeVisible();
   expect(atualizacoes[1].corpo).toMatchObject({ status: "rejeitado" });
 
-  await page.getByRole("button", { name: "Sair" }).click();
+  await page.getByRole("button", { name: "Sair do perfil de administrador" }).click();
   await expect(page.getByRole("heading", { name: "Entrar" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "Modo administrador" })).toHaveCount(0);
 });
 
 test("administrador edita um ponto publicado", async ({ page }) => {
@@ -269,5 +270,45 @@ test.describe("dicas no painel", () => {
     await expect(page.getByText("A dica “Separe secos e úmidos” foi excluída.")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Dicas publicadas (1)" })).toBeVisible();
     expect(dicasEnviadas[1]).toMatchObject({ metodo: "DELETE" });
+  });
+});
+
+
+test.describe("perfil de administrador no site", () => {
+  test("a faixa acompanha a navegação e a página de dicas vira edição", async ({ page }) => {
+    await simularAdmin(page, { ehAdmin: true });
+    await login(page);
+    const faixa = page.getByRole("region", { name: "Modo administrador" });
+    await expect(faixa).toContainText("Você está no perfil de administrador");
+
+    // Abre outra página do site (recarregando): o perfil de administrador continua.
+    await page.goto("/dicas");
+    await expect(faixa).toBeVisible();
+    await expect(page.getByRole("button", { name: "+ Nova dica" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Editar Leve sua própria sacola" })).toBeVisible();
+
+    await faixa.getByRole("link", { name: "Painel do administrador" }).click();
+    await expect(page).toHaveURL(/\/admin/);
+    await expect(page.getByRole("heading", { name: /Pontos pendentes|Dicas publicadas/ })).toBeVisible();
+  });
+
+  test("sair do perfil esconde a faixa e as opções de edição", async ({ page }) => {
+    await simularAdmin(page, { ehAdmin: true });
+    await login(page);
+    await page.goto("/dicas");
+    await expect(page.getByRole("button", { name: "+ Nova dica" })).toBeVisible();
+    await page.getByRole("button", { name: "Sair do perfil de administrador" }).click();
+    await expect(page.getByRole("region", { name: "Modo administrador" })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "+ Nova dica" })).toHaveCount(0);
+    await expect(page.getByText(/2 dica\(s\) encontrada\(s\)/)).toBeVisible();
+  });
+
+  test("o painel lembra a área escolhida", async ({ page }) => {
+    await simularAdmin(page, { ehAdmin: true });
+    await login(page);
+    await page.getByRole("button", { name: "🌱 Dicas" }).click();
+    await expect(page).toHaveURL(/area=dicas/);
+    await page.goto("/admin");
+    await expect(page.getByRole("heading", { name: "Dicas publicadas (2)" })).toBeVisible();
   });
 });
